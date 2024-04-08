@@ -1,0 +1,74 @@
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 100;
+  src: url(../fonts/poppins/Poppins-Light.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 200;
+  src: url(../fonts/poppins/Poppins-Thin.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  src: url(../fonts/poppins/Poppins-Light.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/poppins/Poppins-Regular.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  src: url(../fonts/poppins/Poppins-Medium.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  src: url(../fonts/poppins/Poppins-Bold.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  src: url(../fonts/poppins/Poppins-Bold.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 800;
+  src: url(../fonts/poppins/Poppins-ExtraBold.ttf)
+}
+
+@font-face {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 900;
+  src: url(../fonts/poppins/Poppins-Black.ttf)
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Poppins;
+}
+
+body {
+  background-color: #131313;
+  background-attachment: fixed;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='138' height='138' viewBox='0 0 100 100'%3E%3Cg stroke='%23191919' stroke-width='3' %3E%3Crect fill='%23000000' x='-60' y='-60' width='60' height='240'/%3E%3C/g%3E%3C/svg%3E");
+}
