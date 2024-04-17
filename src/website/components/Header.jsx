@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import * as Tabler from "react-icons/tb";
 import * as Phosphor from "react-icons/pi";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link as ScrollLink, Element } from 'react-scroll';
 import Logo from "../../assets/images/logo.svg";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import DarkLogo from "../../assets/images/logo-dark.svg";
 import { mode } from "../../redux/slices/ThemeSlice.jsx";
@@ -74,40 +75,46 @@ const Header = () => {
             <nav className={!isScrollingDown ? "active" : ""}>
               <ul className="menu">
                 <li>
-                  <Link to="/">
+                  <ScrollLink to="home" smooth={true} duration={500} offset={-70}>
                     <Phosphor.PiHouse />
                     <span>Home</span>
-                  </Link>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <Link to="/about">
+                  <ScrollLink to="about" smooth={true} duration={500}>
                     <Phosphor.PiUser />
                     <span>About</span>
-                  </Link>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <Link to="/services">
+                  <ScrollLink to="services" smooth={true} duration={500}>
                     <Phosphor.PiGear />
                     <span>Services</span>
-                  </Link>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <Link to="/skills">
+                  <ScrollLink to="skills" smooth={true} duration={500}>
                     <Phosphor.PiStack />
                     <span>Skills</span>
-                  </Link>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <Link to="/portfolio">
+                  <ScrollLink to="portfolio" smooth={true} duration={500}>
                     <Phosphor.PiPenNib />
                     <span>Portfolio</span>
-                  </Link>
+                  </ScrollLink>
                 </li>
                 <li>
-                  <Link to="/contact">
+                  <ScrollLink to="packages" smooth={true} duration={500}>
+                    <Phosphor.PiPackage />
+                    <span>Packages</span>
+                  </ScrollLink>
+                </li>
+                <li>
+                  <ScrollLink to="contact" smooth={true} duration={500}>
                     <Phosphor.PiPhoneCall />
                     <span>Contact</span>
-                  </Link>
+                  </ScrollLink>
                 </li>
               </ul>
             </nav>
