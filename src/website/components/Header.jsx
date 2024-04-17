@@ -1,6 +1,6 @@
 import * as Tabler from "react-icons/tb";
 import * as Phosphor from "react-icons/pi";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/images/logo.svg";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,9 @@ import DarkLogo from "../../assets/images/logo-dark.svg";
 import { mode } from "../../redux/slices/ThemeSlice.jsx";
 
 const Header = () => {
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [previousPosition, setPreviousPosition] = useState(0);
+
   const themeMode = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
 
@@ -16,6 +19,24 @@ const Header = () => {
   };
 
   document.body.classList.toggle("dark-mode", themeMode);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition = window.scrollY;
+      if (currentPosition > previousPosition && !isScrollingDown) {
+        setIsScrollingDown(true);
+      } else if (currentPosition < previousPosition && isScrollingDown) {
+        setIsScrollingDown(false);
+      }
+      setPreviousPosition(currentPosition);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isScrollingDown, previousPosition]);
 
   return (
     <header>
@@ -50,7 +71,7 @@ const Header = () => {
             <button className="menu_btn">
               <Tabler.TbAlignRight />
             </button>
-            <nav>
+            <nav className={!isScrollingDown ? "active" : ""}>
               <ul className="menu">
                 <li>
                   <Link to="/">
