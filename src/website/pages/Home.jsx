@@ -1,17 +1,17 @@
 import React from "react";
+import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
 import Button from "../components/Button.jsx";
 import WorkCard from "../components/WorkCard.jsx";
 import SkillCard from "../components/SkillCard.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import PackageCard from "../components/PackageCard.jsx";
-import { Element } from 'react-scroll';
 
 const Home = () => {
   return (
     <>
       {/* hero section*/}
-      <Element name="home">
+      <Element name="/">
         <section className="hero">
           <div className="container">
             <div className="hero_main">
@@ -72,6 +72,10 @@ const Home = () => {
                   voluptatum corrupti quos dolores quas molestias excepturi sint
                   occaecati cupiditate provident qui officia deserunt mollitia
                   animi, id est laborum et dolorum
+                  <Button to="about" className="text_btn">
+                    <span>Read more</span>
+                    <Tabler.TbArrowNarrowRight />
+                  </Button>
                 </p>
                 <div className="about_me_top_skills">
                   <div className="about_skill">
@@ -228,7 +232,7 @@ const Home = () => {
         </section>
       </Element>
       {/* work */}
-      <Element name="portfolio">
+      <Element name="projects">
         <section className="work">
           <div className="container">
             <div className="heading_wrapper center">
@@ -262,7 +266,7 @@ const Home = () => {
                 category="Development"
                 imageUrl="https://cdn.dribbble.com/users/7306574/screenshots/17359664/media/1e1f73d6a4c5e498e21cfab91d7d1d5c.png"
               />
-              <Button>
+              <Button to="projects">
                 <span>View More Projects</span>
                 <Tabler.TbChevronRight />
               </Button>
@@ -323,75 +327,6 @@ const Home = () => {
                   { name: "Advanced Analytics", included: true },
                 ]}
               />
-            </div>
-          </div>
-        </section>
-      </Element>
-      {/* Contact */}
-      <Element name="contact">
-        <section className="Contact">
-          <div className="container">
-            <div className="contact_wrapper">
-  	          <div className="heading_wrapper">
-  	            <span className="heading_title">Get In Touch</span>
-  	            <h2 className="heading">
-  	              Let's Talk For your <span>Next Projects</span>
-  	            </h2>
-  	            <p>Sed ut perspiciatis unde omnin natus totam rem aperiam eaque inventore veritatis</p>
-                <ul className="contact_list">
-                  <li>
-                    <Tabler.TbCircleCheckFilled />
-                    <p>5+ Years Of Experience</p>
-                  </li>
-                  <li>
-                    <Tabler.TbCircleCheckFilled />
-                    <p>Professional Web Designer</p>
-                  </li>
-                  <li>
-                    <Tabler.TbCircleCheckFilled />
-                    <p>Mobile Apps Design</p>
-                  </li>
-                  <li>
-                    <Tabler.TbCircleCheckFilled />
-                    <p>Custom Design Support</p>
-                  </li>
-                </ul>
-  	          </div>
-            	<form className="contact_form">
-  						  <div className="input_group">
-  						    <label htmlFor="name">Name</label>
-  						    <input type="text" id="name" name="name" placeholder="Enter your name" />
-  						    <Tabler.TbUser />
-  						  </div>
-  						  <div className="input_group">
-  						    <label htmlFor="email">Email</label>
-  						    <input type="email" id="email" name="email" placeholder="Enter your email" />
-  						    <Tabler.TbMail />
-  						  </div>
-  						  <div className="input_group">
-  						    <label htmlFor="number">Phone Number</label>
-  						    <input type="tel" id="number" name="number" placeholder="Enter your phone number" />
-  						    <Tabler.TbPhone />
-  						  </div>
-  						  <div className="input_group">
-  						    <label htmlFor="subject">Subject</label>
-  						    <select id="subject" name="subject" placeholder="Select a subject">
-  						      <option value="">Select</option>
-  						      <option value="general">General Inquiry</option>
-  						      <option value="support">Customer Support</option>
-  						      <option value="feedback">Feedback</option>
-  						    </select>
-  						    <Tabler.TbChevronDown />
-  						  </div>
-  						  <div className="input_group w-100">
-  						    <label htmlFor="message">Message</label>
-  						    <textarea id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
-  						  </div>
-  						  <Button type="submit" className="btn sd">
-  						    <span>Submit</span>
-  						    <Tabler.TbChevronRight />
-  						  </Button>
-  						</form>
             </div>
           </div>
         </section>

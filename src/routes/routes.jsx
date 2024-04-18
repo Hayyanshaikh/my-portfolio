@@ -3,8 +3,11 @@ import React from 'react';
 import AdminLayout from '../admin/AdminLayout';
 
 // web pages
+import Home from '../website/pages/Home.jsx';
+import About from '../website/pages/About.jsx';
 import WebLayout from '../website/WebLayout.jsx';
-import Home from '../website/pages/Home.jsx'
+import Projects from '../website/pages/Projects.jsx';
+import SingleProject from '../website/pages/SingleProject.jsx';
 
 const adminRoutes = [
   {
@@ -14,6 +17,18 @@ const adminRoutes = [
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "projects",
+        element: <Projects />,
+      },
+      {
+        path: "projects/:projectId",
+        element: <SingleProject />,
       }
     ]
   },
