@@ -179,7 +179,7 @@ const Home = () => {
                     accusantium doloremque laudantium, totam rem aperiamc eaque
                     ipsa quae ab illo inventore veritatis
                   </p>
-                  <Button className="btn">
+                  <Button className="btn" to="skills">
                     <span>Learn More</span>
                     <Tabler.TbChevronRight />
                   </Button>
