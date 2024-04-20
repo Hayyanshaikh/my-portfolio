@@ -159,10 +159,6 @@ li {
   font-size: clamp(12px, 2vw, 14px);
 }
 
-li {
-  list-style: disc inside;
-}
-
 hr {
   border: 1px solid var(--border);
 }
@@ -570,7 +566,9 @@ nav:where(.active, :hover) {
   flex-direction: column;
   grid-gap: 20px;
 }
-
+.project_detail li{
+  list-style: disc inside;
+}
 .project_detail .content :where(p, li) {
   font-size: clamp(14px, 2vw, 15px);
   line-height: 2;
