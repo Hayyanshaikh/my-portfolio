@@ -36,7 +36,7 @@ const Header = () => {
   }, [previousPosition]);
 
   const menuItems = [
-    { to: "/", icon: <Phosphor.PiHouse />, text: "Home" },
+    { to: "", icon: <Phosphor.PiHouse />, text: "Home" },
     { to: "about", icon: <Phosphor.PiUser />, text: "About" },
     { to: "services", icon: <Phosphor.PiGear />, text: "Services" },
     { to: "skills", icon: <Phosphor.PiStack />, text: "Skills" },
@@ -94,19 +94,24 @@ const Header = () => {
 
 const MenuItem = ({ to, icon, text, location }) => (
   <li>
-    {location.pathname === "/" ? (
-      <ScrollLink to={to} duration={500}>
-        {icon}
-        <span>{text}</span>
-      </ScrollLink>
-    ) : (
-      <Link to={to}>
+    {location.pathname === "/projects" ? (
+      <Link to={`/#${to}`}>
         {icon}
         <span>{text}</span>
       </Link>
+    ) : (
+      <ScrollLink 
+        to={to}
+        duration={500}
+        spy={true}
+        hashSpy={true}
+        offset={1}
+      >
+        {icon}
+        <span>{text}</span>
+      </ScrollLink>
     )}
   </li>
 );
-
 
 export default Header;

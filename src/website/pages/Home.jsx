@@ -1,17 +1,20 @@
-import React from "react";
 import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
+import React, { useEffect } from "react";
+import WebLayout from '../WebLayout.jsx';
 import Button from "../components/Button.jsx";
+import useTitle from '../../hooks/useTitle.jsx';
 import WorkCard from "../components/WorkCard.jsx";
 import SkillCard from "../components/SkillCard.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
 import PackageCard from "../components/PackageCard.jsx";
 
 const Home = () => {
+  useTitle("Home");
   return (
     <>
       {/* hero section*/}
-      <Element name="/">
+      <Element name="">
         <section className="hero">
           <div className="container">
             <div className="hero_main">
@@ -72,10 +75,6 @@ const Home = () => {
                   voluptatum corrupti quos dolores quas molestias excepturi sint
                   occaecati cupiditate provident qui officia deserunt mollitia
                   animi, id est laborum et dolorum
-                  <Button to="about" className="text_btn">
-                    <span>Read more</span>
-                    <Tabler.TbArrowNarrowRight />
-                  </Button>
                 </p>
                 <div className="about_me_top_skills">
                   <div className="about_skill">
@@ -179,10 +178,10 @@ const Home = () => {
                     accusantium doloremque laudantium, totam rem aperiamc eaque
                     ipsa quae ab illo inventore veritatis
                   </p>
-                  <Button className="btn" to="skills">
+                  {/*<Button className="btn" to="skills">
                     <span>Learn More</span>
                     <Tabler.TbChevronRight />
-                  </Button>
+                  </Button>*/}
                 </div>
               </div>
               <div className="skills_list">

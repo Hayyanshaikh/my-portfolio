@@ -97,7 +97,7 @@
   --body: #131313;
   --border: #383838;
   --primary: #c8f31d;
-  --secondary-text: #7b7b7b;
+  --secondary-text: #939393;
   --shadow: rgba(0, 0, 0, 0.2);
   --dark-background: #070707;
   --light-background: #1f1f1f;
@@ -151,29 +151,45 @@ a {
   color: var(--text);
 }
 
-p {
+p,
+li {
   font-weight: 400;
   line-height: 24px;
   color: var(--secondary-text);
   font-size: clamp(12px, 2vw, 14px);
 }
 
+li {
+  list-style: disc inside;
+}
+
+hr {
+  border: 1px solid var(--border);
+}
+
 .btn {
   border: none;
-  display: inline-flex;
   grid-gap: 5px;
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 12px;
   align-items: center;
   color: var(--black);
+  display: inline-flex;
   text-decoration: none;
+  justify-content: center;
   background-color: var(--primary);
   transition: background-color 0.3s ease;
 }
 
 .dark-mode .btn {
   color: var(--white);
+}
+
+.btn.outline {
+  background: var(--light-background);
+  color: var(--black);
+  border: 1px solid var(--border);
 }
 
 .btn span {
@@ -421,12 +437,15 @@ nav:where(.active, :hover) {
   padding: 0;
   display: flex;
   overflow: hidden;
+  position: relative;
   align-items: center;
   height: calc(100dvh - 70px);
 }
 
 .hero_main {
+  z-index: 1;
   display: flex;
+  position: relative;
   justify-content: space-between;
 }
 
@@ -520,7 +539,7 @@ nav:where(.active, :hover) {
 
 .filter_buttons {
   display: flex;
-  grid-gap: 20px;
+  grid-gap: 10px;
   align-items: center;
   margin-bottom: 40px;
   justify-content: center;
@@ -529,6 +548,82 @@ nav:where(.active, :hover) {
 .filter_buttons .btn:not(.active) {
   background: transparent;
   color: var(--black);
+}
+
+.project_detail {
+  background: var(--light-background);
+}
+
+.detail_wrapper {
+  display: flex;
+  align-items: flex-start;
+  grid-gap: 40px;
+}
+
+.project_detail .filter_buttons {
+  justify-content: flex-start;
+}
+
+.project_detail .content {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+}
+
+.project_detail .content :where(p, li) {
+  font-size: clamp(14px, 2vw, 15px);
+  line-height: 2;
+}
+
+.project_detail .content ul {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 04px;
+}
+
+.project_detail .content :where(h1,h2,h3,h4,h5,h6) {
+  font-size: clamp(20px, 2vw, 22px);
+  font-weight: 600;
+}
+
+.small_overview {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+  flex: 0 0 300px;
+  padding: 20px;
+  background: var(--border);
+  border-radius: 12px;
+}
+
+.small_overview .image_of_project {
+  overflow: hidden;
+  flex: 0 0 auto;
+  min-height: unset;
+}
+
+.small_overview_content_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.small_overview_content {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+}
+
+.small_overview_content_head .price {
+  color: var(--black);
+  font-weight: 500;
+}
+
+.small_overview_content_head h4 {
+  font-weight: 600;
+  font-size: clamp(16px, 2vw, 18px);
+  text-transform: capitalize;
 }
 
 /* about */
@@ -636,7 +731,7 @@ nav:where(.active, :hover) {
   font-size: clamp(12px, 2vw, 14px);
 }
 
-.counter{
+.counter {
   padding: 40px 0;
 }
 
@@ -650,17 +745,18 @@ nav:where(.active, :hover) {
   border-bottom: none !important;
 }
 
-.counter_wrapper>*:not(:last-child){
-  border-right: 1px solid var(--border);  
+.counter_wrapper>*:not(:last-child) {
+  border-right: 1px solid var(--border);
 }
 
 .counter_wrapper .count {
   font-size: clamp(26px, 4vw, 40px);
 }
 
-.counter_wrapper .work_text{
+.counter_wrapper .work_text {
   font-size: clamp(14px, 4vw, 16px);
 }
+
 /* services */
 .service_card>svg {
   height: 40px;
@@ -912,6 +1008,66 @@ nav:where(.active, :hover) {
 
 .work_card_v2 .work_description {
   display: none;
+}
+
+.single_product_overview_wrapper {
+  display: flex;
+  grid-gap: 40px;
+}
+
+.image_of_project {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  min-height: 400px;
+  max-height: 450px;
+  border-radius: 12px;
+}
+
+.content_of_project {
+  flex: 1;
+  max-width: 380px;
+  background: var(--light-background);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+}
+
+.image_of_project img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.highlight_text {
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--black);
+}
+
+.content_of_project ul {
+  display: flex;
+  grid-gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--secondary-text);
+  font-size: clamp(12px, 2vw, 14px);
+}
+
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
+  margin-top: auto;
+}
+
+.cta .price {
+  color: var(--black);
+  font-weight: 500;
 }
 
 /* packages */

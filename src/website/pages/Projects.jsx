@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../components/Button.jsx";
 import Banner from '../components/Banner.jsx';
+import useTitle from '../../hooks/useTitle.jsx';
 import WorkCardV2 from "../components/WorkCardV2.jsx";
 
 const projectsData = [
@@ -34,6 +35,7 @@ const uniqueCategories = [...new Set(projectsData.map(project => project.categor
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  useTitle("All Projects");
   
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -43,7 +45,7 @@ const Projects = () => {
 
   return (
     <>
-      <Banner>My <span>work</span></Banner>
+      <Banner>My <span>Projects</span></Banner>
       <section className="work bg">
         <div className="container">
           <div className="filter_buttons">
