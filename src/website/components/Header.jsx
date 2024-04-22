@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { Link as ScrollLink } from 'react-scroll';
+import { Link as ScrollLink } from "react-scroll";
 import * as Tabler from "react-icons/tb";
 import * as Phosphor from "react-icons/pi";
 import Logo from "../../assets/images/logo.svg";
@@ -28,10 +28,10 @@ const Header = () => {
       setPreviousPosition(currentPosition);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [previousPosition]);
 
@@ -47,66 +47,77 @@ const Header = () => {
 
   return (
     <>
-    <header>
-      <div className="container">
-        <div className="header_main">
-          <Link className="logo">
-            <img src={themeMode ? Logo : DarkLogo} alt="logo" />
-          </Link>
-          <div className="header_socials">
-            <a href="https://github.com/hayyanshaikh" target="_blank" rel="noopener noreferrer">
-              <Tabler.TbBrandGithub />
-            </a>
-            <a href="https://api.whatsapp.com/send/?phone=923172271459&text=Hello%2C+I+am+interested+in+hiring+your+services.+Can+we+discuss+further+details%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-              <Tabler.TbBrandWhatsapp />
-            </a>
-            <a href="https://www.linkedin.com/in/hayyan-shaikh/" target="_blank" rel="noopener noreferrer">
-              <Tabler.TbBrandLinkedin />
-            </a>
-          </div>
-          <div className="header_rightside">
-            <div className="theme">
-              {themeMode ? <Tabler.TbSun /> : <Tabler.TbMoon />}
-              <button
-                className={`theme_toggle ${themeMode ? "active" : ""}`}
-                onClick={toggleTheme}
-              ></button>
-              <span>{themeMode ? "light" : "dark"}</span>
+      <header>
+        <div className="container">
+          <div className="header_main">
+            <Link className="logo">
+              <img src={themeMode ? Logo : DarkLogo} alt="logo" />
+            </Link>
+            <div className="header_socials">
+              <a
+                href="https://github.com/hayyanshaikh"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Tabler.TbBrandGithub />
+              </a>
+              <a
+                href="https://api.whatsapp.com/send/?phone=923172271459&text=Hello%2C+I+am+interested+in+hiring+your+services.+Can+we+discuss+further+details%3F&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Tabler.TbBrandWhatsapp />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/hayyan-shaikh/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Tabler.TbBrandLinkedin />
+              </a>
             </div>
-            <button className="menu_btn">
-              <Tabler.TbAlignRight />
-            </button>
+            <div className="header_rightside">
+              <div className="theme">
+                {themeMode ? <Tabler.TbSun /> : <Tabler.TbMoon />}
+                <button
+                  className={`theme_toggle ${themeMode ? "active" : ""}`}
+                  onClick={toggleTheme}
+                ></button>
+                <span>{themeMode ? "light" : "dark"}</span>
+              </div>
+              <button className="menu_btn">
+                <Tabler.TbAlignRight />
+              </button>
+            </div>
+            <nav className={!isScrollingDown ? "active" : ""}>
+              <ul className="menu">
+                {menuItems.map((item, index) => (
+                  <MenuItem
+                    key={index}
+                    to={item.to}
+                    icon={item.icon}
+                    text={item.text}
+                    location={location}
+                  />
+                ))}
+              </ul>
+            </nav>
           </div>
         </div>
-      </div>
-    </header>
-
-    <nav className={!isScrollingDown ? "active" : ""}>
-      <ul className="menu">
-        {menuItems.map((item, index) => (
-          <MenuItem key={index} to={item.to} icon={item.icon} text={item.text} location={location} />
-        ))}
-      </ul>
-    </nav>
+      </header>
     </>
   );
 };
 
 const MenuItem = ({ to, icon, text, location }) => (
   <li>
-    {location.pathname === "/projects" ? (
+    {location.pathname.startsWith("/projects") ? (
       <Link to={`/#${to}`}>
         {icon}
         <span>{text}</span>
       </Link>
     ) : (
-      <ScrollLink 
-        to={to}
-        duration={500}
-        spy={true}
-        hashSpy={true}
-        offset={1}
-      >
+      <ScrollLink to={to} duration={500} spy={true} hashSpy={true} offset={1}>
         {icon}
         <span>{text}</span>
       </ScrollLink>

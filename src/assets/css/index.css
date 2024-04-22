@@ -72,6 +72,9 @@
 *:not(svg) {
   transition: 0.2s ease;
 }
+svg {
+  transition: 0s ease;
+}
 
 :root {
   --text: #666;
@@ -138,6 +141,10 @@ input {
   outline: none;
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
 ul,
 ol,
 li {
@@ -161,6 +168,19 @@ li {
 
 hr {
   border: 1px solid var(--border);
+}
+
+figure {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .btn {
@@ -279,6 +299,10 @@ hr {
   align-items: center;
 }
 
+.logo img{
+  object-fit: contain;
+}
+
 .header_socials {
   display: flex;
   grid-gap: 20px;
@@ -311,6 +335,7 @@ hr {
 .theme svg {
   width: 20px;
   height: 20px;
+  stroke: var(--text);
   aspect-ratio: 1;
 }
 
@@ -368,7 +393,7 @@ hr {
   width: 20px;
 }
 
-nav {
+.header_main nav {
   top: 50%;
   z-index: 999;
   right: -50px;
@@ -382,7 +407,7 @@ nav {
   background: var(--light-background);
 }
 
-nav:where(.active, :hover) {
+.header_main nav:where(.active, :hover) {
   right: 0;
 }
 
@@ -550,10 +575,14 @@ nav:where(.active, :hover) {
   background: var(--light-background);
 }
 
-.detail_wrapper {
+.project_detail_wrapper {
   display: flex;
   align-items: flex-start;
   grid-gap: 40px;
+}
+
+.project_detail_content {
+  flex: 1;
 }
 
 .project_detail .filter_buttons {
@@ -566,9 +595,11 @@ nav:where(.active, :hover) {
   flex-direction: column;
   grid-gap: 20px;
 }
-.project_detail li{
+
+.project_detail li {
   list-style: disc inside;
 }
+
 .project_detail .content :where(p, li) {
   font-size: clamp(14px, 2vw, 15px);
   line-height: 2;
@@ -580,12 +611,15 @@ nav:where(.active, :hover) {
   grid-gap: 04px;
 }
 
-.project_detail .content :where(h1,h2,h3,h4,h5,h6) {
-  font-size: clamp(20px, 2vw, 22px);
+.project_detail .content :where(h1, h2, h3, h4, h5, h6) {
   font-weight: 600;
+  color: var(--black);
+  font-size: clamp(20px, 2vw, 22px);
 }
 
 .small_overview {
+  position: sticky;
+  top: 40px;
   display: flex;
   flex-direction: column;
   grid-gap: 10px;
@@ -622,6 +656,12 @@ nav:where(.active, :hover) {
   font-weight: 600;
   font-size: clamp(16px, 2vw, 18px);
   text-transform: capitalize;
+}
+
+.product_screenshots {
+  width: 100%;
+  display: flex;
+  border-radius: 12px;
 }
 
 /* about */
@@ -1055,12 +1095,14 @@ nav:where(.active, :hover) {
   font-size: clamp(12px, 2vw, 14px);
 }
 
+.content_of_project hr {
+  margin-top: auto;
+}
 
 .cta {
   display: flex;
   flex-direction: column;
   grid-gap: 10px;
-  margin-top: auto;
 }
 
 .cta .price {
@@ -1197,22 +1239,25 @@ nav:where(.active, :hover) {
 }
 
 .input_group label {
-  display: block;
+  display: flex;
+  color: var(--text);
   margin-bottom: 5px;
+  align-items: center;
+  justify-content: space-between;
   font-size: clamp(12px, 2vw, 14px);
 }
 
 .input_group :where(input, textarea, select) {
   appearance: none;
   width: 100%;
-  padding: 10px;
   border-radius: 12px;
   color: var(--text);
   min-height: 45px;
   resize: none;
   outline: none;
-  background: var(--light-background);
+  padding: 10px 40px 10px 15px;
   border: 1px solid var(--border);
+  background: var(--light-background);
 }
 
 .input_group :where(input, textarea, select):focus {
@@ -1221,7 +1266,7 @@ nav:where(.active, :hover) {
 
 .input_group svg {
   position: absolute;
-  bottom: 14px;
+  bottom: 12.5px;
   right: 14px;
   height: 20px;
   width: 20px;
@@ -1267,7 +1312,7 @@ nav:where(.active, :hover) {
 
 /* footer */
 footer {
-  padding: 60px 0;
+  padding: 40px 0 20px;
   background: var(--dark-background);
 }
 
@@ -1288,6 +1333,8 @@ footer {
   display: flex;
   flex-direction: column;
   grid-gap: 12px;
+  flex-wrap: wrap;
+  max-height: 140px;
 }
 
 .footer_list :where(a, li) {
@@ -1319,6 +1366,11 @@ footer {
   flex: 1 1 300px;
 }
 
+.footer_list:has(.footer_figure) {
+  flex-wrap: nowrap;
+  max-height: unset;
+}
+
 .footer_figure {
   display: flex;
   grid-gap: 15px;
@@ -1337,6 +1389,42 @@ footer {
   font-weight: 500;
   font-size: clamp(14px, 2vw, 16px);
 }
+
+footer>.container>.footer_column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.copyright {
+  text-align: center;
+  font-size: clamp(14px, 2vw, 15px);
+  color: var(--black);
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.footer_column .header_socials {
+  grid-gap: 10px;
+}
+
+.footer_column .header_socials a {
+  height: 40px;
+  width: 40px;
+  padding: 11px;
+  background: var(--primary);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer_column .header_socials svg {
+  stroke: var(--white);
+}
+
 
 /* banner */
 .banner {

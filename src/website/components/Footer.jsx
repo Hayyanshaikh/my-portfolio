@@ -1,21 +1,19 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import * as Phosphor from "react-icons/pi";
+import * as Tabler from "react-icons/tb";
 import Logo from "../../assets/images/logo.svg";
-import { useSelector } from "react-redux";
-import DarkLogo from "../../assets/images/logo-dark.svg";
 
 const Footer = () => {
-  const themeMode = useSelector((state) => state.theme.mode);
 
   // Sample quick links data
   const quickLinks = [
-    { id: 1, title: "About", link: "about" },
-    { id: 2, title: "Services", link: "services" },
-    { id: 3, title: "Skills", link: "skills" },
-    { id: 4, title: "Projects", link: "projects" },
-    { id: 5, title: "Packages", link: "packages" },
-    { id: 6, title: "Contact", link: "contact" }
+    { id: 1, title: "About", link: "/#about" },
+    { id: 2, title: "Services", link: "/#services" },
+    { id: 3, title: "Skills", link: "/#skills" },
+    { id: 4, title: "Projects", link: "/projects" },
+    { id: 5, title: "Packages", link: "/#packages" },
+    { id: 6, title: "Contact", link: "/#contact" }
   ];
 
   // Sample address data
@@ -42,14 +40,25 @@ const Footer = () => {
   ];
 
   return (
-    <footer>
+    <footer className="dark-mode">
       <div className="container">
-        <div className="footer_wrapper">
-          <div className="footer_column">
-            <Link className="logo">
-              <img src={themeMode ? Logo : DarkLogo} alt="logo" />
-            </Link>
+        <div className="footer_column">
+          <Link className="logo">
+            <img src={Logo} alt="logo" />
+          </Link>
+          <div className="header_socials">
+            <a href="https://github.com/hayyanshaikh" target="_blank" rel="noopener noreferrer">
+              <Tabler.TbBrandGithub />
+            </a>
+            <a href="https://api.whatsapp.com/send/?phone=923172271459&text=Hello%2C+I+am+interested+in+hiring+your+services.+Can+we+discuss+further+details%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+              <Tabler.TbBrandWhatsapp />
+            </a>
+            <a href="https://www.linkedin.com/in/hayyan-shaikh/" target="_blank" rel="noopener noreferrer">
+              <Tabler.TbBrandLinkedin />
+            </a>
           </div>
+        </div>
+        <div className="footer_wrapper">
           <div className="footer_column">
             <h4 className="footer_heading">Quick Links</h4>
             <ul className="footer_list">
@@ -60,6 +69,20 @@ const Footer = () => {
                     <Phosphor.PiCaretDoubleRight/>
                     <span>{link.title}</span>
                   </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="footer_column">
+            <h4 className="footer_heading">Address</h4>
+            <ul className="footer_list">
+              {/* Loop through address data and render */}
+              {Object.entries(address).map(([key, value]) => (
+                <li key={key}>
+                  {key === "street" && <Phosphor.PiHouse />}
+                  {key === "email" && <Phosphor.PiEnvelope />}
+                  {key === "phone" && <Phosphor.PiPhone />}
+                  <span>{value}</span>
                 </li>
               ))}
             </ul>
@@ -80,21 +103,10 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          <div className="footer_column">
-            <h4 className="footer_heading">Address</h4>
-            <ul className="footer_list">
-              {/* Loop through address data and render */}
-              {Object.entries(address).map(([key, value]) => (
-                <li key={key}>
-                  {key === "street" && <Phosphor.PiHouse />}
-                  {key === "email" && <Phosphor.PiEnvelope />}
-                  {key === "phone" && <Phosphor.PiPhone />}
-                  <span>{value}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
+        <p className="copyright">
+          &copy; {new Date().getFullYear()} Hayyan Ali. All rights reserved.
+        </p>
       </div>
     </footer>
   );
