@@ -8,7 +8,7 @@ import Button from '../../website/components/Button.jsx';
 import Input from '../../website/components/Input.jsx';
 
 const Projects = () => {
-  useTitle("All Projects");
+  useTitle("Admin all Projects");
 	
 	return (
 		<>
@@ -21,7 +21,7 @@ const Projects = () => {
 	          name="searchProject"
 	          placeholder="Search project"
 	        />
-					<Button to="add-project">
+					<Button to="add">
 						<Tabler.TbPlus/>
 						<span>Add project</span>
 					</Button>
@@ -31,17 +31,58 @@ const Projects = () => {
 			  <thead>
 			    <tr>
 			    	<th>
-			    		
 			    		<div>
 			    			<Checkbox/>
 			    		</div>
 			    	</th>
-			      <th>Project Name</th>
-			      <th>Description</th>
-			      <th>Status</th>
-			      <th>Start Date</th>
-			      <th>End Date</th>
-			      <th>Actions</th>
+			      <th>
+			      	<div>
+				      	<span>Project Name</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
+			      <th>
+			      	<div>
+				      	<span>Description</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
+			      <th>
+			      	<div>
+				      	<span>Status</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
+			      <th>
+			      	<div>
+				      	<span>Start Date</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
+			      <th>
+			      	<div>
+				      	<span>End Date</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
+			      <th>
+			      	<div>
+				      	<span>Actions</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
 			    </tr>
 			  </thead>
 			  <tbody>

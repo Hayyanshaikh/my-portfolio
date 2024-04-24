@@ -141,6 +141,12 @@ input {
   outline: none;
 }
 
+button{
+  cursor: pointer;
+  color: var(--black);
+  display: inline-flex;
+}
+
 input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
@@ -1439,4 +1445,14 @@ footer>.container>.footer_column {
 .banner .heading_wrapper {
   margin-bottom: 0;
   text-transform: capitalize;
+}
+
+/*error page*/
+#error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    grid-gap: 10px;
 }

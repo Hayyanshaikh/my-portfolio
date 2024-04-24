@@ -4,6 +4,7 @@ import AdminLayout from '../admin/AdminLayout';
 import AdminAbout from '../admin/pages/About.jsx';
 import AdminDashboard from '../admin/pages/Dashboard.jsx';
 import AdminProjects from '../admin/pages/Projects.jsx';
+import AdminAddProject from '../admin/pages/AddProject.jsx';
 import AdminServices from '../admin/pages/Services.jsx';
 import AdminSkills from '../admin/pages/Skills.jsx';
 import AdminSettings from '../admin/pages/Settings.jsx';
@@ -14,6 +15,7 @@ import AdminLogin from '../admin/pages/Login.jsx';
 import Home from '../website/pages/Home.jsx';
 import WebLayout from '../website/WebLayout.jsx';
 import Projects from '../website/pages/Projects.jsx';
+import ErrorPage from '../website/pages/ErrorPage.jsx';
 import SingleProject from '../website/pages/SingleProject.jsx';
 
 const adminRoutes = [
@@ -21,8 +23,8 @@ const adminRoutes = [
   {
     path: "/",
     element: <WebLayout />,
-    children: [
-      {
+    errorElement: <ErrorPage/>,
+    children: [{
         index: true,
         element: <Home />,
       },
@@ -41,8 +43,7 @@ const adminRoutes = [
   {
     path: "/hs-admin",
     element: <AdminLayout />,
-    children: [
-      {
+    children: [{
         path: "dashboard",
         index: true,
         element: <AdminDashboard />,
@@ -54,6 +55,10 @@ const adminRoutes = [
       {
         path: "projects",
         element: <AdminProjects />,
+      },
+      {
+        path: "projects/add",
+        element: <AdminAddProject />,
       },
       {
         path: "services",
