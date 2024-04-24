@@ -2,6 +2,7 @@ import React from "react";
 import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
 import Button from "../components/Button.jsx";
+import Input from "../components/Input.jsx";
 
 const ContactForm = () => {
 	return (
@@ -37,35 +38,45 @@ const ContactForm = () => {
                 </ul>
   	          </div>
             	<form className="contact_form">
-  						  <div className="input_group">
-  						    <label htmlFor="name">Name</label>
-  						    <input type="text" id="name" name="name" placeholder="Enter your name" />
-  						    <Tabler.TbUser />
-  						  </div>
-  						  <div className="input_group">
-  						    <label htmlFor="email">Email</label>
-  						    <input type="email" id="email" name="email" placeholder="Enter your email" />
-  						    <Tabler.TbMail />
-  						  </div>
-  						  <div className="input_group">
-  						    <label htmlFor="number">Phone Number</label>
-  						    <input type="tel" id="number" name="number" placeholder="Enter your phone number" />
-  						    <Tabler.TbPhone />
-  						  </div>
-  						  <div className="input_group">
-  						    <label htmlFor="subject">Subject</label>
-  						    <select id="subject" name="subject" placeholder="Select a subject">
-  						      <option value="">Select</option>
-  						      <option value="general">General Inquiry</option>
-  						      <option value="support">Customer Support</option>
-  						      <option value="feedback">Feedback</option>
-  						    </select>
-  						    <Tabler.TbChevronDown />
-  						  </div>
-  						  <div className="input_group w-100">
-  						    <label htmlFor="message">Message</label>
-  						    <textarea id="message" name="message" rows="5" placeholder="Enter your message"></textarea>
-  						  </div>
+                <Input
+                  icon={<Tabler.TbUser />}
+                  label="Name"
+                  id="name"
+                  name="name"
+                  placeholder="Enter your name"
+                />
+
+                <Input
+                  icon={<Tabler.TbMail />}
+                  label="Email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                />
+
+                <Input
+                  icon={<Tabler.TbPhone />}
+                  label="Phone Number"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  placeholder="Enter your Phone Number"
+                />
+
+                <Input
+                  icon={<Tabler.TbChevronDown />}
+                  label="Subject"
+                  id="Subject"
+                  name="Subject"
+                  placeholder="Select a subject"
+                />
+
+                <Input
+                  label="Message"
+                  id="message"
+                  name="message"
+                  placeholder="Enter your message"
+                  className="w-100"
+                />
   						  <Button type="submit" className="btn sd">
   						    <span>Submit</span>
   						    <Tabler.TbChevronRight />

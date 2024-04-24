@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import * as Tabler from "react-icons/tb";
+import useTitle from '../../hooks/useTitle.jsx';
+import Checkbox from '../components/Checkbox.jsx';
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
-import useTitle from '../../hooks/useTitle.jsx';
+import Input from '../../website/components/Input.jsx';
 
 const Projects = () => {
   useTitle("All Projects");
@@ -13,10 +15,12 @@ const Projects = () => {
 			<div className="admin_head">
 				<h4>all Projects</h4>
 				<div className="admin_head_actions">
-				  <div className="input_group">
-				    <input type="search" id="name" name="name" autoComplete="off" placeholder="Search project" />
-				    <Tabler.TbSearch />
-				  </div>
+					<Input
+	          icon={<Tabler.TbSearch />}
+	          id="searchProject"
+	          name="searchProject"
+	          placeholder="Search project"
+	        />
 					<Button to="add-project">
 						<Tabler.TbPlus/>
 						<span>Add project</span>
@@ -26,6 +30,12 @@ const Projects = () => {
 			<table>
 			  <thead>
 			    <tr>
+			    	<th>
+			    		
+			    		<div>
+			    			<Checkbox/>
+			    		</div>
+			    	</th>
 			      <th>Project Name</th>
 			      <th>Description</th>
 			      <th>Status</th>
@@ -36,6 +46,11 @@ const Projects = () => {
 			  </thead>
 			  <tbody>
 			    <tr>
+			    	<td>
+			    		<div>
+			    			<Checkbox/>
+			    		</div>
+			    	</td>
 			      <td>
 			      	<div>
 			      		<figure>
@@ -76,6 +91,12 @@ const Projects = () => {
             </td>
 			    </tr>
 			    <tr>
+			    	<td>
+			    		
+			    		<div>
+			    			<Checkbox/>
+			    		</div>
+			    	</td>
 			      <td>
 			      	<div>
 			      		<figure>

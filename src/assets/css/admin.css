@@ -131,7 +131,7 @@ table thead tr {
   border-radius: 12px;
 }
 
-table span{
+table span {
   color: var(--text);
 }
 
@@ -154,7 +154,7 @@ table tbody tr:first-child td {
   padding-top: 20px;
 }
 
-table tbody tr div {
+table tr div {
   display: flex;
   grid-gap: 10px;
   align-items: center;
@@ -208,4 +208,38 @@ table figure {
 
 .action_button .edit svg {
   stroke: var(--black);
+}
+
+.checkbox {
+  height: 18px;
+  grid-gap: 10px;
+  min-width: 18px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+}
+
+.checkbox:before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 18px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.checkbox input {
+  display: none;
+}
+
+.checkbox label {
+  font-weight: 500;
+}
+
+.checkbox:has(input:checked):before {
+  border-color: var(--primary);
+  background-color: var(--primary);
+  box-shadow: inset 0 0 0 4px var(--white);
 }

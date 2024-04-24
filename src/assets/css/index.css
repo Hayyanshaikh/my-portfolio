@@ -1260,6 +1260,10 @@ figure img {
   background: var(--light-background);
 }
 
+.input_group textarea{
+  height: 120px;
+}
+
 .input_group :where(input, textarea, select):focus {
   border-color: var(--primary);
 }
