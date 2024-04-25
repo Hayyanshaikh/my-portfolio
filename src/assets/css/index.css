@@ -72,6 +72,7 @@
 *:not(svg) {
   transition: 0.2s ease;
 }
+
 svg {
   transition: 0s ease;
 }
@@ -141,15 +142,18 @@ input {
   outline: none;
 }
 
-button{
+button {
   cursor: pointer;
   color: var(--black);
   display: inline-flex;
 }
 
-input[type="search"]::-webkit-search-cancel-button {
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="file"]::-webkit-file-upload-button  {
   display: none;
 }
+
 
 ul,
 ol,
@@ -305,7 +309,7 @@ figure img {
   align-items: center;
 }
 
-.logo img{
+.logo img {
   object-fit: contain;
 }
 
@@ -397,6 +401,7 @@ figure img {
 .menu_btn svg {
   height: 20px;
   width: 20px;
+  stroke: var(--white);
 }
 
 .header_main nav {
@@ -1266,7 +1271,7 @@ figure img {
   background: var(--light-background);
 }
 
-.input_group textarea{
+.input_group textarea {
   height: 120px;
 }
 
@@ -1274,7 +1279,7 @@ figure img {
   border-color: var(--primary);
 }
 
-.input_group svg {
+.input_group:not(.input_quill) svg {
   position: absolute;
   bottom: 12.5px;
   right: 14px;
@@ -1287,6 +1292,139 @@ figure img {
 .input_group.w-100 {
   flex: 0 0 100%;
 }
+
+
+.quill {
+  width: 100%;
+  background: var(--light-background);
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.ql-toolbar.ql-snow {
+  border: none !important;
+  padding: 10px !important;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border) !important;
+  background: transparent;
+  border-radius: 5px 5px 0 0
+}
+
+.ql-snow .ql-stroke {
+  stroke: var(--secondary-text);
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow .ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button:focus .ql-stroke,
+.ql-snow .ql-toolbar button:focus .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter {
+  stroke: var(--primary);
+}
+
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button:focus .ql-fill,
+.ql-snow .ql-toolbar button:focus .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill,
+.ql-snow .ql-toolbar button.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-fill,
+.ql-snow.ql-toolbar button:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar button:focus .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button:focus .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar button.ql-active .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke.ql-fill,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke.ql-fill {
+  fill: var(--primary);
+}
+
+.ql-snow .ql-picker-label::before {
+  color: var(--secondary-text);
+  line-height: 1;
+  margin-top: 5px;
+}
+
+.ql-snow.ql-toolbar button svg,
+.ql-snow .ql-toolbar button svg,
+.ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
+  float: left;
+  height: 100%;
+  border: none;
+  background: transparent;
+  padding: 0
+}
+
+.ql-container.ql-snow {
+  border: 2px solid var(--gray-40) !important;
+  border-top: none !important;
+  border-radius: 0 0 5px 5px
+}
+
+.ql-editor {
+  min-height: 200px;
+}
+
+.ql-toolbar button {
+  display: flex !important;
+  align-items: center;
+  transition: .2s ease;
+  justify-content: center
+}
+
+.ql-toolbar .ql-formats {
+  display: inline-flex !important;
+  grid-gap: 10px !important;
+  margin: 0 !important;
+  flex-wrap: wrap
+}
+
+
+.ql-editor * {
+  color: var(--text) !important;
+  font-size: 15px !important;
+}
+
 
 .contact_wrapper {
   display: flex;
@@ -1449,10 +1587,10 @@ footer>.container>.footer_column {
 
 /*error page*/
 #error-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100dvh;
-    grid-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  grid-gap: 10px;
 }

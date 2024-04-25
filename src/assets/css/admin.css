@@ -126,11 +126,11 @@ table thead tr th {
   background-color: var(--light-background);
 }
 
-table thead button svg{
+table thead button svg {
   stroke: var(--secondary-text);
 }
 
-table thead button:hover svg{
+table thead button:hover svg {
   stroke: var(--primary);
 }
 
@@ -139,7 +139,7 @@ table thead tr {
   border-radius: 12px;
 }
 
-table :where(th, td):has(.checkbox){
+table :where(th, td):has(.checkbox) {
   width: 10px;
   padding: 10px;
 }
@@ -188,7 +188,7 @@ table figure {
 }
 
 .admin_head h4 {
-  font-weight: 600;
+  font-weight: 500;
   color: var(--black);
   text-transform: capitalize;
   font-size: clamp(18px, 2vw, 20px);
@@ -261,3 +261,73 @@ table figure {
   border-color: var(--primary);
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12l5 5l10 -10" /></svg>');
 }
+
+/* modal */
+.modal {
+  height: 100dvh;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.modal-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: #0008;
+}
+
+.modal-content {
+  padding: 20px;
+  border-radius: 12px;
+  background: var(--light-background);
+  max-width: 600px;
+  width: 100%;
+}
+
+/* layout of every page */
+.wrapper {
+  display: flex;
+  grid-gap: 40px;
+  align-items: flex-start;
+}
+
+.wrapper_content,
+.wrapper_sidebar {
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.wrapper_content {
+  flex: 1;
+  display: flex;
+  grid-gap: 20px;
+  flex-wrap: wrap;
+}
+
+.wrapper_content > .w-full{
+  flex: 1 100%;
+}
+
+.wrapper_content > .w-half{
+  flex: 1 calc(50% - 20px);
+}
+
+.wrapper_content > .w-one-third{
+  flex: 1 calc(33.33% - 20px);
+}
+
+.wrapper_content .input_group input{
+  border-radius: 10px;
+}
+
+.wrapper_sidebar {
+  flex: 0 0 350px;
+}
+
+/* add project */
