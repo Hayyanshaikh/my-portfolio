@@ -10,6 +10,7 @@ const Sidebar = () => {
     { path: "skills", label: "Skills" },
     { path: "about", label: "About" },
     { path: "resume", label: "Resume" },
+    { path: "media", label: "Media" },
     { path: "settings", label: "Settings" },
   ];
   return (

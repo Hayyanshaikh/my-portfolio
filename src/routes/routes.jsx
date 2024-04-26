@@ -10,6 +10,7 @@ import AdminSkills from '../admin/pages/Skills.jsx';
 import AdminSettings from '../admin/pages/Settings.jsx';
 import AdminResume from '../admin/pages/Resume.jsx';
 import AdminLogin from '../admin/pages/Login.jsx';
+import AdminMedia from '../admin/pages/Media.jsx';
 
 // Web pages
 import Home from '../website/pages/Home.jsx';
@@ -71,6 +72,10 @@ const adminRoutes = [
       {
         path: "resume",
         element: <AdminResume />,
+      },
+      {
+        path: "media",
+        element: <AdminMedia />,
       },
       {
         path: "settings",

@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
+import Media from './Media.jsx';
 import * as Tabler from "react-icons/tb";
+import Modal from '../components/Modal.jsx';
 import useTitle from '../../hooks/useTitle.jsx';
 import Checkbox from '../components/Checkbox.jsx';
-import Dropzone from '../components/Dropzone.jsx';
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
@@ -13,6 +14,15 @@ const AddProject = () => {
   useTitle("Add New Project");
   const navigate = useNavigate();
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 	return (
 		<>
 			<div className="admin_head">
@@ -87,27 +97,17 @@ const AddProject = () => {
 				    type="text"
 				  />
 				</div>
-				<div className="wrapper_sidebar"></div>
+				<div className="wrapper_sidebar">
+	        <Button onClick={openModal}>
+	        	<span>Open Modal</span>
+	        </Button>
+					<Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
+		        <Media/>
+		      </Modal>
+				</div>
 			</div>
 		</>
 	)
 }
 
 export default AddProject
-
-
-/*
-	
-title ok
-featured image ok
-highlights -- list ok
-price ok
-live preview link -- if website ok
-short description ok
-long description ok
-Screenshots ok
-Changelog 
-	- time / date / project version
-	- template link if any website (live preview)
-
-*/

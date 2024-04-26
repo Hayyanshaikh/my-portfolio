@@ -1,14 +1,27 @@
-import React, {useCallback} from 'react';
-import {useDropzone} from 'react-dropzone';
+import React, { useState } from 'react';
+import * as Tabler from "react-icons/tb";
+import { useDropzone } from 'react-dropzone';
+import Button from '../../website/components/Button.jsx';
 
-const Dropzone = () => {
-  const {getRootProps, getInputProps} = useDropzone()
+const Dropzone = ({multiple = false, sendFilesToParent}) => {
+
+  const { getRootProps, getInputProps } = useDropzone({
+    multiple: multiple,
+    onDrop: acceptedFiles => {
+      sendFilesToParent(acceptedFiles);
+    }
+  });
 
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      <p>Drag 'n' drop some files here, or click to select files</p>
-    </div>
+    <>
+      <div {...getRootProps({ className: "dropzone" })}>
+      <Tabler.TbCloudUpload/>
+        <p>Drag and Drop</p>
+        <Button>
+          <span>Browse</span>
+        </Button>
+      </div>
+    </>
   )
 }
 
