@@ -1,6 +1,7 @@
 /* Admin layout styles */
 .admin-layout {
   display: flex;
+  min-height: 100dvh;
   flex-direction: column;
   background-color: var(--body);
 }
@@ -11,6 +12,9 @@
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--border);
   background-color: var(--dark-background);
+  position: sticky;
+  top: 0;
+  z-index: 9;
 }
 
 .navbar {
@@ -41,12 +45,15 @@
 .admin-main {
   flex: 1;
   display: flex;
+  height: calc(100vh - 70.86px);
 }
 
 .admin-sidebar {
-  top: 0;
+  top: 70.86px;
   width: 200px;
+  height: calc(100vh - (70.86px));
   padding: 1rem 0;
+  position: fixed;
   background-color: var(--dark-background);
   border-right: 1px solid var(--border);
 }
@@ -74,13 +81,15 @@
 }
 
 .admin-content {
-  flex: 1;
-  height: calc(100dvh - (56.8px + 70.86px));
-  overflow: auto;
-  padding: 1rem 2rem;
+    flex: 1;
+    padding: 1rem 2rem;
+    max-width: calc(100% - 200px);
+    margin-left: auto;
 }
 
 .admin-footer {
+  position: relative;
+  z-index: 1;
   padding: 1rem 2rem;
   text-align: center;
   background-color: var(--dark-background);
@@ -173,6 +182,13 @@ table tr div {
   align-items: center;
 }
 
+table tr div > svg{
+  width: 35px;
+  height: 35px;
+  stroke-width: 1.3px;
+  stroke: var(--del);
+}
+
 table figure {
   width: 40px;
   height: 40px;
@@ -198,16 +214,22 @@ table figure {
   flex: 1;
   display: flex;
   grid-gap: 20px;
-  max-width: 600px;
   align-items: center;
   justify-content: flex-end;
+}
+
+.admin_head_actions .input_group {
+  max-width: 400px;
+}
+
+table :where(td, th):has(.action_button) {
+  width: 120px;
 }
 
 .action_button {
   display: flex;
   grid-gap: 10px;
   align-items: center;
-  justify-content: center;
 }
 
 .action_button svg {
@@ -225,6 +247,7 @@ table figure {
 }
 
 .checkbox {
+  width: 100%;
   height: 18px;
   grid-gap: 10px;
   min-width: 18px;
@@ -252,8 +275,9 @@ table figure {
   display: none;
 }
 
-.checkbox label {
-  font-weight: 500;
+.checkbox span {
+  color: var(--text);
+  font-size: clamp(12px, 2vw, 14px);
 }
 
 .checkbox:has(input:checked):before {
@@ -267,8 +291,8 @@ table figure {
 .modal {
   top: 0;
   left: 0;
-  z-index: 1;
   opacity: 0;
+  z-index: 99;
   width: 100%;
   height: 100dvh;
   position: fixed;
@@ -355,6 +379,10 @@ table figure {
   font-size: clamp(14px, 2vw, 16px);
 }
 
+.sidebar_heading.center {
+  text-align: center;
+}
+
 .image_thumbnail {
   width: 100%;
   min-height: 100px;
@@ -371,10 +399,6 @@ table figure {
   display: flex;
   grid-gap: 10px;
   flex-direction: column;
-}
-
-.sidebar_item:has(.image_thumbnail) {
-  align-items: center;
 }
 
 .image_thumbnail figure {
@@ -471,10 +495,11 @@ table figure {
   pointer-events: auto;
 }
 
-.form_action_buttons{
+.form_action_buttons {
   width: 100%;
   display: flex;
   grid-gap: 10px;
+  margin-top: 12px;
   align-items: center;
   justify-content: flex-end;
 }

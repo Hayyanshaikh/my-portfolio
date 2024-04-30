@@ -234,6 +234,7 @@ figure img {
 
 .btn.outline {
   color: var(--black);
+  padding: 9px 20px;
   border: 1px solid var(--border);
   background: var(--light-background);
 }
@@ -1270,8 +1271,9 @@ figure img {
 }
 
 .input_group {
-  flex: 1 1 calc(50% - 30px);
+  width: 100%;
   position: relative;
+  flex: 1 1 calc(50% - 30px);
 }
 
 .input_group label {

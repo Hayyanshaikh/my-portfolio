@@ -5,6 +5,8 @@ import AdminAbout from '../admin/pages/About.jsx';
 import AdminDashboard from '../admin/pages/Dashboard.jsx';
 import AdminProjects from '../admin/pages/Projects.jsx';
 import AdminAddProject from '../admin/pages/AddProject.jsx';
+import AdminPackages from '../admin/pages/Packages.jsx';
+import AdminAddPackage from '../admin/pages/AddPackage.jsx';
 import AdminServices from '../admin/pages/Services.jsx';
 import AdminSkills from '../admin/pages/Skills.jsx';
 import AdminSettings from '../admin/pages/Settings.jsx';
@@ -60,6 +62,14 @@ const adminRoutes = [
       {
         path: "projects/add",
         element: <AdminAddProject />,
+      },
+      {
+        path: "packages",
+        element: <AdminPackages />,
+      },
+      {
+        path: "packages/add",
+        element: <AdminAddPackage />,
       },
       {
         path: "services",

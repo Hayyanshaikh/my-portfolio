@@ -34,8 +34,8 @@ const projectsData = [
 const uniqueCategories = [...new Set(projectsData.map(project => project.category))];
 
 const Projects = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
   useTitle("All Projects");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);

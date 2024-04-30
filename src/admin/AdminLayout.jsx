@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header.jsx';
 import Sidebar from './components/Sidebar.jsx';
 import Footer from './components/Footer.jsx';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, ScrollRestoration } from 'react-router-dom';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -25,6 +25,8 @@ const AdminLayout = () => {
         </section>
       </main>
      	<Footer/>
+      <ScrollRestoration />
+
     </div>
   );
 };

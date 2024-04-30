@@ -1,11 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Media from './Media.jsx';
 import * as Tabler from "react-icons/tb";
 import Modal from '../components/Modal.jsx';
 import useTitle from '../../hooks/useTitle.jsx';
 import Checkbox from '../components/Checkbox.jsx';
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
 import Input from '../../website/components/Input.jsx';
 import QuillEditor from '../../website/components/QuillEditor.jsx';
@@ -52,6 +51,7 @@ const AddProject = () => {
 				    className="w-full"
 				    type="text"
 				  />
+					<Checkbox label="This Project Under construction"/>
 				  <Input
 				    icon={<Tabler.TbLink />}
 				    label="Live Preview Link"
@@ -98,7 +98,7 @@ const AddProject = () => {
 				</div>
 				<div className="wrapper_sidebar">
 					<div className="sidebar_item">
-						<h4 className="sidebar_heading">Upload featured image</h4>
+						<h4 className="sidebar_heading center">Upload featured image</h4>
 						<div className="image_thumbnail">
 							<Tabler.TbPhotoScan/>
 							{/*<figure>

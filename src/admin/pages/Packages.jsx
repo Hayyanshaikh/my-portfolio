@@ -7,12 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
 import Input from '../../website/components/Input.jsx';
 
-const projects = [
+const packages = [
   {
     id: 1,
     image: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
-    name: "Project A",
-    description: "This is a brief description of Project A.",
+    name: "Package A",
+    description: "This is a brief description of Package A.",
     status: "In Progress",
     startDate: "2024-04-01",
     endDate: "2024-05-31"
@@ -20,20 +20,20 @@ const projects = [
   {
     id: 2,
     image: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
-    name: "Project A",
-    description: "This is a brief description of Project A.",
+    name: "Package A",
+    description: "This is a brief description of Package A.",
     status: "In Progress",
     startDate: "2024-04-01",
     endDate: "2024-05-31"
   },
 ];
 
-const Projects = () => {
-  useTitle("all Projects");
-  const [selected, setSelected] = useState(Array(projects.length).fill(false));
+const Packages = () => {
+  useTitle("all Packages");
+  const [selected, setSelected] = useState(Array(packages.length).fill(false));
 
 	const handleSelectAll = (e) => {
-	  const updatedSelected = Array(projects.length).fill(e.target.checked);
+	  const updatedSelected = Array(packages.length).fill(e.target.checked);
 	  setSelected(updatedSelected);
 	};
 
@@ -48,17 +48,17 @@ const Projects = () => {
 	return (
 		<>
 			<div className="admin_head">
-				<h4>all Projects</h4>
+				<h4>all Packages</h4>
 				<div className="admin_head_actions">
 					<Input
 	          icon={<Tabler.TbSearch />}
-	          id="searchProject"
-	          name="searchProject"
-	          placeholder="Search project"
+	          id="searchPackage"
+	          name="searchPackage"
+	          placeholder="Search package"
 	        />
 					<Button to="add">
 						<Tabler.TbPlus/>
-						<span>Add project</span>
+						<span>Add package</span>
 					</Button>
 				</div>
 			</div>
@@ -75,7 +75,7 @@ const Projects = () => {
 			    	</th>
 			      <th>
 			      	<div>
-				      	<span>Project Name</span>
+				      	<span>Package Name</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
 				      	</button>
@@ -122,8 +122,8 @@ const Projects = () => {
 			  </thead>
 			  <tbody>
 			    {
-			    	projects.map((project, index) => (
-						  <tr key={project.id}>
+			    	packages.map((pkg, index) => (
+						  <tr key={pkg.id}>
 						    <td>
 						      <div>
 						        <Checkbox
@@ -136,29 +136,29 @@ const Projects = () => {
 						    <td>
 						      <div>
 						        <figure>
-						          <img src={project.image} alt=""/>
+						          <img src={pkg.image} alt=""/>
 						        </figure>
-						        <span>{project.name}</span>
+						        <span>{pkg.name}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.description}</span>
+						        <span>{pkg.description}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.status}</span>
+						        <span>{pkg.status}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.startDate}</span>
+						        <span>{pkg.startDate}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.endDate}</span>
+						        <span>{pkg.endDate}</span>
 						      </div>
 						    </td>
 						    <td>
@@ -180,4 +180,4 @@ const Projects = () => {
 	)
 }
 
-export default Projects
+export default Packages
