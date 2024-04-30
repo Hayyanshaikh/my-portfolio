@@ -13,4 +13,4 @@ const QuillEditor = ({ icon , label, id, name, placeholder, className }) => {
   )
 }
 
-export default QuillEditor
+export default QuillEditor;

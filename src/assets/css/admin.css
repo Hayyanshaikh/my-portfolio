@@ -217,7 +217,7 @@ table figure {
 }
 
 .action_button .delete svg {
-  stroke: #ef4e2c;
+  stroke: var(--del);
 }
 
 .action_button .edit svg {
@@ -263,13 +263,22 @@ table figure {
 }
 
 /* modal */
+
 .modal {
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  width: 100%;
   height: 100dvh;
   position: fixed;
-  width: 100%;
-  left: 0;
-  top: 0;
-  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .modal-overlay {
@@ -297,7 +306,7 @@ table figure {
 }
 
 .wrapper_content,
-.wrapper_sidebar {
+.sidebar_item {
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -328,13 +337,148 @@ table figure {
 
 .wrapper_sidebar {
   flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 30px;
 }
 
 /* add project */
 .media_modal .modal-content {
-    max-width: calc(100% - 60px);
-    height: calc(100% - 60px);
+  max-width: calc(100% - 100px);
+  height: calc(100% - 100px);
 }
+
+.sidebar_heading {
+  font-weight: 500;
+  color: var(--black);
+  text-transform: capitalize;
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+.image_thumbnail {
+  width: 100%;
+  min-height: 100px;
+}
+
+.image_thumbnail svg {
+  width: 100%;
+  height: 100px;
+  stroke: var(--secondary-text);
+  stroke-width: 1px;
+}
+
+.sidebar_item {
+  display: flex;
+  grid-gap: 10px;
+  flex-direction: column;
+}
+
+.sidebar_item:has(.image_thumbnail) {
+  align-items: center;
+}
+
+.image_thumbnail figure {
+  height: 200px;
+  border-radius: 12px;
+}
+
+.highlight_input {
+  display: flex;
+  grid-gap: 10px;
+}
+
+.highlight_list {
+  display: flex;
+  grid-gap: 12px;
+  margin-top: 15px;
+  flex-direction: column;
+}
+
+.highlight_list li {
+  display: flex;
+  grid-gap: 12px;
+  color: var(--text);
+  align-items: center;
+}
+
+.highlight_list li:before {
+  content: '';
+  height: 6px;
+  aspect-ratio: 1;
+  align-self: start;
+  border-radius: 10px;
+  background-color: var(--primary);
+}
+
+.highlight_list li span {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.highlight_list svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--del);
+}
+
+.highlight_list li:before {
+  margin-top: 7px;
+}
+
+.screen_shots_upload {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.screen_shots {
+  width: 100%;
+}
+
+.screen_shots_imgs {
+  display: grid;
+  padding: 12px;
+  grid-gap: 20px;
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.screen_shots_imgs figure {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border-radius: 8px;
+}
+
+.screen_shots_imgs figure svg {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  padding: 38px;
+  cursor: pointer;
+  stroke-width: 1.8;
+  stroke: var(--del);
+  position: absolute;
+  pointer-events: none;
+  transition: 0.2s ease;
+  background-color: var(--dark-background);
+}
+
+.screen_shots_imgs figure:hover svg {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.form_action_buttons{
+  width: 100%;
+  display: flex;
+  grid-gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 /* dropzone */
 .dropzone {
   display: flex;
@@ -372,7 +516,7 @@ table figure {
 .media_upload {
   flex: 1;
   display: flex;
-  max-width: 400px;
+  max-width: 300px;
   align-items: center;
   background-color: var(--light-background);
   border: 2px dashed var(--border);

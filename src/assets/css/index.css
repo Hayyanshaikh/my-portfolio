@@ -81,8 +81,9 @@ svg {
   --text: #666;
   --black: #000;
   --white: #fff;
-  --border: #e1e1e1;
+  --del: #ef4e2c;
   --body: #f9f9f9;
+  --border: #e1e1e1;
   --primary: #b5e200;
   --secondary-text: #888;
   --dark-background: #fff;
@@ -135,7 +136,12 @@ body.dark-mode {
   max-width: 1350px;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text);
 }
 
@@ -154,7 +160,7 @@ button {
 
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator,
-input[type="file"]::-webkit-file-upload-button  {
+input[type="file"]::-webkit-file-upload-button {
   display: none;
 }
 
@@ -212,14 +218,29 @@ figure img {
   transition: background-color 0.3s ease;
 }
 
+.btn:not(:has(span)) {
+  padding: 12px 15px;
+}
+
+.btn:not(:has(span)) svg {
+  height: 20px;
+  width: 20px;
+  margin-top: 0;
+}
+
 .dark-mode .btn {
   color: var(--white);
 }
 
 .btn.outline {
-  background: var(--light-background);
   color: var(--black);
   border: 1px solid var(--border);
+  background: var(--light-background);
+}
+
+.btn.del {
+  color: var(--black);
+  background: var(--del);
 }
 
 .btn span {
@@ -1426,9 +1447,11 @@ figure img {
 
 .ql-editor * {
   color: var(--text) !important;
-  font-size: 15px !important;
 }
 
+.ql-editor :where(h1, h2, h3, h4, h5, h6, b, strong) {
+  font-weight: 600;
+}
 
 .contact_wrapper {
   display: flex;
