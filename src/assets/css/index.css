@@ -1285,14 +1285,19 @@ figure img {
   font-size: clamp(12px, 2vw, 14px);
 }
 
-.input_group :where(input, textarea, select) {
-  appearance: none;
+.input_group span {
+  line-height: 1;
+}
+
+.input_group :where(input, textarea, select, button) {
   width: 100%;
-  border-radius: 12px;
-  color: var(--text);
-  min-height: 45px;
   resize: none;
   outline: none;
+  appearance: none;
+  min-height: 45px;
+  color: var(--text);
+  align-items: center;
+  border-radius: 12px;
   padding: 10px 40px 10px 15px;
   border: 1px solid var(--border);
   background: var(--light-background);
@@ -1302,8 +1307,9 @@ figure img {
   height: 120px;
 }
 
-.input_group :where(input, textarea, select):focus {
+.input_group :where(input, textarea, select, button):focus {
   border-color: var(--primary);
+  background: var(--dark-background);
 }
 
 .input_group:not(.input_quill) svg {
@@ -1320,6 +1326,32 @@ figure img {
   flex: 0 0 100%;
 }
 
+.options {
+  border-radius: 12px;
+  background: var(--dark-background);
+  border: 1px solid var(--border);
+  margin-top: 6px;
+  padding: 5px 0;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.option {
+  border: none;
+  min-height: unset;
+  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 0px;
+  color: var(--text);
+  background: transparent;
+  font-size: clamp(12px, 2vw, 13px);
+}
+
+.option:where(:hover, :focus) {
+  background: var(--light-background);
+}
 
 .quill {
   width: 100%;

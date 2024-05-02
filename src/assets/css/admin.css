@@ -81,10 +81,10 @@
 }
 
 .admin-content {
-    flex: 1;
-    padding: 1rem 2rem;
-    max-width: calc(100% - 200px);
-    margin-left: auto;
+  flex: 1;
+  padding: 1rem 2rem;
+  max-width: calc(100% - 200px);
+  margin-left: auto;
 }
 
 .admin-footer {
@@ -182,7 +182,7 @@ table tr div {
   align-items: center;
 }
 
-table tr div > svg{
+table tr div>svg {
   width: 35px;
   height: 35px;
   stroke-width: 1.3px;
@@ -636,4 +636,63 @@ table :where(td, th):has(.action_button) {
 .media_not_found p {
   color: var(--text);
   font-size: clamp(14px, 2vw, 16px);
+}
+
+/* packages */
+.add_package {
+  align-items: unset;
+}
+
+.add_package .sidebar_item {
+  height: 100%;
+}
+
+/* add packages */
+.tier_wrapper {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 20px;
+  padding: 20px;
+  margin-top: 30px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.sub_heading {
+  font-weight: 500;
+  color: var(--black);
+  text-transform: capitalize;
+  font-size: clamp(18px, 2vw, 20px);
+}
+
+.tier_grid {
+  width: 100%;
+  display: flex;
+  grid-gap: 30px;
+  flex-wrap: wrap;
+}
+
+.tier_form {
+  padding: 20px;
+  display: flex;
+  grid-gap: 15px;
+  flex: 1 1 300px;
+  max-width: 400px;
+  border-radius: 10px;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  background-color: var(--light-background);
+}
+
+.tier_form h3 {
+  font-weight: 500;
+  color: var(--black);
+  text-transform: capitalize;
+  font-size: clamp(16px, 2vw, 18px);
+}
+
+.tier_feature_list {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 10px;
 }
