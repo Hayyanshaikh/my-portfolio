@@ -229,7 +229,7 @@ const Skills = () => {
 					        </td>
 					        <td>
 					          <div>
-					            <span>{skill.featured ? "is Featured" : "Not"}</span>
+					            <span>{skill.featured ? "Featured" : "Not Featured"}</span>
 					          </div>
 					        </td>
 					        <td>

@@ -31,9 +31,14 @@
   align-items: center;
 }
 
+.nav-links a.active {
+  color: var(--primary);
+}
+
 .nav-links a svg {
-  height: 18px;
-  width: 18px;
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.6;
 }
 
 .admin-header ul {
@@ -51,11 +56,12 @@
 .admin-sidebar {
   top: 70.86px;
   width: 200px;
-  height: calc(100vh - (70.86px));
+  overflow: auto;
   padding: 1rem 0;
   position: fixed;
-  background-color: var(--dark-background);
+  height: calc(100vh - (70.86px));
   border-right: 1px solid var(--border);
+  background-color: var(--dark-background);
 }
 
 .admin-sidebar ul {
@@ -343,6 +349,18 @@ table :where(td, th):has(.action_button) {
   flex-wrap: wrap;
 }
 
+.wrapper_content .admin_head {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.wrapper_content_item {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
 .wrapper_content>.w-full {
   flex: 1 100%;
 }
@@ -360,10 +378,12 @@ table :where(td, th):has(.action_button) {
 }
 
 .wrapper_sidebar {
-  flex: 0 0 350px;
+  top: 85px;
   display: flex;
-  flex-direction: column;
+  position: sticky;
   grid-gap: 30px;
+  flex: 0 0 350px;
+  flex-direction: column;
 }
 
 /* add project */
@@ -374,6 +394,7 @@ table :where(td, th):has(.action_button) {
 
 .sidebar_heading {
   font-weight: 500;
+  margin-bottom: 10px;
   color: var(--black);
   text-transform: capitalize;
   font-size: clamp(14px, 2vw, 16px);
@@ -403,6 +424,9 @@ table :where(td, th):has(.action_button) {
 
 .image_thumbnail figure {
   height: 200px;
+  width: 200px;
+  margin-inline: auto;
+  margin-bottom: 10px;
   border-radius: 12px;
 }
 
@@ -695,4 +719,62 @@ table :where(td, th):has(.action_button) {
   display: flex;
   flex-direction: column;
   grid-gap: 10px;
+}
+
+/* profile */
+
+.experience_grid {
+  width: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.experience_card {
+  display: flex;
+  grid-gap: 20px;
+  padding: 15px 20px;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--light-background);
+}
+
+.experience_img {
+  width: 60px;
+  height: 60px;
+  padding: 5px;
+  flex: 0 0 60px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+
+.experience_img img {
+  object-fit: contain;
+  filter: brightness(0%) invert(1);
+}
+
+.experience_content {
+  display: flex;
+  grid-gap: 2px;
+  flex-direction: column;
+}
+
+.experience_title {
+  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 500;
+  color: var(--black);
+}
+
+.experience_date {
+  grid-gap: 5px;
+  display: flex;
+  align-items: center;
+  color: var(--secondary-text);
+  font-size: clamp(12px, 2vw, 14px);
+}
+
+.job_title {
+  font-size: clamp(12px, 2vw, 14px);
+  color: var(--primary);
 }

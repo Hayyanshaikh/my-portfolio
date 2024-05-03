@@ -82,7 +82,7 @@ const Resumes = () => {
 			<div className="wrapper">
 				<div className="wrapper_sidebar">
 					<div className="sidebar_item">
-						<h4 className="sidebar_heading center">Upload featured Resume</h4>
+						<h4 className="sidebar_heading center">Upload Resume</h4>
 						<div className="image_thumbnail">
 							<Tabler.TbFileTypePdf/>
 							{/*<figure>

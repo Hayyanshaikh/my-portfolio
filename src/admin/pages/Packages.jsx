@@ -10,21 +10,17 @@ import Input from '../../website/components/Input.jsx';
 const packages = [
   {
     id: 1,
-    image: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
     name: "Package A",
     description: "This is a brief description of Package A.",
-    status: "In Progress",
-    startDate: "2024-04-01",
-    endDate: "2024-05-31"
+    isFeatured: true,
+    createdAt: "2024-04-01",
   },
   {
     id: 2,
-    image: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
     name: "Package A",
     description: "This is a brief description of Package A.",
-    status: "In Progress",
-    startDate: "2024-04-01",
-    endDate: "2024-05-31"
+    isFeatured: false,
+    createdAt: "2024-04-01",
   },
 ];
 
@@ -91,7 +87,7 @@ const Packages = () => {
 			      </th>
 			      <th>
 			      	<div>
-				      	<span>Status</span>
+				      	<span>Featured</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
 				      	</button>
@@ -99,15 +95,7 @@ const Packages = () => {
 			      </th>
 			      <th>
 			      	<div>
-				      	<span>Start Date</span>
-				      	<button>
-				      		<Tabler.TbSelector/>
-				      	</button>
-			      	</div>
-			      </th>
-			      <th>
-			      	<div>
-				      	<span>End Date</span>
+				      	<span>Created at</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
 				      	</button>
@@ -135,9 +123,6 @@ const Packages = () => {
 						    </td>
 						    <td>
 						      <div>
-						        <figure>
-						          <img src={pkg.image} alt=""/>
-						        </figure>
 						        <span>{pkg.name}</span>
 						      </div>
 						    </td>
@@ -148,17 +133,12 @@ const Packages = () => {
 						    </td>
 						    <td>
 						      <div>
-						        <span>{pkg.status}</span>
+						        <span>{pkg.isFeatured ? "Featured" : "Not Featured"}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{pkg.startDate}</span>
-						      </div>
-						    </td>
-						    <td>
-						      <div>
-						        <span>{pkg.endDate}</span>
+						        <span>{pkg.createdAt}</span>
 						      </div>
 						    </td>
 						    <td>

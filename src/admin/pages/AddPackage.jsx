@@ -28,6 +28,11 @@ const AddPackage = () => {
     { value: '2', label: 'Web Development' },
     { value: '3', label: 'UI/UX Designing' },
   ];
+  const tiers = [
+    { value: 'basic', label: 'Basic' },
+    { value: 'standard', label: 'Standard' },
+    { value: 'premium', label: 'Premium' },
+  ];
 	return (
 		<>
 			<div className="admin_head">
@@ -119,7 +124,7 @@ const AddPackage = () => {
 				      id="selectTierBasic"
 				      label="Select Tier"
 				      name="selectTierBasic"
-				      options={services}
+				      options={tiers}
 				      className="custom-select"
 				    />
 				    <Input
@@ -177,7 +182,7 @@ const AddPackage = () => {
 				      id="selectTierStandard"
 				      label="Select Tier"
 				      name="selectTierStandard"
-				      options={services}
+				      options={tiers}
 				      className="custom-select"
 				    />
 				    <Input
@@ -235,7 +240,7 @@ const AddPackage = () => {
 				      id="selectTierPremium"
 				      label="Select Tier"
 				      name="selectTierPremium"
-				      options={services}
+				      options={tiers}
 				      className="custom-select"
 				    />
 				    <Input

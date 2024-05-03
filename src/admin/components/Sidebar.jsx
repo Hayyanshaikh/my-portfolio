@@ -8,8 +8,8 @@ const Sidebar = () => {
     { path: "services", label: "Services" },
     { path: "packages", label: "Packages" },
     { path: "skills", label: "Skills" },
-    { path: "about", label: "About" },
     { path: "resume", label: "Resume" },
+    { path: "experience", label: "Experience" },
     { path: "media", label: "Media" },
     { path: "settings", label: "Settings" },
   ];

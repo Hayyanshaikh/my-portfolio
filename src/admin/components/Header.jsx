@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../../assets/images/logo.svg";
 import DarkLogo from "../../assets/images/logo-dark.svg";
@@ -26,22 +26,22 @@ const Header = () => {
       <nav className="navbar">
         <ul className="nav-links">
           <li>
-            <Link to="/dashboard">
-              <Tabler.TbDashboard />
-              <span>Dashboard</span>
-            </Link>
+            <NavLink to="/hs-admin/profile">
+              <Tabler.TbUserCircle />
+              <span>My Profile</span>
+            </NavLink>
           </li>
           <li>
-            <Link to="/settings">
+            <NavLink to="/hs-admin/settings">
               <Tabler.TbSettings />
               <span>Settings</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/settings">
+            <NavLink to="/hs-admin/login">
               <Tabler.TbLogout />
               <span>Logout</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
         <div className="theme">
