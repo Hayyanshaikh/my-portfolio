@@ -1,11 +1,11 @@
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDfQ8_cSbhjaasmEmIrJxq_AbzpRl_vEKQ",
-  authDomain: "personal-portfolio-3e59d.firebaseapp.com",
-  projectId: "personal-portfolio-3e59d",
-  storageBucket: "personal-portfolio-3e59d.appspot.com",
-  messagingSenderId: "317366267930",
-  appId: "1:317366267930:web:21946562acebbd3db5a1a3"
+  apiKey: "AIzaSyBRq3VBV4ih98ytvgcfWJES686RazgeFWE",
+  authDomain: "hayyan-portfolio.firebaseapp.com",
+  projectId: "hayyan-portfolio",
+  storageBucket: "hayyan-portfolio.appspot.com",
+  messagingSenderId: "722319596311",
+  appId: "1:722319596311:web:aa1bba9f53f891521af552"
 };
 
 export default firebaseConfig;

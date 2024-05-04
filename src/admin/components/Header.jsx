@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import Logo from "../../assets/images/logo.svg";
-import DarkLogo from "../../assets/images/logo-dark.svg";
 import * as Tabler from "react-icons/tb";
 import * as Phosphor from "react-icons/pi";
+import Logo from "../../assets/images/logo.svg";
+import { Link, NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import DarkLogo from "../../assets/images/logo-dark.svg";
 import { mode } from "../../redux/slices/ThemeSlice.jsx";
+import { selectIsAuthenticated } from "../../redux/slices/authSlice.jsx";
+import { signOutAsync } from "../../redux/actions/authAction.jsx";
 
 const Header = () => {
+  const dispatch = useDispatch();  
+  const IsAuthenticated = useSelector(selectIsAuthenticated);
   const themeMode = useSelector((state) => state.theme.mode);
-  const dispatch = useDispatch();
 
   const toggleTheme = () => {
     dispatch(mode());
+  };
+
+  const handleSignout = () => {
+    dispatch(signOutAsync());
   };
 
   useEffect(() => {
@@ -25,22 +32,36 @@ const Header = () => {
       </Link>
       <nav className="navbar">
         <ul className="nav-links">
-          <li>
-            <NavLink to="/hs-admin/profile">
-              <Tabler.TbUserCircle />
-              <span>My Profile</span>
-            </NavLink>
-          </li>
+          {
+            IsAuthenticated ? (
+              <>
+                <li>
+                  <NavLink to="/hs-admin/profile">
+                    <Tabler.TbUserCircle />
+                    <span>My Profile</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <button to="/hs-admin/login" onClick={handleSignout}>
+                    <Tabler.TbLogout />
+                    <span>Logout</span>
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <NavLink to="/hs-admin/login" onClick={handleSignout}>
+                  <Tabler.TbLogin />
+                  <span>Login</span>
+                </NavLink>
+              </li>
+            )
+          }
+
           <li>
             <NavLink to="/hs-admin/settings">
               <Tabler.TbSettings />
               <span>Settings</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/hs-admin/login">
-              <Tabler.TbLogout />
-              <span>Logout</span>
             </NavLink>
           </li>
         </ul>
