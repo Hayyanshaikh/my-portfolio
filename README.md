@@ -1,57 +1,23 @@
-# React + Vite
+Portfolio ke admin settings page me aksar ye options hote hain:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. **General Settings**: Portfolio ka title, description, aur contact information ka setup.
 
-Currently, two official plugins are available:
+2. **Portfolio Items**: Yahan par portfolio items ko manage kiya jata hai, jaise ki unka title, description, images, categories, aur tags.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. **Appearance Settings**: Portfolio ka appearance customize karne ke liye options, jaise ki color scheme, fonts, aur layout.
 
+4. **Social Media Links**: Social media profiles ko connect karne ke liye settings.
 
-package table
-[
-	{
-			serviceId: id,
-			packageId: packId,
-			features: ["feature1", "feature2", ...]
-	}
-]
+5. **Contact Form Settings**: Agar portfolio me contact form hai, toh uske settings yahan par kiye jate hain, jaise ki email address, form fields, aur notifications.
 
+6. **Analytics Integration**: Website traffic ko track karne ke liye analytics services ka integration.
 
-tier Table
-[
-	{
-		tierId: tierId,
-		tier: basic,
-	},
-	{
-		tierId: tierId,
-		tier: standard,
-	},
-	{
-		tierId: tierId,
-		tier: premium,
-	},
-]
+7. **SEO Settings**: Search engine optimization ke liye meta tags, keywords, aur other settings.
 
-pricing table
-[
-	{
-		price: "$5 - $8",
-		tierId: tierId,
-		salePrice: "$5",
-		packId: packageId,
-	},
-	{
-		price: "$10 - $13",
-		tierId: tierId,
-		salePrice: "$10",
-		packId: packageId,
-	},
-	{
-		price: "$15 - $18",
-		tierId: tierId,
-		salePrice: "$15",
-		packId: packageId,
-	}
-]
+8. **Backup/Export Settings**: Data backup aur export options.
+
+9. **Security Settings**: Portfolio ki security ke liye settings, jaise ki login attempts limit, password policies, aur security plugins ka setup.
+
+10. **Permissions**: User roles aur permissions ko configure karne ke liye options.
+
+Ye options portfolio ke nature aur requirements par depend karte hain. Aapke portfolio ka admin settings page alag ho sakta hai.

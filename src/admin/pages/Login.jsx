@@ -9,8 +9,8 @@ const Login = () => {
 			<h2>Login</h2>
 			<form className="contact_form">
 			  <div className="input_group">
-			    <label htmlFor="name">Username</label>
-			    <input type="text" id="name" name="name" placeholder="Enter your Username" />
+			    <label htmlFor="email">Email</label>
+			    <input type="email" id="email" name="email" placeholder="Enter your Email" />
 			    <Tabler.TbUser />
 			  </div>
 			  <div className="input_group">

@@ -683,10 +683,11 @@ table :where(td, th):has(.action_button) {
 }
 
 .sub_heading {
+  width: 100%;
   font-weight: 500;
   color: var(--black);
   text-transform: capitalize;
-  font-size: clamp(18px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 18px);
 }
 
 .tier_grid {

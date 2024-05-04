@@ -11,7 +11,7 @@ const AdminLayout = () => {
   
   useEffect(() => {
     if (currentUrl === "/hs-admin") {
-      navigate("dashboard");
+      navigate("login");
     }
   }, []);
 

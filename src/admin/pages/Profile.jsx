@@ -62,6 +62,24 @@ const Profile = () => {
 				    type="text"
 				  />
 				  <Input
+					  icon={<Tabler.TbPhone />}
+					  label="Phone Number"
+					  id="phoneNumber"
+					  name="phoneNumber"
+					  placeholder="Phone number"
+					  className="w-half"
+					  type="tel"
+					/>
+					<Input
+					  icon={<Tabler.TbMail />}
+					  label="Email"
+					  id="email"
+					  name="email"
+					  placeholder="Email"
+					  className="w-half"
+					  type="email"
+					/>
+				  <Input
 				    icon={<Tabler.TbBriefcase />}
 				    label="Job title"
 				    id="jobTitle"
