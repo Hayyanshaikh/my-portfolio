@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import * as Tabler from "react-icons/tb";
 import Logo from "../../assets/images/logo.svg";
+import DarkLogo from "../../assets/images/logo-dark.svg";
 import { useDispatch, useSelector } from "react-redux";
 import Input from '../../website/components/Input.jsx';
-import { mode } from "../../redux/slices/ThemeSlice.jsx";
-import DarkLogo from "../../assets/images/logo-dark.svg";
 import Button from '../../website/components/Button.jsx';
+import { signInAsync } from "../../redux/actions/authAction.jsx";
 import { selectError, selectIsLoading } from "../../redux/slices/authSlice.jsx";
-import { signInAsync, checkSignInStatusAsync } from "../../redux/actions/authAction.jsx";
 
-const Login = () => {
-	const [email, setEmail] = useState("");
+const Register = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-	const dispatch = useDispatch();
-  const error = useSelector(selectError);
-  const loading = useSelector(selectIsLoading);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const themeMode = useSelector((state) => state.theme.mode);
-
-  useEffect(() => {
-  	dispatch(checkSignInStatusAsync());
-  }, [])
+  const dispatch = useDispatch();
 
   const handleSignIn = (e) => {
-  	e.preventDefault();
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    setLoading(true);
     dispatch(signInAsync(email, password));
   };
 
-	return (
+  return (
     <div className="login_form">
-      
       <Link className="logo" to="/">
         <img src={themeMode ? Logo : DarkLogo} alt="logo" />
       </Link>
 
       <div className="loginForm">
-        <h2>Login</h2>
+        <h2>Register</h2>
         <form className="contact_form" onSubmit={handleSignIn}>
           <Input
             icon={<Tabler.TbUser />}
@@ -58,14 +58,24 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             valid={error === null ? "" : "Invalid Password"}
           />
-          <Link to="register">Register</Link>
+          <Input
+            icon={<Tabler.TbKey />}
+            label="Confirm Password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm your Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            valid={error === null ? "" : "Passwords do not match"}
+          />
           <Button className="btn" disabled={loading}>
             <span>{loading ? "Loading..." : "Login"}</span>
           </Button>
         </form>
       </div>
     </div>
-	)
+  );
 }
 
-export default Login;
+export default Register;

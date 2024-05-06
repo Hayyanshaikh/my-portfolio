@@ -14,6 +14,7 @@ import AdminSettings from '../admin/pages/Settings.jsx';
 import AdminResume from '../admin/pages/Resume.jsx';
 import AdminLogin from '../admin/pages/Login.jsx';
 import AdminMedia from '../admin/pages/Media.jsx';
+import AdminRegister from '../admin/pages/Register.jsx';
 
 // Web pages
 import Home from '../website/pages/Home.jsx';
@@ -99,6 +100,10 @@ const adminRoutes = [
       {
         path: "login",
         element: <AdminLogin />,
+      },
+      {
+        path: "register",
+        element: <AdminRegister />,
       },
     ],
   },
