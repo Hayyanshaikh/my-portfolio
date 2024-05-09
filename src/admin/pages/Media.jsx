@@ -1,22 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Tabler from "react-icons/tb";
-import Dropzone from "../components/Dropzone.jsx";
 import useTitle from '../../hooks/useTitle.jsx';
+import Dropzone from "../components/Dropzone.jsx";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectMediaList } from '../../redux/slices/mediaSlice.jsx';
+import { uploadMedia, getMedia, deleteFile } from '../../redux/actions/mediaAction.jsx';
 
-const Media = () => {
+const Media = ({ getFile }) => { // Pass getFile function as a prop
   useTitle("All Media");
+  const dispatch = useDispatch();
+  const media = useSelector(selectMediaList);
   const [mediaFiles, setMediaFiles] = useState([]);
 
+  useEffect(() => {
+    dispatch(getMedia());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (media && media.length > 0) {
+      setMediaFiles(media);
+    }
+  }, [media]);
+
   const handleFilesFromDropzone = (files) => {
-    setMediaFiles((prevFiles) => [
-      ...prevFiles,
-      ...files.map((file) =>
-        Object.assign(file, {
-          url: URL.createObjectURL(file),
-        })
-      ),
-    ]);
+    files.forEach(file => {
+      dispatch(uploadMedia(file));
+    });    
   };
+
+  const handleDeleteImg = (file) => {
+    dispatch(deleteFile(file.id));
+  }
+
+  const handleTransferFile = (file) => {
+    getFile(file); // Call the getFile function with the file data
+  }
 
   return (
     <div className="media">
@@ -29,10 +47,10 @@ const Media = () => {
             {mediaFiles.map((file, index) => (
               <li key={index}>
                 <figure>
-                  <img src={file.url} alt="" />
+                  <img src={file.imageUrl} alt={file.fileName} />
                 </figure>
-                <h4>{file.name}</h4>
-                <button>
+                <h4 onClick={() => handleTransferFile(file)}>{file.fileName}</h4>
+                <button onClick={() => handleDeleteImg(file)}>
                   <Tabler.TbTrash />
                 </button>
               </li>
@@ -40,8 +58,8 @@ const Media = () => {
           </ul>
         ) : (
           <div className="media_not_found">
-          	<Tabler.TbFileUnknown/>
-          	<p>No media files available</p>
+            <Tabler.TbFileUnknown/>
+            <p>No media files available</p>
           </div>
         )}
       </div>

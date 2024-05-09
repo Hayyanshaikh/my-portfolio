@@ -1,5 +1,5 @@
 import { auth } from '../../firebase/firebaseUtils.js';
-import { setUserSlice } from '../slices/userSlice.jsx';
+import { fetchUserSuccess } from '../slices/userSlice.jsx';
 import { setUser, setError, clearUser, setLoading } from '../slices/authSlice.jsx';
 
 // Async action to sign in
@@ -14,7 +14,7 @@ export const signInAsync = (email, password) => async (dispatch) => {
       email: user.email,
     };
 
-    dispatch(setUserSlice(serializedUser));
+    dispatch(fetchUserSuccess(serializedUser));
     dispatch(setUser());
   } catch (error) {
     dispatch(setError(error.message));
@@ -43,7 +43,7 @@ export const checkSignInStatusAsync = () => async (dispatch) => {
           uid: user.uid,
           email: user.email,
         };
-        dispatch(setUserSlice(serializedUser));
+        dispatch(fetchUserSuccess(serializedUser));
         dispatch(setUser());
       } else {
         dispatch(clearUser());

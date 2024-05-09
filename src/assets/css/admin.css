@@ -317,8 +317,8 @@ table :where(td, th):has(.action_button) {
   top: 0;
   left: 0;
   opacity: 0;
-  z-index: 99;
   width: 100%;
+  z-index: 99999;
   height: 100dvh;
   position: fixed;
   pointer-events: none;

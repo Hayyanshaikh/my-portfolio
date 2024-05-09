@@ -8,7 +8,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Input from '../../website/components/Input.jsx';
 import Button from '../../website/components/Button.jsx';
-import { selectUser } from "../../redux/slices/userSlice.jsx";
+import { selectUser, selectLoading } from "../../redux/slices/userSlice.jsx";
 import { getUserAsync, updateUserAsync } from "../../redux/actions/userAction.jsx";
 import QuillEditor from '../../website/components/QuillEditor.jsx';
 
@@ -16,6 +16,7 @@ const Profile = () => {
   useTitle("Profile General");
   const dispatch = useDispatch();  
   const user = useSelector(selectUser);
+  const userLoading = useSelector(selectLoading);
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -26,7 +27,10 @@ const Profile = () => {
     location: '',
     about: '',
     moreAbout: '',
+    imageUrl: '',
   });
+
+  console.log(userLoading);
 
   useEffect(() => {
   	dispatch(getUserAsync());
@@ -43,6 +47,7 @@ const Profile = () => {
         location: user[0].location || "",
         about: user[0].about || "",
         moreAbout: user[0].moreAbout || "",
+        imageUrl: user[0].imageUrl || "",
       });
     }
   }, [user]);
@@ -63,6 +68,11 @@ const Profile = () => {
     }));
   };
 
+
+  const getTransferedFile = (file) => {
+  	setFormData({...formData, imageUrl: file.imageUrl})
+  }
+
   const handleSubmit = (e) => {
   	e.preventDefault();
   	dispatch(updateUserAsync(user && user[0].id, formData));
@@ -70,22 +80,27 @@ const Profile = () => {
 
 	return (
 		<>
+
+			<Modal className="media_modal" isOpen={isOpen} onClose={closeModal} >
+        <Media getFile={getTransferedFile}/>
+      </Modal>
 			<div className="wrapper">
 				<div className="wrapper_sidebar">
 					<div className="sidebar_item">
 					<h4 className="sidebar_heading center">Profile picture</h4>
 						<div className="image_thumbnail">
-							<Tabler.TbPhotoScan/>
-							{/*<figure>
-								<img src="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg" alt=""/>
-							</figure>*/}
+							{
+								formData.imageUrl ? (
+									<figure>
+										<img src={formData.imageUrl} alt=""/>
+									</figure>
+								) : <Tabler.TbPhotoScan/>
+							}
+							
 						</div>
 		        <Button onClick={openModal}>
 		        	<span>Upload Image</span>
 		        </Button>
-						<Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
-			        <Media/>
-			      </Modal>
 					</div>
 				</div>
 				
@@ -179,8 +194,8 @@ const Profile = () => {
 		        <Button type="button" className="btn outline">
 		          <span>Discard</span>
 		        </Button>
-		        <Button type="submit">
-		          <span>Save</span>
+		        <Button type="submit" disabled={userLoading ? true : false}>
+		          <span>{userLoading ? "Loading..." : "Save"}</span>
 		        </Button>
 		      </div>
 		    </form>

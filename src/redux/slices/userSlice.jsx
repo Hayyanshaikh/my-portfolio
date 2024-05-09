@@ -8,23 +8,43 @@ const userSlice = createSlice({
     loading: false,
   },
   reducers: {
-    fetchUser: (state) => {
+    fetchUserStart: (state) => {
       state.loading = true;
       state.error = null;
     },
-    setUserSlice: (state, action) => {
+    fetchUserSuccess: (state, action) => {
       state.loading = false;
       state.user = action.payload;
       state.error = null;
     },
-    failureUser: (state, action) => {
+    fetchUserFailure: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    updateUserStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateUserSuccess: (state, action) => {
+      state.loading = false;
+      state.user = action.payload;
+      state.error = null;
+    },
+    updateUserFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const { fetchUser, setUserSlice, failureUser } = userSlice.actions;
+export const {
+  fetchUserStart,
+  fetchUserSuccess,
+  fetchUserFailure,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+} = userSlice.actions;
 
 // Selectors
 export const selectUser = (state) => state.user.user;
