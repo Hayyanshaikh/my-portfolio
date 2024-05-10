@@ -7,10 +7,20 @@ import useTitle from '../../hooks/useTitle.jsx';
 import WorkCard from "../components/WorkCard.jsx";
 import SkillCard from "../components/SkillCard.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
+import { useSelector, useDispatch } from "react-redux";
 import PackageCard from "../components/PackageCard.jsx";
+import {selectProjects} from '../../redux/slices/projectSlice.jsx';
+import {fetchProjects} from '../../redux/actions/projectAction.jsx';
 
 const Home = () => {
   useTitle("Home");
+  const dispatch = useDispatch();
+  const projects = useSelector(selectProjects);
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, []);
+
   return (
     <>
       {/* hero section*/}
@@ -241,30 +251,16 @@ const Home = () => {
               </h2>
             </div>
             <div className="work_wrapper">
-              <WorkCard
-                title="Website Mockup Design"
-                description="We provide stunning website mockup designs tailored to your needs."
-                category="Design"
-                imageUrl="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg"
-              />
-              <WorkCard
-                title="Mobile App Design"
-                description="Our expert designers craft beautiful mobile app designs for your business."
-                category="Design"
-                imageUrl="https://cdn.dribbble.com/userupload/3246132/file/original-d17aaff41fec3353fe80fc8f7372253e.png"
-              />
-              <WorkCard
-                title="Brand Identity and Motion Design"
-                description="We specialize in creating unique brand identities and captivating motion designs."
-                category="Design"
-                imageUrl="https://cdn.dribbble.com/userupload/13811655/file/original-60b55a5fb25841372b5ca18c5b50be7c.jpg"
-              />
-              <WorkCard
-                title="Mobile Application Development"
-                description="Our skilled developers build high-quality mobile applications for iOS and Android platforms."
-                category="Development"
-                imageUrl="https://cdn.dribbble.com/users/7306574/screenshots/17359664/media/1e1f73d6a4c5e498e21cfab91d7d1d5c.png"
-              />
+              {
+                projects && projects.map((project, key) => (
+                  <WorkCard
+                    title={project.title}
+                    description={project.shortDescription}
+                    category="Design"
+                    imageUrl={project.featureImage}
+                  />
+                ))
+              }
               <Button to="projects">
                 <span>View More Projects</span>
                 <Tabler.TbChevronRight />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Checkbox = ({checked, onChange, label, id}) => {
+const Checkbox = ({checked = false, onChange, label, id}) => {
 	return (
 		<label htmlFor={id} className="checkbox">
 			{label && <span>{label}</span>}

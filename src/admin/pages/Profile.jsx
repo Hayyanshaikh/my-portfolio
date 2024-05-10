@@ -30,8 +30,6 @@ const Profile = () => {
     imageUrl: '',
   });
 
-  console.log(userLoading);
-
   useEffect(() => {
   	dispatch(getUserAsync());
   }, [])
@@ -68,6 +66,12 @@ const Profile = () => {
     }));
   };
 
+  const handleEditorChange = (value) => {
+    setFormData(prevState => ({
+      ...prevState,
+      moreAbout: value,
+    }));
+  }
 
   const getTransferedFile = (file) => {
   	setFormData({...formData, imageUrl: file.imageUrl})
@@ -184,11 +188,9 @@ const Profile = () => {
 		      <QuillEditor
 		        label="More About"
 		        id="moreAbout"
-		        name="moreAbout"
-		        placeholder="Enter long description"
 		        className="w-full"
 		        value={formData.moreAbout}
-		        onChange={handleChange}
+		        onChange={handleEditorChange}
 		      />
 		      <div className="form_action_buttons">
 		        <Button type="button" className="btn outline">

@@ -4,35 +4,24 @@ import useTitle from '../../hooks/useTitle.jsx';
 import Checkbox from '../components/Checkbox.jsx';
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Button from '../../website/components/Button.jsx';
 import Input from '../../website/components/Input.jsx';
-
-const projects = [
-  {
-    id: 1,
-    image: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
-    name: "Project A",
-    description: "This is a brief description of Project A.",
-    status: "In Progress",
-    startDate: "2024-04-01",
-    endDate: "2024-05-31"
-  },
-  {
-    id: 2,
-    image: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
-    name: "Project A",
-    description: "This is a brief description of Project A.",
-    status: "In Progress",
-    startDate: "2024-04-01",
-    endDate: "2024-05-31"
-  },
-];
+import Button from '../../website/components/Button.jsx';
+import {selectProjects} from '../../redux/slices/projectSlice.jsx';
+import {fetchProjects, deleteProject} from '../../redux/actions/projectAction.jsx';
 
 const Projects = () => {
   useTitle("all Projects");
-  const [selected, setSelected] = useState(Array(projects.length).fill(false));
+  const dispatch = useDispatch();
+  const projects = useSelector(selectProjects);
+  const [selected, setSelected] = useState(false);
+  const [selectedAll, setSelectedAll] = useState('');
+
+  useEffect(() => {
+  	dispatch(fetchProjects());
+  }, [])
 
 	const handleSelectAll = (e) => {
+		setSelectedAll(!selectedAll);
 	  const updatedSelected = Array(projects.length).fill(e.target.checked);
 	  setSelected(updatedSelected);
 	};
@@ -44,6 +33,11 @@ const Projects = () => {
 	    return updatedSelected;
 	  });
 	};
+
+	const handleDeleteProject = (projectId) => {
+		dispatch(deleteProject(projectId));
+  	dispatch(fetchProjects());
+	}
 
 	return (
 		<>
@@ -68,6 +62,7 @@ const Projects = () => {
 			    	<th>
 			    		<div>
 			    			<Checkbox
+									checked={selectedAll}
 								  onChange={handleSelectAll}
 								/>
 
@@ -83,14 +78,6 @@ const Projects = () => {
 			      </th>
 			      <th>
 			      	<div>
-				      	<span>Description</span>
-				      	<button>
-				      		<Tabler.TbSelector/>
-				      	</button>
-			      	</div>
-			      </th>
-			      <th>
-			      	<div>
 				      	<span>Status</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
@@ -99,7 +86,7 @@ const Projects = () => {
 			      </th>
 			      <th>
 			      	<div>
-				      	<span>Start Date</span>
+				      	<span>Create at</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
 				      	</button>
@@ -107,7 +94,7 @@ const Projects = () => {
 			      </th>
 			      <th>
 			      	<div>
-				      	<span>End Date</span>
+				      	<span>Version</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
 				      	</button>
@@ -136,29 +123,24 @@ const Projects = () => {
 						    <td>
 						      <div>
 						        <figure>
-						          <img src={project.image} alt=""/>
+						          <img src={project.featureImage} alt=""/>
 						        </figure>
-						        <span>{project.name}</span>
+						        <span>{project.title}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.description}</span>
+						        <span>{project.underConstruction ? "Under Construction" : "Completed"}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.status}</span>
+						        <span>{project.createdAt}</span>
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{project.startDate}</span>
-						      </div>
-						    </td>
-						    <td>
-						      <div>
-						        <span>{project.endDate}</span>
+						        <span>{project.version}</span>
 						      </div>
 						    </td>
 						    <td>
@@ -166,9 +148,9 @@ const Projects = () => {
 						        <Link className="edit">
 						          <Tabler.TbEdit />
 						        </Link>
-						        <Link className="delete">
+						        <button className="delete" onClick={() => handleDeleteProject(project.id)}>
 						          <Tabler.TbTrash />
-						        </Link>
+						        </button>
 						      </div>
 						    </td>
 						  </tr>

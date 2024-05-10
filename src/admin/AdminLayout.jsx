@@ -23,14 +23,14 @@ const AdminLayout = () => {
     document.body.classList.toggle("dark-mode", themeMode);
   }, [themeMode]);
 
-  useEffect(() => {
-    if (!IsAuthenticated) {
-      navigate("login");
-    }
-    else{
-      navigate("dashboard");
-    }
-  }, [IsAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!IsAuthenticated) {
+  //     navigate("login");
+  //   }
+  //   else{
+  //     navigate("dashboard");
+  //   }
+  // }, [IsAuthenticated, navigate]);
 
   return (
     <div className="admin-layout">
