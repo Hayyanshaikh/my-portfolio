@@ -1,25 +1,28 @@
 import Media from "./Media.jsx";
 import * as Tabler from "react-icons/tb";
 import Modal from "../components/Modal.jsx";
-import { useNavigate } from "react-router-dom";
 import useTitle from "../../hooks/useTitle.jsx";
 import Checkbox from "../components/Checkbox.jsx";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Input from "../../website/components/Input.jsx";
 import Button from "../../website/components/Button.jsx";
+import { useNavigate, useParams } from "react-router-dom";
 import QuillEditor from "../../website/components/QuillEditor.jsx";
-import {selectLoading} from '../../redux/slices/projectSlice.jsx';
-import {addProject} from '../../redux/actions/projectAction.jsx';
+import {addProject, fetchProjects, updateProject } from '../../redux/actions/projectAction.jsx';
+import {selectLoading, selectProjects} from '../../redux/slices/projectSlice.jsx';
 
 const AddProject = () => {
-  useTitle("Add New Project");
+  const {id} = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
+  const projects = useSelector(selectProjects);
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState("");
   const [hightlightField, setHightlightField] = useState("");
+  const project = projects.find(project => project.id === id);
+  useTitle(!project ? "Add New Project" : `Update ${project && project.title}`);
   const [formData, setFormData] = useState({
     title: "",
     shortDescription: "",
@@ -34,6 +37,29 @@ const AddProject = () => {
     createdAt: "",
     version: "",
   });
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [])
+
+  useEffect(() => {
+    if (project) {
+      setFormData({
+        title: project.title || "",
+        shortDescription: project.shortDescription || "",
+        longDescription: project.longDescription || "",
+        underConstruction: project.underConstruction || false,
+        featureImage: project.featureImage || "",
+        liveLink: project.liveLink || "",
+        galleryImages: project.galleryImages || [],
+        highlights: project.highlights || [],
+        time: project.time || "",
+        date: project.date || "",
+        createdAt: project.createdAt || "",
+        version: project.version || "",
+      });
+    }
+  }, [project]);
 
   const handleIsConstruction = (e) => {
     setFormData((prev) => ({ ...prev, underConstruction: e.target.checked }));
@@ -89,29 +115,44 @@ const AddProject = () => {
     setHightlightField("");
   };
 
+  const deleteHighlight = (index) => {
+    setFormData(prevFormData => {
+      const updatedHighlights = [...prevFormData.highlights];
+      updatedHighlights.splice(index, 1);
+      return { ...prevFormData, highlights: updatedHighlights };
+    });
+  };
+
   const handleAddProject = async (e) => {
     e.preventDefault();
-    await dispatch(addProject(formData));
-  	setFormData({
-	    title: "",
-	    shortDescription: "",
-	    longDescription: "",
-	    underConstruction: false,
-	    featureImage: "",
-	    liveLink: "",
-	    galleryImages: [],
-	    highlights: [],
-	    time: "",
-	    date: "",
-	    createdAt: "",
-	    version: "",
-	  });
+    if (!project) {
+      await dispatch(addProject(formData));
+    }
+    else{
+      await dispatch(updateProject(id, formData));
+    }
+  	if (!project) {
+      setFormData({
+        title: "",
+        shortDescription: "",
+        longDescription: "",
+        underConstruction: false,
+        featureImage: "",
+        liveLink: "",
+        galleryImages: [],
+        highlights: [],
+        time: "",
+        date: "",
+        createdAt: "",
+        version: "",
+      });
+    }
   };
 
   return (
     <>
       <div className="admin_head">
-        <h4>add new project</h4>
+        <h4>{!project ? "add new project" : "update project"}</h4>
         <div className="admin_head_actions">
           <Button onClick={() => navigate(-1)}>
             <Tabler.TbArrowLeft />
@@ -240,14 +281,15 @@ const AddProject = () => {
               </Button>
             </div>
             <ul className="highlight_list">
-              {formData.highlights.map((highlights, key) => (
-                <li key={key}>
-                  <span>{highlights}</span>
-                  <button>
+              {formData.highlights.map((highlight, index) => (
+                <li key={index}>
+                  <span>{highlight}</span>
+                  <button type="button" onClick={() => deleteHighlight(index)}>
                     <Tabler.TbTrash />
                   </button>
                 </li>
               ))}
+
             </ul>
           </div>
           <div className="sidebar_item">

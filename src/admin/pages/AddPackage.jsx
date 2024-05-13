@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import Media from './Media.jsx';
 import * as Tabler from "react-icons/tb";
 import Modal from '../components/Modal.jsx';
 import Select from '../components/Select.jsx';
+import { useNavigate } from "react-router-dom";
 import useTitle from '../../hooks/useTitle.jsx';
 import Checkbox from '../components/Checkbox.jsx';
 import React, { useState, useEffect } from "react";
-import Button from '../../website/components/Button.jsx';
 import Input from '../../website/components/Input.jsx';
+import Button from '../../website/components/Button.jsx';
 import QuillEditor from '../../website/components/QuillEditor.jsx';
 
 const AddPackage = () => {

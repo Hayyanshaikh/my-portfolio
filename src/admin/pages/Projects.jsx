@@ -145,7 +145,7 @@ const Projects = () => {
 						    </td>
 						    <td>
 						      <div className="action_button">
-						        <Link className="edit">
+						        <Link to={project.id} className="edit">
 						          <Tabler.TbEdit />
 						        </Link>
 						        <button className="delete" onClick={() => handleDeleteProject(project.id)}>

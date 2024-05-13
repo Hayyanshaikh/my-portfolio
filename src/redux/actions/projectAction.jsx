@@ -41,7 +41,6 @@ export const fetchProjects = () => async (dispatch) => {
   }
 }
 
-
 // async add project data to firebase firestore
 export const addProject = (projectData) => async (dispatch) => {
   try {
@@ -61,9 +60,7 @@ export const addProject = (projectData) => async (dispatch) => {
   }
 }
 
-
-
-// async fetch project data from firebase firestore
+// async delete project data to firebase firestore
 export const deleteProject = (projectId) => async (dispatch) => {
   try {
     dispatch(deleteProjectStart());
@@ -71,5 +68,24 @@ export const deleteProject = (projectId) => async (dispatch) => {
     dispatch(deleteProjectSuccess(projects));
   } catch (error) {
     dispatch(deleteProjectFailure(error.message));
+  }
+}
+
+// async update project data to firebase firestore
+export const updateProject = (projectId, updatedProjectData) => async (dispatch) => {
+  try {
+    dispatch(updateProjectStart());
+
+    const today = new Date();
+    const formattedDate = formatDate(today);
+
+    updatedProjectData.createdAt = formattedDate;
+
+    await database.collection("projects").doc(projectId).update(updatedProjectData);
+    
+    const updatedProject = { id: projectId, ...updatedProjectData };
+    dispatch(updateProjectSuccess(updatedProject));
+  } catch (error) {
+    dispatch(updateProjectFailure(error.message));
   }
 }

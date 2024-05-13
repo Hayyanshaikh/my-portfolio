@@ -81,8 +81,8 @@ export const {
 } = projectSlice.actions;
 
 // Selectors
-export const selectProjects = (state) => state.projects.projects;
 export const selectError = (state) => state.projects.error;
+export const selectProjects = (state) => state.projects.projects;
 export const selectLoading = (state) => state.projects.loading;
 
 export default projectSlice.reducer;

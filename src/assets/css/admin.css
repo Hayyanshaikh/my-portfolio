@@ -631,15 +631,16 @@ table :where(td, th):has(.action_button) {
 
 .media_list h4 {
   font-weight: 400;
-  color: var(--black);
+  overflow: hidden;
+  cursor: pointer;
   text-align: center;
-  font-size: clamp(12px, 2vw, 14px);
+  color: var(--black);
   display: -webkit-box;
   -webkit-line-clamp: 1;
-  overflow: hidden;
+  word-break: break-all;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  word-break: break-all;
+  font-size: clamp(12px, 2vw, 14px);
 }
 
 .media_list ul li button {

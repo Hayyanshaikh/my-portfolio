@@ -70,6 +70,10 @@ const adminRoutes = [
         element: <AdminAddProject />,
       },
       {
+        path: "projects/:id",
+        element: <AdminAddProject />,
+      },
+      {
         path: "packages",
         element: <AdminPackages />,
       },
