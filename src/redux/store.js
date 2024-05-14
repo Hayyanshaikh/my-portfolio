@@ -5,6 +5,8 @@ import userSlice from './slices/userSlice.jsx';
 import mediaSlice from './slices/mediaSlice.jsx';
 import projectSlice from './slices/projectSlice.jsx';
 import skillSlice from './slices/skillSlice.jsx';
+import serviceSlice from './slices/serviceSlice.jsx';
+import packageSlice from './slices/packageSlice.jsx';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ const store = configureStore({
     media: mediaSlice,
     projects: projectSlice,
     skills: skillSlice,
+    services: serviceSlice,
+    packages: packageSlice,
   },
 });
 

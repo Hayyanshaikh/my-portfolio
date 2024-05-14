@@ -9,4 +9,4 @@ const Checkbox = ({checked = false, onChange, label, id}) => {
 	)
 }
 
-export default Checkbox
+export default Checkbox;

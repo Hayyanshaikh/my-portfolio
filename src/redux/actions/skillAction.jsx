@@ -18,16 +18,20 @@ function formatDate(date) {
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
 
-  return `${day}/${month}/${year}`;
+  return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
 
 // async fetch skill data from firebase firestore
 export const fetchSkills = () => async (dispatch) => {
   try {
     dispatch(fetchSkillsStart());
     const skills = [];
-    await database.collection("skills").get().then((querySnapshot) => {
+    await database.collection("skills").orderBy("createdAt", "desc").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const skillData = doc.data();
         // Convert Firestore timestamp to string
@@ -40,6 +44,7 @@ export const fetchSkills = () => async (dispatch) => {
     dispatch(fetchSkillsFailure(error.message));
   }
 }
+
 
 // async add skill data to firebase firestore
 export const addSkill = (skillData) => async (dispatch) => {

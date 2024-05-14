@@ -7,13 +7,31 @@ import useTitle from '../../hooks/useTitle.jsx';
 import Checkbox from '../components/Checkbox.jsx';
 import React, { useState, useEffect } from "react";
 import Input from '../../website/components/Input.jsx';
+import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
+import {addPackage, fetchPackages} from "../../redux/actions/packageAction.jsx";
 import QuillEditor from '../../website/components/QuillEditor.jsx';
+import {fetchServices} from "../../redux/actions/serviceAction.jsx";
+import { selectLoading, selectPackages } from "../../redux/slices/packageSlice.jsx";
+import { selectServices } from "../../redux/slices/serviceSlice.jsx";
 
 const AddPackage = () => {
   useTitle("Add New Package");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const servicesData = useSelector(selectServices);
+  const packagesData = useSelector(selectPackages);
+  const [formData, setFormData] = useState({
+  	service: "",
+  	description: "",
+  	featured: false,
+  });
+
+  useEffect(() => {
+  	dispatch(fetchServices());
+  	dispatch(fetchPackages());
+  }, []);
 
   const openModal = () => {
     setIsOpen(true);
@@ -23,16 +41,35 @@ const AddPackage = () => {
     setIsOpen(false);
   };
 
-  const services = [
-    { value: '1', label: 'App Development' },
-    { value: '2', label: 'Web Development' },
-    { value: '3', label: 'UI/UX Designing' },
-  ];
+  const services = servicesData.map(service => ({
+    value: service.title,
+    label: service.title
+  }));
+
+  const handleSelect = (value) => {
+    setFormData({
+    	...formData,
+    	service: value,
+    });
+  };
+
+  const handleCheckboxChange = (e) => {
+		setFormData((prev) => ({ ...prev, featured: e.target.checked }));
+  };
+
   const tiers = [
     { value: 'basic', label: 'Basic' },
     { value: 'standard', label: 'Standard' },
     { value: 'premium', label: 'Premium' },
   ];
+
+  const handleAddpackge = async (e) => {
+  	e.preventDefault();
+  	dispatch(addPackage(formData));
+  }
+
+  console.log(packagesData);
+
 	return (
 		<>
 			<div className="admin_head">
@@ -44,7 +81,7 @@ const AddPackage = () => {
 					</Button>
 				</div>
 			</div>
-			<div className="wrapper add_package">
+			<form onSubmit={handleAddpackge} className="wrapper add_package">
 				<div className="wrapper_content">
 				  <Select
 		        id="exampleSelect"
@@ -52,6 +89,7 @@ const AddPackage = () => {
 		        name="exampleSelect"
 		        options={services}
 		        className="custom-select"
+		        onSelect={handleSelect}
 		      />
 				  <Input
 				    label="Short Description"
@@ -61,7 +99,12 @@ const AddPackage = () => {
 				    className="w-full"
 				    type="text"
 				  />
-					<Checkbox label="Featured Package"/>
+					<Checkbox
+		        id="featuredPackage"
+		        checked={formData.featured}
+		        onChange={handleCheckboxChange}
+		        label="Featured Package"
+		      />
 				  <div className="form_action_buttons">
 				  	<Button className="btn outline">
 				  		<span>Discard</span>
@@ -113,7 +156,7 @@ const AddPackage = () => {
 						</ul>
 					</div>
 				</div>
-			</div>
+			</form>
 
 			<div className="tier_wrapper">
 				<h4 className="sub_heading">Pricing Package</h4>
@@ -157,22 +200,22 @@ const AddPackage = () => {
 				    <h3>Select Features</h3>
 				    <ul className="tier_feature_list">
 				      <li>
-				        <Checkbox label="Unlimited access" />
+				        {/*<Checkbox label="Unlimited access" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Collaborative diary" />
+				        {/*<Checkbox label="Collaborative diary" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Confirmation & Reminders of appointments" />
+				        {/*<Checkbox label="Confirmation & Reminders of appointments" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Online appointment booking" />
+				        {/*<Checkbox label="Online appointment booking" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Free reservations" />
+				        {/*<Checkbox label="Free reservations" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Integration with the agency website" />
+				        {/*<Checkbox label="Integration with the agency website" />*/}
 				      </li>
 				    </ul>
 				  </div>
@@ -215,22 +258,22 @@ const AddPackage = () => {
 				    <h3>Select Features</h3>
 				    <ul className="tier_feature_list">
 				      <li>
-				        <Checkbox label="Unlimited access" />
+				        {/*<Checkbox label="Unlimited access" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Collaborative diary" />
+				        {/*<Checkbox label="Collaborative diary" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Confirmation & Reminders of appointments" />
+				        {/*<Checkbox label="Confirmation & Reminders of appointments" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Online appointment booking" />
+				        {/*<Checkbox label="Online appointment booking" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Free reservations" />
+				        {/*<Checkbox label="Free reservations" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Integration with the agency website" />
+				        {/*<Checkbox label="Integration with the agency website" />*/}
 				      </li>
 				    </ul>
 				  </div>
@@ -273,22 +316,22 @@ const AddPackage = () => {
 				    <h3>Select Features</h3>
 				    <ul className="tier_feature_list">
 				      <li>
-				        <Checkbox label="Unlimited access" />
+				        {/*<Checkbox label="Unlimited access" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Collaborative diary" />
+				        {/*<Checkbox label="Collaborative diary" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Confirmation & Reminders of appointments" />
+				        {/*<Checkbox label="Confirmation & Reminders of appointments" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Online appointment booking" />
+				        {/*<Checkbox label="Online appointment booking" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Free reservations" />
+				        {/*<Checkbox label="Free reservations" />*/}
 				      </li>
 				      <li>
-				        <Checkbox label="Integration with the agency website" />
+				        {/*<Checkbox label="Integration with the agency website" />*/}
 				      </li>
 				    </ul>
 				  </div>

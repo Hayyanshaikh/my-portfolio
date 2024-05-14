@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TbChevronDown } from "react-icons/tb";
 
-const CustomSelect = ({ id, label, name, options, className, selectedOption: initialSelectedOption }) => {
+const CustomSelect = ({ id, label, name, options, className, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(initialSelectedOption || options[0]);
+  const [selectedOption, setSelectedOption] = useState();
   const selectRef = useRef(null);
 
   useEffect(() => {
@@ -20,10 +20,10 @@ const CustomSelect = ({ id, label, name, options, className, selectedOption: ini
   }, []);
 
   useEffect(() => {
-    if (initialSelectedOption) {
-      setSelectedOption(initialSelectedOption);
+    if (options) {
+      setSelectedOption(options[0]);
     }
-  }, [initialSelectedOption]);
+  }, [options]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -32,20 +32,24 @@ const CustomSelect = ({ id, label, name, options, className, selectedOption: ini
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     toggleDropdown();
+    onSelect(option.value); // Invoke the onSelect callback with the selected value
   };
 
   return (
     <div ref={selectRef} className="input_group custom-select">
-      {<label htmlFor={id}>{label}</label>}
-      <button id={id} className="select" onClick={toggleDropdown}>
-        <span>{selectedOption.label}</span>
-        <TbChevronDown />
-      </button>
+      <label htmlFor={id}>{label}</label>
+      <div className="input_box">
+        <button type="button" id={id} className="select" onClick={toggleDropdown}>
+          <span>{selectedOption && selectedOption.label}</span>
+          <TbChevronDown />
+        </button>
+      </div>
       {isOpen && (
         <div className="options">
           {options.map(option => (
             <button
               key={option.value}
+              type="button"
               className="option"
               onClick={() => handleOptionSelect(option)}
             >

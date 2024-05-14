@@ -18,8 +18,11 @@ function formatDate(date) {
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
 
-  return `${day}/${month}/${year}`;
+  return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
 // async fetch project data from firebase firestore
@@ -27,7 +30,7 @@ export const fetchProjects = () => async (dispatch) => {
   try {
     dispatch(fetchProjectsStart());
     const projects = [];
-    await database.collection("projects").get().then((querySnapshot) => {
+    await database.collection("projects").orderBy("createdAt", "desc").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const projectData = doc.data();
         // Convert Firestore timestamp to string

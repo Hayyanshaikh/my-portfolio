@@ -82,11 +82,23 @@ const adminRoutes = [
         element: <AdminAddPackage />,
       },
       {
+        path: "packages/:id",
+        element: <AdminAddPackage />,
+      },
+      {
         path: "services",
         element: <AdminServices />,
       },
       {
+        path: "services/:id",
+        element: <AdminServices />,
+      },
+      {
         path: "skills",
+        element: <AdminSkills />,
+      },
+      {
+        path: "skills/:id",
         element: <AdminSkills />,
       },
       {

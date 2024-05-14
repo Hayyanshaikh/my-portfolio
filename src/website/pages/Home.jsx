@@ -10,15 +10,23 @@ import ServiceCard from "../components/ServiceCard.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import PackageCard from "../components/PackageCard.jsx";
 import {selectProjects} from '../../redux/slices/projectSlice.jsx';
+import {selectServices} from '../../redux/slices/serviceSlice.jsx';
 import {fetchProjects} from '../../redux/actions/projectAction.jsx';
+import {fetchServices} from '../../redux/actions/serviceAction.jsx';
+import {selectSkills} from '../../redux/slices/skillSlice.jsx';
+import {fetchSkills} from '../../redux/actions/skillAction.jsx';
 
 const Home = () => {
   useTitle("Home");
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
+  const services = useSelector(selectServices);
+  const skills = useSelector(selectSkills);
 
   useEffect(() => {
     dispatch(fetchProjects());
+    dispatch(fetchServices());
+    dispatch(fetchSkills());
   }, []);
 
   return (
@@ -137,36 +145,16 @@ const Home = () => {
               </h2>
             </div>
             <div className="services_wrapper">
-              <ServiceCard
-                count="01."
-                title="Brand Identity Design"
-                description="Dignissimos ducimus blanditiis praesen"
-              />
-              <ServiceCard
-                count="02."
-                title="Web Design & Development"
-                description="Craft stunning and functional websites that engage your audience."
-              />
-              <ServiceCard
-                count="03."
-                title="Content Marketing"
-                description="Create compelling content that attracts, converts, and retains leads."
-              />
-              <ServiceCard
-                count="04."
-                title="Search Engine Optimization (SEO)"
-                description="Improve your website's visibility and organic traffic through SEO strategies."
-              />
-              <ServiceCard
-                count="05."
-                title="Social Media Marketing"
-                description="Connect with your audience and grow your brand on social media platforms."
-              />
-              <ServiceCard
-                count="06."
-                title="Graphic Design"
-                description="Create eye-catching visuals that elevate your brand identity."
-              />
+              {
+                services && services.map((service, key) => (
+                  <ServiceCard
+                    key={key}
+                    icon={service.featureImage}
+                    title={service.title}
+                    description={service.description}
+                  />
+                ))
+              }
             </div>
           </div>
         </section>
@@ -195,46 +183,15 @@ const Home = () => {
                 </div>
               </div>
               <div className="skills_list">
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/html-5.png"
-                  text="HTML"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/css3.png"
-                  text="CSS"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/javascript.png"
-                  text="JavaScript"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/figma.png"
-                  text="Figma"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/firebase.png"
-                  text="Firebase"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/tailwindcss.png"
-                  text="Tailwind CSS"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/wordpress.png"
-                  text="Wordpress"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/bootstrap--v2.png"
-                  text="Bootstrap"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/react-native.png"
-                  text="React JS"
-                />
-                <SkillCard
-                  image="https://img.icons8.com/color/1600/git.png"
-                  text="Github"
-                />
+                {
+                  skills && skills.filter(featuredSkill => featuredSkill.featured).map((skill, key)=>(
+                    <SkillCard
+                      key={key}
+                      image={skill.featureImage}
+                      text={skill.title}
+                    />
+                  ))
+                }
               </div>
             </div>
           </div>
@@ -254,6 +211,7 @@ const Home = () => {
               {
                 projects && projects.map((project, key) => (
                   <WorkCard
+                    key={key}
                     title={project.title}
                     description={project.shortDescription}
                     category="Design"

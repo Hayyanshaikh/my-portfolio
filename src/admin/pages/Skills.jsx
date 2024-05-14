@@ -23,6 +23,7 @@ const Skills = () => {
   const dispatch = useDispatch();
   const loading = useSelector(selectLoading);
   const skills = useSelector(selectSkills);
+  const skill = skills.find(skill => skill.id === id);
   const [selected, setSelected] = useState(Array(skills.length).fill(false));
   const [selectedAll, setSelectedAll] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -33,12 +34,21 @@ const Skills = () => {
     featureImage: "",
     createdAt: "",
   });
-
-  console.log(skills);
-
   useEffect(() => {
   	dispatch(fetchSkills());
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (skill) {
+      setFormData({
+        title: skill.title || "",
+        description: skill.description || "",
+        featured: skill.featured || false,
+        featureImage: skill.featureImage || "",
+        createdAt: skill.createdAt || "",
+      });
+    }
+  }, [skill])
 
   const openModal = () => {
     setIsOpen(true);
@@ -77,7 +87,23 @@ const Skills = () => {
 
   const handleAddSkill = async (e) => {
     e.preventDefault();
-    await dispatch(addSkill(formData));
+    if (!skill) {
+      await dispatch(addSkill(formData));
+      setFormData({
+        title: "",
+        description: "",
+        featured: false,
+        featureImage: "",
+        createdAt: "",
+      });
+    }
+    else{
+      await dispatch(updateSkill(id, formData));
+    }
+  };
+
+  const handleDeleteSkill = async (id) => {
+    await dispatch(deleteSkill(id));
   };
 
   return (
@@ -142,8 +168,8 @@ const Skills = () => {
               <Button type="button" className="btn outline">
                 <span>Discard</span>
               </Button>
-              <Button type="submit">
-                <span>Save</span>
+              <Button type="submit" disabled={loading ? true : false}>
+                <span>{loading ? "Loading..." : "Save"}</span>
               </Button>
             </div>
           </form>
@@ -224,12 +250,12 @@ const Skills = () => {
                   </td>
                   <td>
                     <div className="action_button">
-                      <Link className="edit">
+                      <Link to={`/hs-admin/skills/${skill.id}`} className="edit">
                         <Tabler.TbEdit />
                       </Link>
-                      <Link className="delete">
+                      <button onClick={() => handleDeleteSkill(skill.id)} className="delete">
                         <Tabler.TbTrash />
-                      </Link>
+                      </button>
                     </div>
                   </td>
                 </tr>

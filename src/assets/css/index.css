@@ -842,10 +842,11 @@ figure img {
 .service_card>svg {
   height: 40px;
   width: 40px;
-  background: var(--primary);
   padding: 9px;
   border-radius: 50px;
   stroke: var(--white);
+  align-self: center;
+  background: var(--primary);
 }
 
 .services_wrapper {
@@ -860,7 +861,7 @@ figure img {
   grid-gap: 20px;
   padding: 20px 25px;
   border-radius: 12px;
-  align-items: center;
+  align-items: flex-start;
   border: 1px solid var(--border);
   background: var(--light-background);
 }
@@ -880,6 +881,12 @@ figure img {
   font-weight: 600;
   align-self: flex-start;
   color: var(--text);
+}
+
+.service_img{
+  width: 50px;
+  height: 50px;
+  flex: 0 0 auto;
 }
 
 .service_content {
