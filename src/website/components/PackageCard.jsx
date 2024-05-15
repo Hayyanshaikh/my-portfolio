@@ -6,10 +6,10 @@ const PackageCard = ({ tier, discountRate, price, desc, features, ...restProps }
 	return (
 		<div className="package_card" {...restProps}>
 			<div className="package_header">
-				<span className="package_tier">{tier}</span>
+				<span className="package_tier">{tier} Plan</span>
 				<p className="package_discount_rate">Try Out {tier} Save <span>{discountRate}</span></p>
 				<div className="package_price">
-					<span>{price}</span>
+					<span>Rs. {parseInt(price).toFixed(2)}</span>
 					<sub>/per month</sub>
 				</div>
 			</div>
@@ -17,11 +17,11 @@ const PackageCard = ({ tier, discountRate, price, desc, features, ...restProps }
 				<p className="package_desc">{desc}</p>
 				<ul className="package_features">
 					{features.map((feature, index) => (
-						<li key={index} className={feature.included ? "" : "disabled"}>
+						<li key={index} className={feature.value ? "" : "disabled"}>
 							{
-								feature.included ? <Tabler.TbCheck/> : <Tabler.TbX/>
+								feature.value ? <Tabler.TbCheck/> : <Tabler.TbX/>
 							}
-							<p className="package_features_text">{feature.name}</p>
+							<p className="package_features_text">{feature.label}</p>
 						</li>
 					))}
 				</ul>

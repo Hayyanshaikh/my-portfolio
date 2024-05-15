@@ -169,7 +169,7 @@ const Skills = () => {
                 <span>Discard</span>
               </Button>
               <Button type="submit" disabled={loading ? true : false}>
-                <span>{loading ? "Loading..." : "Save"}</span>
+                <span>{loading ? "Loading..." : skills ? "Update" : "Save"}</span>
               </Button>
             </div>
           </form>

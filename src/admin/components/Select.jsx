@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TbChevronDown } from "react-icons/tb";
 
-const CustomSelect = ({ id, label, name, options, className, onSelect }) => {
+const CustomSelect = ({ id, label, name, options, className, onSelect, selected }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState(options[0]);
   const selectRef = useRef(null);
 
   useEffect(() => {
@@ -19,20 +19,14 @@ const CustomSelect = ({ id, label, name, options, className, onSelect }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (options) {
-      setSelectedOption(options[0]);
-    }
-  }, [options]);
-
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option, id) => {
     setSelectedOption(option);
     toggleDropdown();
-    onSelect(option.value); // Invoke the onSelect callback with the selected value
+    onSelect(option.value, id);
   };
 
   return (
@@ -40,7 +34,7 @@ const CustomSelect = ({ id, label, name, options, className, onSelect }) => {
       <label htmlFor={id}>{label}</label>
       <div className="input_box">
         <button type="button" id={id} className="select" onClick={toggleDropdown}>
-          <span>{selectedOption && selectedOption.label}</span>
+          <span>{selected ? selected : selectedOption ? selectedOption.label : "Please Select"}</span>
           <TbChevronDown />
         </button>
       </div>
@@ -51,7 +45,7 @@ const CustomSelect = ({ id, label, name, options, className, onSelect }) => {
               key={option.value}
               type="button"
               className="option"
-              onClick={() => handleOptionSelect(option)}
+              onClick={() => handleOptionSelect(option, id)}
             >
               {option.label}
             </button>

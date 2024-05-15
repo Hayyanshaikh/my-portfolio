@@ -8,15 +8,15 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Input from '../../website/components/Input.jsx';
 import Button from '../../website/components/Button.jsx';
+import QuillEditor from '../../website/components/QuillEditor.jsx';
 import { selectUser, selectLoading } from "../../redux/slices/userSlice.jsx";
 import { getUserAsync, updateUserAsync } from "../../redux/actions/userAction.jsx";
-import QuillEditor from '../../website/components/QuillEditor.jsx';
 
 const Profile = () => {
   useTitle("Profile General");
   const dispatch = useDispatch();  
   const user = useSelector(selectUser);
-  const userLoading = useSelector(selectLoading);
+  const loading = useSelector(selectLoading);
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -196,8 +196,8 @@ const Profile = () => {
 		        <Button type="button" className="btn outline">
 		          <span>Discard</span>
 		        </Button>
-		        <Button type="submit" disabled={userLoading ? true : false}>
-		          <span>{userLoading ? "Loading..." : "Save"}</span>
+		        <Button type="submit" disabled={loading ? true : false}>
+		          <span>{loading ? "Loading..." : user ? "Update" : "Save"}</span>
 		        </Button>
 		      </div>
 		    </form>

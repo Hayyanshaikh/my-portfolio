@@ -18,7 +18,8 @@ const Projects = () => {
 
   useEffect(() => {
   	dispatch(fetchProjects());
-  }, [])
+  }, []);
+
 
 	const handleSelectAll = (e) => {
 		setSelectedAll(!selectedAll);
@@ -65,7 +66,6 @@ const Projects = () => {
 									checked={selectedAll}
 								  onChange={handleSelectAll}
 								/>
-
 			    		</div>
 			    	</th>
 			      <th>
@@ -117,7 +117,6 @@ const Projects = () => {
 										  checked={selected[index]}
 										  onChange={() => handleSelect(index)}
 										/>
-
 						      </div>
 						    </td>
 						    <td>

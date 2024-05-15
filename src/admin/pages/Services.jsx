@@ -169,7 +169,7 @@ const Services = () => {
                 <span>Discard</span>
               </Button>
               <Button type="submit" disabled={loading ? true : false}>
-                <span>{loading ? "Loading..." : "Save"}</span>
+                <span>{loading ? "Loading..." : service ? "Update" : "Save"}</span>
               </Button>
             </div>
           </form>

@@ -2,14 +2,14 @@ import Media from './Media.jsx';
 import * as Tabler from "react-icons/tb";
 import Modal from '../components/Modal.jsx';
 import Select from '../components/Select.jsx';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useTitle from '../../hooks/useTitle.jsx';
 import Checkbox from '../components/Checkbox.jsx';
 import React, { useState, useEffect } from "react";
 import Input from '../../website/components/Input.jsx';
 import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
-import {addPackage, fetchPackages} from "../../redux/actions/packageAction.jsx";
+import {addPackage, fetchPackages, updatePackage} from "../../redux/actions/packageAction.jsx";
 import QuillEditor from '../../website/components/QuillEditor.jsx';
 import {fetchServices} from "../../redux/actions/serviceAction.jsx";
 import { selectLoading, selectPackages } from "../../redux/slices/packageSlice.jsx";
@@ -17,16 +17,34 @@ import { selectServices } from "../../redux/slices/serviceSlice.jsx";
 
 const AddPackage = () => {
   useTitle("Add New Package");
+  const {id} = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const servicesData = useSelector(selectServices);
   const packagesData = useSelector(selectPackages);
+  const selectedPkg = packagesData.find(pkg => pkg.id === id);
+  const servicesData = useSelector(selectServices);
+  const [hightlightField, setHightlightField] = useState("");
+  const loading = useSelector(selectLoading);
   const [formData, setFormData] = useState({
+  	title: "",
   	service: "",
   	description: "",
   	featured: false,
+  	features:[],
   });
+
+  useEffect(() => {
+    if (selectedPkg) {
+      setFormData({
+		  	title: selectedPkg.title || "",
+		  	service: selectedPkg.service || "",
+		  	description: selectedPkg.description || "",
+		  	featured: selectedPkg.featured || "",
+		  	features: selectedPkg.features || "",
+      });
+    }
+  }, [selectedPkg]);
 
   useEffect(() => {
   	dispatch(fetchServices());
@@ -53,22 +71,46 @@ const AddPackage = () => {
     });
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleCheckboxChange = (e) => {
 		setFormData((prev) => ({ ...prev, featured: e.target.checked }));
   };
 
-  const tiers = [
-    { value: 'basic', label: 'Basic' },
-    { value: 'standard', label: 'Standard' },
-    { value: 'premium', label: 'Premium' },
-  ];
+  const highlightChange = (e) => {
+    const { value } = e.target;
+    setHightlightField(value);
+  };
+
+  const handleAddfeatures = () => {
+    setFormData((prev) => ({
+      ...prev,
+      features: [...formData.features, hightlightField],
+    }));
+    setHightlightField("");
+  };
+
+  const deleteFeature = (index) => {
+    setFormData(prevFormData => {
+      const updatedFeatures = [...prevFormData.features];
+      updatedFeatures.splice(index, 1);
+      return { ...prevFormData, features: updatedFeatures };
+    });
+  };
 
   const handleAddpackge = async (e) => {
   	e.preventDefault();
-  	dispatch(addPackage(formData));
-  }
 
-  console.log(packagesData);
+  	if (!selectedPkg) {
+  		await dispatch(addPackage(formData));
+    }
+    else{
+  		await dispatch(updatePackage(id, formData));
+    }
+  }
 
 	return (
 		<>
@@ -83,10 +125,21 @@ const AddPackage = () => {
 			</div>
 			<form onSubmit={handleAddpackge} className="wrapper add_package">
 				<div className="wrapper_content">
+				  <Input
+				    label="Package Title"
+				    id="title"
+				    name="title"
+				    placeholder="Enter Package title"
+				    className="w-full"
+				    type="text"
+				    value={formData.title}
+				    onChange={handleInputChange}
+				  />
 				  <Select
-		        id="exampleSelect"
+		        id="serviceSelect"
 		        label="Select Service"
-		        name="exampleSelect"
+		        name="serviceSelect"
+		        selected={formData.service}
 		        options={services}
 		        className="custom-select"
 		        onSelect={handleSelect}
@@ -94,10 +147,12 @@ const AddPackage = () => {
 				  <Input
 				    label="Short Description"
 				    id="message"
-				    name="message"
+				    name="description"
 				    placeholder="Enter short description"
 				    className="w-full"
 				    type="text"
+				    value={formData.description}
+				    onChange={handleInputChange}
 				  />
 					<Checkbox
 		        id="featuredPackage"
@@ -106,11 +161,11 @@ const AddPackage = () => {
 		        label="Featured Package"
 		      />
 				  <div className="form_action_buttons">
-				  	<Button className="btn outline">
+				  	<Button type="button" className="btn outline">
 				  		<span>Discard</span>
 				  	</Button>
-				  	<Button>
-				  		<span>Save</span>
+				  	<Button type="submit" disabled={loading ? true : false}>
+				  		<span>{loading ? "Loading..." : selectedPkg ? "Update" : "Save"}</span>
 				  	</Button>
 				  </div>
 				</div>
@@ -120,223 +175,29 @@ const AddPackage = () => {
 					  <div className="highlight_input">
 					  	<Input
 						    type="text"
-						    id="add-highlights"
-						    name="add-highlights"
-						    placeholder="Add Highlight"
+						    id="add-features"
+						    name="add-features"
+						    placeholder="Add Feature"
+						    value={hightlightField}
+                onChange={highlightChange}
 						  />
-						  <Button>
-						  	<Tabler.TbPlus/>
-						  </Button>
+						  <Button type="button" onClick={handleAddfeatures}>
+                <Tabler.TbPlus />
+              </Button>
 					  </div>
 					  <ul className="highlight_list">
-						  <li>
-						    <span>Unlimited access</span>
-						    <button><Tabler.TbTrash/></button>
-						  </li>
-						  <li>
-						    <span>Collaborative diary</span>
-						    <button><Tabler.TbTrash/></button>
-						  </li>
-						  <li>
-						    <span>Confirmation & Reminders of appointments</span>
-						    <button><Tabler.TbTrash/></button>
-						  </li>
-						  <li>
-						    <span>Online appointment booking</span>
-						    <button><Tabler.TbTrash/></button>
-						  </li>
-						  <li>
-						    <span>Free reservations</span>
-						    <button><Tabler.TbTrash/></button>
-						  </li>
-						  <li>
-						    <span>Integration with the agency website</span>
-						    <button><Tabler.TbTrash/></button>
-						  </li>
-						</ul>
+              {formData.features.map((feature, index) => (
+                <li key={index}>
+                  <span>{feature}</span>
+                  <button type="button" onClick={() => deleteFeature(index)}>
+                    <Tabler.TbTrash />
+                  </button>
+                </li>
+              ))}
+            </ul>
 					</div>
 				</div>
 			</form>
-
-			<div className="tier_wrapper">
-				<h4 className="sub_heading">Pricing Package</h4>
-			  <div className="tier_grid">
-				  <div className="tier_form">
-				    <h3>Basic Package</h3>
-				    <Select
-				      id="selectTierBasic"
-				      label="Select Tier"
-				      name="selectTierBasic"
-				      options={tiers}
-				      className="custom-select"
-				    />
-				    <Input
-				      icon={<Tabler.TbFileDescription />}
-				      label="Package Title"
-				      id="basic_package_title"
-				      name="basic_package_title"
-				      placeholder="Enter package title"
-				      className="w-full"
-				      type="text"
-				    />
-				    <Input
-				      icon={<Tabler.TbCoin />}
-				      label="Price"
-				      id="basic_price"
-				      name="basic_price"
-				      placeholder="Enter price"
-				      className="w-full"
-				      type="text"
-				    />
-				    <Input
-				      icon={<Tabler.TbCoin />}
-				      label="Sale Price"
-				      id="basic_sale_price"
-				      name="basic_sale_price"
-				      placeholder="Enter Sale price"
-				      className="w-full"
-				      type="text"
-				    />
-				    <h3>Select Features</h3>
-				    <ul className="tier_feature_list">
-				      <li>
-				        {/*<Checkbox label="Unlimited access" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Collaborative diary" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Confirmation & Reminders of appointments" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Online appointment booking" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Free reservations" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Integration with the agency website" />*/}
-				      </li>
-				    </ul>
-				  </div>
-				  <div className="tier_form">
-				    <h3>Standard Package</h3>
-				    <Select
-				      id="selectTierStandard"
-				      label="Select Tier"
-				      name="selectTierStandard"
-				      options={tiers}
-				      className="custom-select"
-				    />
-				    <Input
-				      icon={<Tabler.TbFileDescription />}
-				      label="Package Title"
-				      id="standard_package_title"
-				      name="standard_package_title"
-				      placeholder="Enter package title"
-				      className="w-full"
-				      type="text"
-				    />
-				    <Input
-				      icon={<Tabler.TbCoin />}
-				      label="Price"
-				      id="standard_price"
-				      name="standard_price"
-				      placeholder="Enter price"
-				      className="w-full"
-				      type="text"
-				    />
-				    <Input
-				      icon={<Tabler.TbCoin />}
-				      label="Sale Price"
-				      id="standard_sale_price"
-				      name="standard_sale_price"
-				      placeholder="Enter Sale price"
-				      className="w-full"
-				      type="text"
-				    />
-				    <h3>Select Features</h3>
-				    <ul className="tier_feature_list">
-				      <li>
-				        {/*<Checkbox label="Unlimited access" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Collaborative diary" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Confirmation & Reminders of appointments" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Online appointment booking" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Free reservations" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Integration with the agency website" />*/}
-				      </li>
-				    </ul>
-				  </div>
-				  <div className="tier_form">
-				    <h3>Premium Package</h3>
-				    <Select
-				      id="selectTierPremium"
-				      label="Select Tier"
-				      name="selectTierPremium"
-				      options={tiers}
-				      className="custom-select"
-				    />
-				    <Input
-				      icon={<Tabler.TbFileDescription />}
-				      label="Package Title"
-				      id="premium_package_title"
-				      name="premium_package_title"
-				      placeholder="Enter package title"
-				      className="w-full"
-				      type="text"
-				    />
-				    <Input
-				      icon={<Tabler.TbCoin />}
-				      label="Price"
-				      id="premium_price"
-				      name="premium_price"
-				      placeholder="Enter price"
-				      className="w-full"
-				      type="text"
-				    />
-				    <Input
-				      icon={<Tabler.TbCoin />}
-				      label="Sale Price"
-				      id="premium_sale_price"
-				      name="premium_sale_price"
-				      placeholder="Enter Sale price"
-				      className="w-full"
-				      type="text"
-				    />
-				    <h3>Select Features</h3>
-				    <ul className="tier_feature_list">
-				      <li>
-				        {/*<Checkbox label="Unlimited access" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Collaborative diary" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Confirmation & Reminders of appointments" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Online appointment booking" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Free reservations" />*/}
-				      </li>
-				      <li>
-				        {/*<Checkbox label="Integration with the agency website" />*/}
-				      </li>
-				    </ul>
-				  </div>
-				</div>
-			</div>
 		</>
 	)
 }

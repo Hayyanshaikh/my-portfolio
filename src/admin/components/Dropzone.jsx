@@ -3,10 +3,10 @@ import * as Tabler from "react-icons/tb";
 import { useDropzone } from 'react-dropzone';
 import Button from '../../website/components/Button.jsx';
 
-const Dropzone = ({multiple = false, sendFilesToParent}) => {
-
+const Dropzone = ({ multiple = false, sendFilesToParent, maxFiles = 5 }) => {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: multiple,
+    maxFiles: maxFiles,
     onDrop: acceptedFiles => {
       sendFilesToParent(acceptedFiles);
     }
@@ -15,7 +15,7 @@ const Dropzone = ({multiple = false, sendFilesToParent}) => {
   return (
     <>
       <div {...getRootProps({ className: "dropzone" })}>
-      <Tabler.TbCloudUpload/>
+        <Tabler.TbCloudUpload />
         <p>Drag and Drop</p>
         <Button>
           <span>Browse</span>

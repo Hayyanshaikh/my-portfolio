@@ -7,6 +7,7 @@ import AdminDashboard from '../admin/pages/Dashboard.jsx';
 import AdminProjects from '../admin/pages/Projects.jsx';
 import AdminAddProject from '../admin/pages/AddProject.jsx';
 import AdminPackages from '../admin/pages/Packages.jsx';
+import AdminPrices from '../admin/pages/Prices.jsx';
 import AdminAddPackage from '../admin/pages/AddPackage.jsx';
 import AdminServices from '../admin/pages/Services.jsx';
 import AdminSkills from '../admin/pages/Skills.jsx';
@@ -14,7 +15,7 @@ import AdminSettings from '../admin/pages/Settings.jsx';
 import AdminResume from '../admin/pages/Resume.jsx';
 import AdminLogin from '../admin/pages/Login.jsx';
 import AdminMedia from '../admin/pages/Media.jsx';
-import AdminRegister from '../admin/pages/Register.jsx';
+import AdminForgotPassword from '../admin/pages/ForgotPassword.jsx';
 
 // Web pages
 import Home from '../website/pages/Home.jsx';
@@ -78,6 +79,14 @@ const adminRoutes = [
         element: <AdminPackages />,
       },
       {
+        path: "prices",
+        element: <AdminPrices />,
+      },
+      {
+        path: "prices/:id",
+        element: <AdminPrices />,
+      },
+      {
         path: "packages/add",
         element: <AdminAddPackage />,
       },
@@ -106,6 +115,10 @@ const adminRoutes = [
         element: <AdminResume />,
       },
       {
+        path: "resume/:id",
+        element: <AdminResume />,
+      },
+      {
         path: "media",
         element: <AdminMedia />,
       },
@@ -118,8 +131,8 @@ const adminRoutes = [
         element: <AdminLogin />,
       },
       {
-        path: "register",
-        element: <AdminRegister />,
+        path: "forgot",
+        element: <AdminForgotPassword />,
       },
     ],
   },

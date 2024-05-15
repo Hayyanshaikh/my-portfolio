@@ -1,6 +1,6 @@
 import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import WebLayout from '../WebLayout.jsx';
 import Button from "../components/Button.jsx";
 import useTitle from '../../hooks/useTitle.jsx';
@@ -15,6 +15,12 @@ import {fetchProjects} from '../../redux/actions/projectAction.jsx';
 import {fetchServices} from '../../redux/actions/serviceAction.jsx';
 import {selectSkills} from '../../redux/slices/skillSlice.jsx';
 import {fetchSkills} from '../../redux/actions/skillAction.jsx';
+import {selectPrices} from '../../redux/slices/priceSlice.jsx';
+import {fetchPrices} from '../../redux/actions/priceAction.jsx';
+import {selectUser} from '../../redux/slices/userSlice.jsx';
+import {getUserAsync} from '../../redux/actions/userAction.jsx';
+import {selectResumes} from '../../redux/slices/resumeSlice.jsx';
+import {fetchResumes} from '../../redux/actions/resumeAction.jsx';
 
 const Home = () => {
   useTitle("Home");
@@ -22,12 +28,28 @@ const Home = () => {
   const projects = useSelector(selectProjects);
   const services = useSelector(selectServices);
   const skills = useSelector(selectSkills);
+  const prices = useSelector(selectPrices);
+  const userData = useSelector(selectUser);
+  const resumes = useSelector(selectResumes);
+  const [user, setUser] = useState("");
+  const activeResume = resumes && resumes.find(resume => resume.active);
+
+  useEffect(() => {
+    if (userData) {
+      setUser(userData[0]);
+    }
+  }, [userData])
 
   useEffect(() => {
     dispatch(fetchProjects());
     dispatch(fetchServices());
     dispatch(fetchSkills());
+    dispatch(fetchPrices());
+    dispatch(getUserAsync());
+    dispatch(fetchResumes());
   }, []);
+
+  console.log(activeResume);
 
   return (
     <>
@@ -39,8 +61,8 @@ const Home = () => {
               <div className="hero_content">
                 <h1 className="hero_heading">
                   <span>Hello, i'm</span>
-                  <strong>Hayyan ali</strong>
-                  <p>Web Developer</p>
+                  <strong>{user.firstName} {user.lastName}</strong>
+                  <p>{user.jobTitle}</p>
                 </h1>
                 <p>
                   We denounce with righteous indignation dislike demoralized by
@@ -51,7 +73,7 @@ const Home = () => {
                     <span>hire me</span>
                     <Tabler.TbChevronRight />
                   </Button>
-                  <Button className="text_btn">
+                  <Button to={activeResume && activeResume.featureImage} target="_blank" download={true} className="text_btn">
                     <span>Download Resume</span>
                     <Tabler.TbChevronRight />
                   </Button>
@@ -89,10 +111,7 @@ const Home = () => {
                   </h2>
                 </div>
                 <p className="about_me_text">
-                  At vero eos et accusamus etodio dignissimos ducimus praesentium
-                  voluptatum corrupti quos dolores quas molestias excepturi sint
-                  occaecati cupiditate provident qui officia deserunt mollitia
-                  animi, id est laborum et dolorum
+                  {user.about}
                 </p>
                 <div className="about_me_top_skills">
                   <div className="about_skill">
@@ -117,14 +136,14 @@ const Home = () => {
                     <Tabler.TbMail />
                     <div className="about_contact_content">
                       <span className="contact_slogan">Email</span>
-                      <p className="contact_text">hayyanshaikh@gmail.com</p>
+                      <p className="contact_text">{user.email}</p>
                     </div>
                   </div>
                   <div className="about_contact">
                     <Tabler.TbPhone />
                     <div className="about_contact_content">
                       <span className="contact_slogan">Phone</span>
-                      <p className="contact_text">03172271459</p>
+                      <p className="contact_text">{user.phoneNumber}</p>
                     </div>
                   </div>
                 </div>
@@ -238,48 +257,18 @@ const Home = () => {
               </h2>
             </div>
             <div className="packages_wrapper">
-              <PackageCard
-                tier="Basic Plan"
-                price="$19.95"
-                discountRate="20%"
-                desc="Ideal for beginners"
-                features={[
-                  { name: "Responsive Website Design", included: true },
-                  { name: "Basic SEO Optimization", included: true },
-                  { name: "Contact Form Integration", included: true },
-                  { name: "Mobile Optimization", included: false },
-                  { name: "Social Media Integration", included: false },
-                  { name: "Basic Analytics", included: false },
-                ]}
-              />
-              <PackageCard
-                tier="Standard Plan"
-                price="$39.95"
-                discountRate="15%"
-                desc="Perfect for small businesses"
-                features={[
-                  { name: "Responsive Website Design", included: true },
-                  { name: "Advanced SEO Optimization", included: true },
-                  { name: "E-commerce Integration", included: true },
-                  { name: "Mobile Optimization", included: true },
-                  { name: "Social Media Integration", included: false },
-                  { name: "Basic Analytics", included: false },
-                ]}
-              />
-              <PackageCard
-                tier="Premium Plan"
-                price="$59.95"
-                discountRate="10%"
-                desc="Best for established businesses"
-                features={[
-                  { name: "Custom Website Design", included: true },
-                  { name: "Full SEO Audit and Strategy", included: true },
-                  { name: "Advanced E-commerce Solutions", included: true },
-                  { name: "Mobile Optimization", included: true },
-                  { name: "Social Media Integration", included: true },
-                  { name: "Advanced Analytics", included: true },
-                ]}
-              />
+              {
+                prices.map((price, key) => (
+                  <PackageCard
+                    key={key}
+                    tier={price.tier}
+                    price={price.price}
+                    discountRate="20%"
+                    desc="Ideal for beginners"
+                    features={price.features}
+                  />
+                ))
+              }
             </div>
           </div>
         </section>

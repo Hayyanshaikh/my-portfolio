@@ -242,7 +242,7 @@ const AddProject = () => {
               <span>Discard</span>
             </Button>
             <Button disabled={loading ? true : false}>
-              <span>{loading ? "Loading..." : "Save"}</span>
+              <span>{loading ? "Loading..." : project ? "Update" : "Save"}</span>
             </Button>
           </div>
         </div>

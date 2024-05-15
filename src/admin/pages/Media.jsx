@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectMediaList } from '../../redux/slices/mediaSlice.jsx';
 import { uploadMedia, getMedia, deleteFile } from '../../redux/actions/mediaAction.jsx';
 
-const Media = ({ getFile }) => { // Pass getFile function as a prop
+const Media = ({ getFile, limit }) => { // Pass getFile function as a prop
   useTitle("All Media");
   const dispatch = useDispatch();
   const media = useSelector(selectMediaList);
@@ -39,7 +39,7 @@ const Media = ({ getFile }) => { // Pass getFile function as a prop
   return (
     <div className="media">
       <div className="media_upload">
-        <Dropzone sendFilesToParent={handleFilesFromDropzone} multiple={true} />
+        <Dropzone maxFiles={limit} sendFilesToParent={handleFilesFromDropzone} multiple={true} />
       </div>
       <div className="media_list">
         {mediaFiles && mediaFiles.length > 0 ? (

@@ -6,29 +6,22 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from '../../website/components/Button.jsx';
 import Input from '../../website/components/Input.jsx';
-
-const packages = [
-  {
-    id: 1,
-    name: "Package A",
-    description: "This is a brief description of Package A.",
-    isFeatured: true,
-    createdAt: "2024-04-01",
-  },
-  {
-    id: 2,
-    name: "Package A",
-    description: "This is a brief description of Package A.",
-    isFeatured: false,
-    createdAt: "2024-04-01",
-  },
-];
+import {selectPackages} from '../../redux/slices/packageSlice.jsx';
+import {fetchPackages, deletePackage} from '../../redux/actions/packageAction.jsx';
 
 const Packages = () => {
   useTitle("all Packages");
-  const [selected, setSelected] = useState(Array(packages.length).fill(false));
+  const dispatch = useDispatch();
+  const packages = useSelector(selectPackages);
+  const [selected, setSelected] = useState(false);
+  const [selectedAll, setSelectedAll] = useState('');
+
+  useEffect(() => {
+  	dispatch(fetchPackages());
+  }, []);
 
 	const handleSelectAll = (e) => {
+		setSelectedAll(!selectedAll);
 	  const updatedSelected = Array(packages.length).fill(e.target.checked);
 	  setSelected(updatedSelected);
 	};
@@ -40,6 +33,11 @@ const Packages = () => {
 	    return updatedSelected;
 	  });
 	};
+
+	const handleDeletePackage = (projectId) => {
+		dispatch(deletePackage(projectId));
+  	dispatch(fetchPackages());
+	}
 
 	return (
 		<>
@@ -64,9 +62,9 @@ const Packages = () => {
 			    	<th>
 			    		<div>
 			    			<Checkbox
+									checked={selectedAll}
 								  onChange={handleSelectAll}
 								/>
-
 			    		</div>
 			    	</th>
 			      <th>
@@ -118,12 +116,11 @@ const Packages = () => {
 										  checked={selected[index]}
 										  onChange={() => handleSelect(index)}
 										/>
-
 						      </div>
 						    </td>
 						    <td>
 						      <div>
-						        <span>{pkg.name}</span>
+						        <span>{pkg.title}</span>
 						      </div>
 						    </td>
 						    <td>
@@ -133,7 +130,7 @@ const Packages = () => {
 						    </td>
 						    <td>
 						      <div>
-						        <span>{pkg.isFeatured ? "Featured" : "Not Featured"}</span>
+						        <span>{pkg.featured ? "Featured" : "Not Featured"}</span>
 						      </div>
 						    </td>
 						    <td>
@@ -143,12 +140,12 @@ const Packages = () => {
 						    </td>
 						    <td>
 						      <div className="action_button">
-						        <Link className="edit">
+						        <Link to={pkg.id} className="edit">
 						          <Tabler.TbEdit />
 						        </Link>
-						        <Link className="delete">
+						        <button className="delete" onClick={() => handleDeletePackage(pkg.id)}>
 						          <Tabler.TbTrash />
-						        </Link>
+						        </button>
 						      </div>
 						    </td>
 						  </tr>

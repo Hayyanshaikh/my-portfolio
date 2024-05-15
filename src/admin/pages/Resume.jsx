@@ -1,48 +1,52 @@
-import { Link, useNavigate } from "react-router-dom";
-import Media from './Media.jsx';
+import Media from "./Media.jsx";
 import * as Tabler from "react-icons/tb";
-import Modal from '../components/Modal.jsx';
-import useTitle from '../../hooks/useTitle.jsx';
-import Checkbox from '../components/Checkbox.jsx';
+import Modal from "../components/Modal.jsx";
+import useTitle from "../../hooks/useTitle.jsx";
+import Checkbox from "../components/Checkbox.jsx";
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import Button from '../../website/components/Button.jsx';
-import Input from '../../website/components/Input.jsx';
+import Input from "../../website/components/Input.jsx";
+import Button from "../../website/components/Button.jsx";
+import { selectLoading, selectResumes } from "../../redux/slices/resumeSlice.jsx";
+import {
+  addResume,
+  fetchResumes,
+  updateResume,
+  deleteResume,
+} from "../../redux/actions/resumeAction.jsx";
 
-const resumes = [
-  {
-    id: 1,
-    resumeName: "Updated Resume - HTML",
-    createdAt: "2024-04-30",
-    resumeFile: "https://img.icons8.com/color/100/html-5.png",
-    isActive: true,
-  },
-  {
-    id: 2,
-    resumeName: "Updated Resume - CSS",
-    createdAt: "2024-04-29",
-    resumeFile: "https://img.icons8.com/color/100/css3.png",
-    isActive: false,
-  },
-  {
-    id: 3,
-    resumeName: "Updated Resume - JavaScript",
-    createdAt: "2024-04-28",
-    resumeFile: "https://img.icons8.com/color/100/javascript.png",
-    isActive: false,
-  },
-  {
-    id: 4,
-    resumeName: "Updated Resume - Figma",
-    createdAt: "2024-04-27",
-    resumeFile: "https://img.icons8.com/color/100/figma.png",
-    isActive: false,
-  },
-];
-
-const Resumes = () => {
+const Resume = () => {
   useTitle("All Resumes");
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loading = useSelector(selectLoading);
+  const resumes = useSelector(selectResumes);
+  const resume = resumes.find(resume => resume.id === id);
+  const [selected, setSelected] = useState(Array(resumes.length).fill(false));
+  const [selectedAll, setSelectedAll] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    active: false,
+    featureImage: "",
+    createdAt: "",
+  });
+  useEffect(() => {
+  	dispatch(fetchResumes());
+  }, []);
+
+  useEffect(() => {
+    if (resume) {
+      setFormData({
+        title: resume.title || "",
+        active: resume.active || false,
+        featureImage: resume.featureImage || "",
+        createdAt: resume.createdAt || "",
+      });
+    }
+  }, [resume])
 
   const openModal = () => {
     setIsOpen(true);
@@ -52,151 +56,195 @@ const Resumes = () => {
     setIsOpen(false);
   };
 
-  const [selected, setSelected] = useState(Array(resumes.length).fill(false));
+  const handleIsConstruction = (e) => {
+    setFormData((prev) => ({ ...prev, active: e.target.checked }));
+  };
 
-	const handleSelectAll = (e) => {
-	  const updatedSelected = Array(resumes.length).fill(e.target.checked);
-	  setSelected(updatedSelected);
-	};
+  const handleSelectAll = (e) => {
+    setSelectedAll(!selectedAll);
+    const updatedSelected = Array(resumes.length).fill(e.target.checked);
+    setSelected(updatedSelected);
+  };
 
-	const handleSelect = (index) => {
-	  setSelected(prevSelected => {
-	    const updatedSelected = [...prevSelected];
-	    updatedSelected[index] = !updatedSelected[index];
-	    return updatedSelected;
-	  });
-	};
-	return (
-		<>
-			<div className="admin_head">
-				<h4>all Resumes</h4>
-				<div className="admin_head_actions">
-					<Input
-	          icon={<Tabler.TbSearch />}
-	          id="searchResumes"
-	          name="searchResumes"
-	          placeholder="Search Resume"
-	        />
-				</div>
-			</div>
-			<div className="wrapper">
-				<div className="wrapper_sidebar">
-					<div className="sidebar_item">
-						<h4 className="sidebar_heading center">Upload Resume</h4>
-						<div className="image_thumbnail">
-							<Tabler.TbFileTypePdf/>
-							{/*<figure>
-								<img src="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg" alt=""/>
-							</figure>*/}
-						</div>
-		        <Button onClick={openModal}>
-		        	<span>Upload Resume</span>
-		        </Button>
-						<Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
-			        <Media/>
-			      </Modal>
-					  <Input
-					    icon={<Tabler.TbFileDescription />}
-					    label="Title"
-					    id="title"
-					    name="title"
-					    placeholder="Enter your title"
-					    className="w-full"
-					    type="text"
-					  />
-						<Checkbox label="Active resume"/>
-					  <div className="form_action_buttons">
-					  	<Button className="btn outline">
-					  		<span>Discard</span>
-					  	</Button>
-					  	<Button>
-					  		<span>Save</span>
-					  	</Button>
-					  </div>
-					</div>
-				</div>
-				<div className="wrapper_content">
-					<table>
-					  <thead>
-					    <tr>
-					      <th>
-					        <div>
-					          <Checkbox onChange={handleSelectAll} />
-					        </div>
-					      </th>
-					      <th>
-					        <div>
-					          <span>Resume Name</span>
-					          <button>
-					            <Tabler.TbSelector />
-					          </button>
-					        </div>
-					      </th>
-					      <th>
-					        <div>
-					          <span>Created At</span>
-					          <button>
-					            <Tabler.TbSelector />
-					          </button>
-					        </div>
-					      </th>
-					      <th>
-					        <div>
-					          <span>Active</span>
-					          <button>
-					            <Tabler.TbSelector />
-					          </button>
-					        </div>
-					      </th>
-					      <th>
-					        <div>
-					          <span>Actions</span>
-					        </div>
-					      </th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					    {resumes.map((resume, index) => (
-					      <tr key={resume.id}>
-					        <td>
-					          <div>
-					            <Checkbox checked={selected[index]} onChange={() => handleSelect(index)} />
-					          </div>
-					        </td>
-					        <td>
-					          <div>
-					          	<Tabler.TbFileTypePdf/>
-					            <span>{resume.resumeName}</span>
-					          </div>
-					        </td>
-					        <td>
-					          <div>
-					            <span>{resume.createdAt}</span>
-					          </div>
-					        </td>
-					        <td>
-					          <div>
-					            <span>{resume.isActive ? "Active" : "Inactive"}</span>
-					          </div>
-					        </td>
-					        <td>
-					          <div className="action_button">
-					            <Link className="edit">
-					              <Tabler.TbEdit />
-					            </Link>
-					            <Link className="delete">
-					              <Tabler.TbTrash />
-					            </Link>
-					          </div>
-					        </td>
-					      </tr>
-					    ))}
-					  </tbody>
-					</table>
-				</div>
-			</div>
-		</>
-	)
-}
+  const handleSelect = (index) => {
+    setSelected((prevSelected) => {
+      const updatedSelected = [...prevSelected];
+      updatedSelected[index] = !updatedSelected[index];
+      return updatedSelected;
+    });
+  };
 
-export default Resumes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const getTransferedFile = (file) => {
+    setFormData({ ...formData, featureImage: file.imageUrl });
+  };
+
+  const handleAddResume = async (e) => {
+    e.preventDefault();
+    if (!resume) {
+      await dispatch(addResume(formData));
+    }
+    else{
+      await dispatch(updateResume(id, formData));
+    }
+    setFormData({
+      title: "",
+      active: false,
+      featureImage: "",
+      createdAt: "",
+    });
+  };
+
+  const handleDeleteResume = async (id) => {
+    await dispatch(deleteResume(id));
+  };
+
+  return (
+    <>
+      <Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
+        <Media limit={1} getFile={getTransferedFile} />
+      </Modal>
+      <div className="admin_head">
+        <h4>all Resumes</h4>
+        <div className="admin_head_actions">
+          <Input
+            icon={<Tabler.TbSearch />}
+            id="searchResumes"
+            name="searchResumes"
+            placeholder="Search Resume"
+          />
+        </div>
+      </div>
+      <div className="wrapper">
+        <div className="wrapper_sidebar">
+          <form onSubmit={handleAddResume} className="sidebar_item">
+            <h4 className="sidebar_heading center">Upload active image</h4>
+            <div className="image_thumbnail">
+              <Tabler.TbFileTypePdf style={{stroke: formData.featureImage ? "#ef4e2c" : ""}}/>
+            </div>
+            <Button type="button" onClick={openModal}>
+              <span>Upload Image</span>
+            </Button>
+            <Input
+              icon={<Tabler.TbFileDescription />}
+              label="Title"
+              id="title"
+              name="title"
+              placeholder="Enter your title"
+              className="w-full"
+              type="text"
+              value={formData.title}
+              onChange={handleInputChange}
+            />
+            <Checkbox
+              checked={formData.active}
+              onChange={handleIsConstruction}
+              label="Active Resume"
+            />
+            <div className="form_action_buttons">
+              <Button type="button" className="btn outline">
+                <span>Discard</span>
+              </Button>
+              <Button type="submit" disabled={loading ? true : false}>
+                <span>{loading ? "Loading..." : resume ? "Update" : "Save"}</span>
+              </Button>
+            </div>
+          </form>
+        </div>
+        <div className="wrapper_content">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <Checkbox
+                      checked={selectedAll}
+                      onChange={handleSelectAll}
+                    />
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>Resume Name</span>
+                    <button>
+                      <Tabler.TbSelector />
+                    </button>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>Created At</span>
+                    <button>
+                      <Tabler.TbSelector />
+                    </button>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>Active</span>
+                    <button>
+                      <Tabler.TbSelector />
+                    </button>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <span>Actions</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {resumes.map((resume, index) => (
+                <tr key={resume.id}>
+                  <td>
+                    <div>
+                      <Checkbox
+                        checked={selected[index]}
+                        onChange={() => handleSelect(index)}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <Tabler.TbFileTypePdf/>
+                      <span>{resume.title}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <span>{resume.createdAt}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <span>
+                        {resume.active ? "Active" : "Not Active"}
+                      </span>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="action_button">
+                      <Link to={`/hs-admin/resume/${resume.id}`} className="edit">
+                        <Tabler.TbEdit />
+                      </Link>
+                      <button onClick={() => handleDeleteResume(resume.id)} className="delete">
+                        <Tabler.TbTrash />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Resume;

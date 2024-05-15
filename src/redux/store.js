@@ -7,6 +7,9 @@ import projectSlice from './slices/projectSlice.jsx';
 import skillSlice from './slices/skillSlice.jsx';
 import serviceSlice from './slices/serviceSlice.jsx';
 import packageSlice from './slices/packageSlice.jsx';
+import priceSlice from './slices/priceSlice.jsx';
+import resumeSlice from './slices/resumeSlice.jsx';
+import settingSlice from './slices/settingSlice.jsx';
 
 const store = configureStore({
   reducer: {
@@ -18,6 +21,9 @@ const store = configureStore({
     skills: skillSlice,
     services: serviceSlice,
     packages: packageSlice,
+    prices: priceSlice,
+    resumes: resumeSlice,
+    settings: settingSlice,
   },
 });
 

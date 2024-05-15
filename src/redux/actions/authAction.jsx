@@ -1,6 +1,7 @@
 import { auth } from '../../firebase/firebaseUtils.js';
 import { fetchUserSuccess } from '../slices/userSlice.jsx';
 import { setUser, setError, clearUser, setLoading } from '../slices/authSlice.jsx';
+import { useNavigate } from 'react-router-dom';
 
 // Async action to sign in
 export const signInAsync = (email, password) => async (dispatch) => {
@@ -18,6 +19,7 @@ export const signInAsync = (email, password) => async (dispatch) => {
     dispatch(setUser());
   } catch (error) {
     dispatch(setError(error.message));
+    console.log(error);
   }
 };
 
@@ -49,6 +51,18 @@ export const checkSignInStatusAsync = () => async (dispatch) => {
         dispatch(clearUser());
       }
     });
+  } catch (error) {
+    dispatch(setError(error.message));
+  }
+};
+
+// Async action to handle forgot password
+export const forgotPasswordAsync = (email) => async (dispatch) => {
+  const navigate = useNavigate();
+  try {
+    dispatch(setLoading());
+    await auth.sendPasswordResetEmail(email);
+    // Password reset email sent successfully
   } catch (error) {
     dispatch(setError(error.message));
   }
