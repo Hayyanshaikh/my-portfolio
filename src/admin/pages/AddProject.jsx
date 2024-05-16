@@ -3,6 +3,7 @@ import * as Tabler from "react-icons/tb";
 import Modal from "../components/Modal.jsx";
 import useTitle from "../../hooks/useTitle.jsx";
 import Checkbox from "../components/Checkbox.jsx";
+import Select from '../components/Select.jsx';
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Input from "../../website/components/Input.jsx";
@@ -11,6 +12,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import QuillEditor from "../../website/components/QuillEditor.jsx";
 import {addProject, fetchProjects, updateProject } from '../../redux/actions/projectAction.jsx';
 import {selectLoading, selectProjects} from '../../redux/slices/projectSlice.jsx';
+import {fetchServices} from "../../redux/actions/serviceAction.jsx";
+
+import { selectServices } from "../../redux/slices/serviceSlice.jsx";
 
 const AddProject = () => {
   const {id} = useParams();
@@ -20,15 +24,18 @@ const AddProject = () => {
   const projects = useSelector(selectProjects);
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState("");
+  const servicesData = useSelector(selectServices);
   const [hightlightField, setHightlightField] = useState("");
   const project = projects.find(project => project.id === id);
   useTitle(!project ? "Add New Project" : `Update ${project && project.title}`);
   const [formData, setFormData] = useState({
     title: "",
+    service: "",
     shortDescription: "",
     longDescription: "",
     underConstruction: false,
     featureImage: "",
+    featured: false,
     liveLink: "",
     galleryImages: [],
     highlights: [],
@@ -40,16 +47,24 @@ const AddProject = () => {
 
   useEffect(() => {
     dispatch(fetchProjects());
-  }, [])
+    dispatch(fetchServices());
+  }, []);
+
+  const services = servicesData.map(service => ({
+    value: service.title,
+    label: service.title
+  }));
 
   useEffect(() => {
     if (project) {
       setFormData({
         title: project.title || "",
+        service: project.service || "",
         shortDescription: project.shortDescription || "",
         longDescription: project.longDescription || "",
         underConstruction: project.underConstruction || false,
         featureImage: project.featureImage || "",
+        featured: project.featured || "",
         liveLink: project.liveLink || "",
         galleryImages: project.galleryImages || [],
         highlights: project.highlights || [],
@@ -61,8 +76,19 @@ const AddProject = () => {
     }
   }, [project]);
 
+  const handleSelect = (value) => {
+    setFormData({
+      ...formData,
+      service: value,
+    });
+  };
+
   const handleIsConstruction = (e) => {
     setFormData((prev) => ({ ...prev, underConstruction: e.target.checked }));
+  };
+
+  const handleIsFeatured = (e) => {
+    setFormData((prev) => ({ ...prev, featured: e.target.checked }));
   };
 
   const handleInputChange = (e) => {
@@ -134,7 +160,9 @@ const AddProject = () => {
   	if (!project) {
       setFormData({
         title: "",
+        service: "",
         shortDescription: "",
+        featured: false,
         longDescription: "",
         underConstruction: false,
         featureImage: "",
@@ -162,6 +190,15 @@ const AddProject = () => {
       </div>
       <form onSubmit={handleAddProject} className="wrapper add_project">
         <div className="wrapper_content">
+          <Select
+            id="serviceSelect"
+            label="Select Service"
+            name="serviceSelect"
+            selected={formData.service}
+            options={services}
+            className="custom-select"
+            onSelect={handleSelect}
+          />
           <Input
             icon={<Tabler.TbFileDescription />}
             label="Title"
@@ -209,6 +246,12 @@ const AddProject = () => {
             onChange={(value) =>
               setFormData((prev) => ({ ...prev, longDescription: value }))
             }
+          />
+
+          <Checkbox
+            label="Featured Project"
+            checked={formData.featured}
+            onChange={handleIsFeatured}
           />
           <div className="screen_shots">
             <div className="screen_shots_upload">

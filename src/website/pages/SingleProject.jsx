@@ -1,41 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../components/Button.jsx";
 import * as Tabler from "react-icons/tb";
 import Banner from "../components/Banner.jsx";
 import useTitle from "../../hooks/useTitle.jsx";
+import { useSelector, useDispatch } from "react-redux";
 import { Routes, Route, useParams } from "react-router-dom";
+import {selectProjects} from '../../redux/slices/projectSlice.jsx';
+import {fetchProjects, deleteProject} from '../../redux/actions/projectAction.jsx';
 
 const SingleProject = () => {
   let { projectId } = useParams();
-  useTitle(projectId.replace(/-/g, " "));
-
+  const dispatch = useDispatch();
+  const projects = useSelector(selectProjects);
+  const project = projects.find(project => project.id === projectId);
   const [activeTab, setActiveTab] = useState("overview");
+  const pageTitle = project && project.title;
+  useTitle(pageTitle);
+
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, []);
+
+  if (!project) {
+    return <div>Loadding...</div>
+  }
+
   return (
     <>
       <Banner>
-        {projectId.replace(/-/g, " ")}
+        {project.title}
       </Banner>
 
       {/* Overview */}
       <section className="bg">
         <div className="single_product_overview">
           <div className="container">
-            <div className="single_product_overview_wrapper">
+            <div className="single_project_overview_wrapper">
               <figure className="image_of_project">
                 <img
-                  src="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg"
+                  src={project.featureImage}
                   alt=""
                 />
               </figure>
               <div className="content_of_project">
                 <span className="highlight_text">highlights</span>
                 <ul>
-                  <li>Responsive design</li>
-                  <li>Customizable color schemes</li>
-                  <li>Integration with e-commerce platforms</li>
-                  <li>Built-in analytics</li>
-                  <li>SEO-friendly design</li>
-                  <li>Mobile-friendly design</li>
+                  {
+                    project.highlights.map((highlight, key) => (
+                      <li key={key}>{highlight}</li>
+                    ))
+                  }
                 </ul>
                 <hr />
                 <div className="cta">
@@ -43,7 +57,7 @@ const SingleProject = () => {
                   <Button>
                     <span>purchase Now</span>
                   </Button>
-                  <Button className="btn outline">
+                  <Button to={project.liveLink} className="btn outline">
                     <span>Live Preview</span>
                     <Tabler.TbExternalLink />
                   </Button>
@@ -83,40 +97,25 @@ const SingleProject = () => {
               </div>
               <hr />
               {activeTab === "overview" && (
-                <div className="content">
-	                <p>StellarWeb is a modern and sleek website template designed for businesses and startups. It features a responsive design that looks great on any device, and customizable color schemes to match your brand. With integration with popular e-commerce platforms like Shopify and WooCommerce, StellarWeb makes it easy to set up an online store and start selling your products. Customizable contact forms and newsletter sign-ups allow you to engage with your customers and build your email list. And with built-in analytics, you can track your website’s performance and make data-driven decisions to improve your online presence.{" "}
-	                </p>
-	                <h4>Stunning Features</h4>
-	                <ul>
-	                  <li>Responsive design</li>
-	                  <li>Customizable color schemes</li>
-	                  <li>Integration with e-commerce platforms</li>
-	                  <li>Built-in analytics</li>
-	                  <li>SEO-friendly design</li>
-	                  <li>Mobile-friendly design</li>
-	                </ul>
-	                <p>StellarWeb’s SEO-friendly design ensures that your website ranks higher in search engines, while its customizable navigation menus and mobile-friendly design make it easy for users to navigate your website on any device. Additionally, StellarWeb offers social media integration to help you connect with your audience on various platforms, and customizable footer widgets to add additional content and information to your website.
-	                </p>
+                <div className="content" dangerouslySetInnerHTML={{ __html: project.longDescription }}>
+	                
 	              </div>
               )}
               {activeTab === "screenshots" && (
                 <div className="content">
-                	<h4>Project Screenshots</h4>
-                	<figure className="product_screenshots">
-                		<img src="https://framerusercontent.com/images/oBMxZqbUZzsIe1YxBWyvLGdUiyI.jpg" alt="" />
-                	</figure>
-                	<figure className="product_screenshots">
-                		<img src="https://framerusercontent.com/images/RaCi6Metgls6IcT3E4BUxTIAALI.jpg" alt="" />
-                	</figure>
-                	<figure className="product_screenshots">
-                		<img src="https://framerusercontent.com/images/bItcrn1JUU5OYP5TCC0CVUydk.jpg" alt="" />
-                	</figure>
+                  {
+                    project.galleryImages.map((image, key) => (
+                      <figure className="project_screenshots">
+                        <img src={image} alt="" />
+                      </figure>
+                    ))
+                  }
                 </div>
               )}
               {activeTab === "changelog" && (
                 <div className="content">
                 	<div className="">
-                		<p>1.0 - 20 May, 2023</p>
+                		<p>{project.version} - {project.date}</p>
                 		<p>Initial Release of the Template</p>
                 	</div>
                 </div>
@@ -137,7 +136,7 @@ const SingleProject = () => {
                 <Button>
                   <span>purchase Now</span>
                 </Button>
-                <Button className="btn outline">
+                <Button to={project.liveLink} className="btn outline">
                   <span>Live Preview</span>
                   <Tabler.TbExternalLink />
                 </Button>

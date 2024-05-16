@@ -78,6 +78,14 @@ const Projects = () => {
 			      </th>
 			      <th>
 			      	<div>
+				      	<span>Featured</span>
+				      	<button>
+				      		<Tabler.TbSelector/>
+				      	</button>
+			      	</div>
+			      </th>
+			      <th>
+			      	<div>
 				      	<span>Status</span>
 				      	<button>
 				      		<Tabler.TbSelector/>
@@ -125,6 +133,11 @@ const Projects = () => {
 						          <img src={project.featureImage} alt=""/>
 						        </figure>
 						        <span>{project.title}</span>
+						      </div>
+						    </td>
+						    <td>
+						      <div>
+						        <span>{project.featured ? "Featured" : "Not featured"}</span>
 						      </div>
 						    </td>
 						    <td>

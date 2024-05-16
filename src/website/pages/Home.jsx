@@ -1,6 +1,7 @@
+import React, { useState, useEffect } from "react";
+import Favicon from '../../assets/images/favicon.svg'
 import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
-import React, { useState, useEffect } from "react";
 import WebLayout from '../WebLayout.jsx';
 import Button from "../components/Button.jsx";
 import useTitle from '../../hooks/useTitle.jsx';
@@ -10,8 +11,8 @@ import ServiceCard from "../components/ServiceCard.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import PackageCard from "../components/PackageCard.jsx";
 import {selectProjects} from '../../redux/slices/projectSlice.jsx';
-import {selectServices} from '../../redux/slices/serviceSlice.jsx';
 import {fetchProjects} from '../../redux/actions/projectAction.jsx';
+import {selectServices} from '../../redux/slices/serviceSlice.jsx';
 import {fetchServices} from '../../redux/actions/serviceAction.jsx';
 import {selectSkills} from '../../redux/slices/skillSlice.jsx';
 import {fetchSkills} from '../../redux/actions/skillAction.jsx';
@@ -49,8 +50,6 @@ const Home = () => {
     dispatch(fetchResumes());
   }, []);
 
-  console.log(activeResume);
-
   return (
     <>
       {/* hero section*/}
@@ -79,6 +78,11 @@ const Home = () => {
                   </Button>
                 </div>
               </div>
+
+              <div className="hero_logo">
+                <img src={Favicon} alt=""/>
+              </div>
+
               <div className="work_counter">
                 <div className="work_count">
                   <span className="count">2Y+</span>
@@ -148,7 +152,9 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="about_me_img"></div>
+              <figure className="about_me_img">
+                <img src={user.imageUrl} alt="" />
+              </figure>
             </div>
           </div>
         </section>
@@ -195,10 +201,6 @@ const Home = () => {
                     accusantium doloremque laudantium, totam rem aperiamc eaque
                     ipsa quae ab illo inventore veritatis
                   </p>
-                  {/*<Button className="btn" to="skills">
-                    <span>Learn More</span>
-                    <Tabler.TbChevronRight />
-                  </Button>*/}
                 </div>
               </div>
               <div className="skills_list">
@@ -228,12 +230,13 @@ const Home = () => {
             </div>
             <div className="work_wrapper">
               {
-                projects && projects.map((project, key) => (
+                projects && projects.filter(featured => featured.featured).map((project, key) => (
                   <WorkCard
                     key={key}
+                    id={project.id}
                     title={project.title}
                     description={project.shortDescription}
-                    category="Design"
+                    service={project.service}
                     imageUrl={project.featureImage}
                   />
                 ))

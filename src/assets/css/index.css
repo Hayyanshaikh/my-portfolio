@@ -114,6 +114,7 @@ section {
 
 section.bg {
   background: var(--dark-background);
+  overflow: hidden;
 }
 
 body {
@@ -218,7 +219,7 @@ figure img {
   transition: background-color 0.3s ease;
 }
 
-.btn:disabled{
+.btn:disabled {
   opacity: 0.5;
 }
 
@@ -500,7 +501,6 @@ figure img {
 .hero {
   padding: 0;
   display: flex;
-  overflow: hidden;
   position: relative;
   align-items: center;
   height: calc(100dvh - 70px);
@@ -561,15 +561,30 @@ figure img {
   grid-gap: 25px;
 }
 
+.hero_logo {
+  flex: 1;
+  max-width: 500px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(1) opacity(3%);
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-70%, -50%);
+}
+
 .work_counter {
   display: flex;
   padding: 25px 30px;
   grid-gap: 20px;
+  position: relative;
   border-radius: 12px;
   flex-direction: column;
   background: var(--dark-background);
   box-shadow: 5px 10px 15px var(--shadow);
-  border: 1px solid var(--border);
 }
 
 .dark-mode .work_counter {
@@ -636,7 +651,6 @@ figure img {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
-  grid-gap: 20px;
 }
 
 .project_detail li {
@@ -646,6 +660,10 @@ figure img {
 .project_detail .content :where(p, li) {
   font-size: clamp(14px, 2vw, 15px);
   line-height: 2;
+}
+
+.project_detail .content :where(li) {
+  color: var(--text);
 }
 
 .project_detail .content ul {
@@ -701,13 +719,18 @@ figure img {
   text-transform: capitalize;
 }
 
-.product_screenshots {
+.project_screenshots {
   width: 100%;
   display: flex;
+  margin-bottom: 20px;
   border-radius: 12px;
 }
 
 /* about */
+.about_me {
+  position: relative;
+  z-index: 1;
+}
 .about_me_wrapper {
   display: flex;
   align-items: center;
@@ -720,11 +743,32 @@ figure img {
 
 .about_me_img {
   align-self: stretch;
-  background: var(--primary);
   width: 100%;
   max-width: 400px;
+  max-height: 500px;
   margin: 0 auto;
   border-radius: 12px;
+  overflow: visible;
+  position: relative;
+  border: none;
+}
+
+.about_me_img img {
+  z-index: 1;
+  position: relative;
+  border-radius: 12px;
+  filter: grayscale(1) brightness(0.8);
+}
+
+.about_me_img:before {
+  content: '';
+  position: absolute;
+  right: 10px;
+  width: 100%;
+  border-radius: 12px;
+  z-index: 1;
+  height: calc(100% + 20px);
+  background: var(--light-background);
 }
 
 .about_me_content {
@@ -883,7 +927,7 @@ figure img {
   color: var(--text);
 }
 
-.service_img{
+.service_img {
   width: 50px;
   height: 50px;
   flex: 0 0 auto;
@@ -1098,7 +1142,7 @@ figure img {
   display: none;
 }
 
-.single_product_overview_wrapper {
+.single_project_overview_wrapper {
   display: flex;
   grid-gap: 40px;
 }
@@ -1108,7 +1152,6 @@ figure img {
   overflow: hidden;
   display: flex;
   min-height: 400px;
-  max-height: 450px;
   border-radius: 12px;
 }
 
@@ -1325,7 +1368,7 @@ figure img {
   background: var(--dark-background);
 }
 
-.input_box{
+.input_box {
   display: flex;
   position: relative;
   align-items: center;
@@ -1347,10 +1390,10 @@ figure img {
   flex: 0 0 100%;
 }
 
-.input_group small{
+.input_group small {
   color: var(--del);
   font-weight: 400;
-  font-size: clamp(12px,2vw,12px);
+  font-size: clamp(12px, 2vw, 12px);
 }
 
 .options {

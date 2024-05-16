@@ -7,6 +7,8 @@ import * as Phosphor from "react-icons/pi";
 import Logo from "../../assets/images/logo.svg";
 import DarkLogo from "../../assets/images/logo-dark.svg";
 import { mode } from "../../redux/slices/ThemeSlice.jsx";
+import {selectSettings} from '../../redux/slices/settingSlice.jsx';
+import {getSettingsAsync} from '../../redux/actions/settingAction.jsx';
 
 const Header = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(false);
@@ -14,6 +16,12 @@ const Header = () => {
   const themeMode = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
   const location = useLocation();
+  const settings = useSelector(selectSettings);
+  const setting = settings && settings[0];
+
+  useEffect(() => {
+    dispatch(getSettingsAsync());
+  }, []);
 
   const toggleTheme = () => {
     dispatch(mode());
@@ -55,23 +63,20 @@ const Header = () => {
             </Link>
             <div className="header_socials">
               <a
-                href="https://github.com/hayyanshaikh"
+                href={setting && setting.github}
                 target="_blank"
-                rel="noopener noreferrer"
               >
                 <Tabler.TbBrandGithub />
               </a>
               <a
-                href="https://api.whatsapp.com/send/?phone=923172271459&text=Hello%2C+I+am+interested+in+hiring+your+services.+Can+we+discuss+further+details%3F&type=phone_number&app_absent=0"
+                href={setting && setting.whatsapp}
                 target="_blank"
-                rel="noopener noreferrer"
               >
                 <Tabler.TbBrandWhatsapp />
               </a>
               <a
-                href="https://www.linkedin.com/in/hayyan-shaikh/"
+                href={setting && setting.linkedin}
                 target="_blank"
-                rel="noopener noreferrer"
               >
                 <Tabler.TbBrandLinkedin />
               </a>

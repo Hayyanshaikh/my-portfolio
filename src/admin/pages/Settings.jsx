@@ -7,7 +7,7 @@ import Input from '../../website/components/Input.jsx';
 import Button from '../../website/components/Button.jsx';
 import { useSelector, useDispatch } from "react-redux";
 import QuillEditor from '../../website/components/QuillEditor.jsx';
-import { selectSettings } from "../../redux/slices/settingSlice.jsx";
+import { selectSettings, selectLoading } from "../../redux/slices/settingSlice.jsx";
 import { updateSettingsAsync, getSettingsAsync } from "../../redux/actions/settingAction.jsx";
 
 const Settings = () => {
@@ -15,6 +15,7 @@ const Settings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const settings = useSelector(selectSettings);
+  const loading = useSelector(selectLoading);
   const [formData, setFormData] = useState({
     websiteTitle: "",
     siteAddress: "",
@@ -83,7 +84,7 @@ const Settings = () => {
         </div>
       </div>
       <div className="wrapper">
-        <div className="wrapper_content">
+        <form onSubmit={handleSubmit} className="wrapper_content">
           <h3 className="sub_heading">General Settings</h3>
           <Input
             icon={<Tabler.TbAppWindow />}
@@ -184,14 +185,14 @@ const Settings = () => {
             onChange={handleChange}
           />
           <div className="form_action_buttons">
-            <Button className="btn outline" onClick={() => navigate(-1)}>
+            <Button type="button" className="btn outline">
               <span>Discard</span>
             </Button>
-            <Button onClick={handleSubmit}>
-              <span>Save</span>
+            <Button type="submit" disabled={loading ? true : false}>
+              <span>{loading ? "Loading..." : "Save"}</span>
             </Button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   )

@@ -1,10 +1,36 @@
-import React from 'react';
 import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import * as Phosphor from "react-icons/pi";
 import * as Tabler from "react-icons/tb";
 import Logo from "../../assets/images/logo.svg";
+import {selectProjects} from '../../redux/slices/projectSlice.jsx';
+import {fetchProjects} from '../../redux/actions/projectAction.jsx';
+import { useSelector, useDispatch } from "react-redux";
+import {selectUser} from '../../redux/slices/userSlice.jsx';
+import {getUserAsync} from '../../redux/actions/userAction.jsx';
+import {selectSettings} from '../../redux/slices/settingSlice.jsx';
+import {getSettingsAsync} from '../../redux/actions/settingAction.jsx';
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector(selectUser);
+  const projects = useSelector(selectProjects);
+  const [user, setUser] = useState("");
+  const settings = useSelector(selectSettings);
+  const setting = settings && settings[0];
+
+  useEffect(() => {
+    if (userData) {
+      setUser(userData[0]);
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    dispatch(getUserAsync());
+    dispatch(getSettingsAsync());
+    dispatch(fetchProjects());
+  }, []);
+
 
   // Sample quick links data
   const quickLinks = [
@@ -16,29 +42,6 @@ const Footer = () => {
     { id: 6, title: "Contact", link: "/#contact" }
   ];
 
-  // Sample address data
-  const address = {
-    street: "55 Main Street, 2nd block, New York City",
-    email: "support@gmail.com",
-    phone: "+880 (123) 456 88"
-  };
-
-  // Sample projects data
-  const projects = [
-    {
-      id: 1,
-      title: "Website Mockup Design",
-      imageUrl: "https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg",
-      link: "/website-mockup-design"
-    },
-    {
-      id: 2,
-      title: "Mobile App Design",
-      imageUrl: "https://cdn.dribbble.com/userupload/3246132/file/original-d17aaff41fec3353fe80fc8f7372253e.png",
-      link: "/mobile-app-design"
-    }
-  ];
-
   return (
     <footer className="dark-mode">
       <div className="container">
@@ -47,15 +50,24 @@ const Footer = () => {
             <img src={Logo} alt="logo" />
           </Link>
           <div className="header_socials">
-            <a href="https://github.com/hayyanshaikh" target="_blank" rel="noopener noreferrer">
-              <Tabler.TbBrandGithub />
-            </a>
-            <a href="https://api.whatsapp.com/send/?phone=923172271459&text=Hello%2C+I+am+interested+in+hiring+your+services.+Can+we+discuss+further+details%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-              <Tabler.TbBrandWhatsapp />
-            </a>
-            <a href="https://www.linkedin.com/in/hayyan-shaikh/" target="_blank" rel="noopener noreferrer">
-              <Tabler.TbBrandLinkedin />
-            </a>
+            <a
+                href={setting && setting.github}
+                target="_blank"
+              >
+                <Tabler.TbBrandGithub />
+              </a>
+              <a
+                href={setting && setting.whatsapp}
+                target="_blank"
+              >
+                <Tabler.TbBrandWhatsapp />
+              </a>
+              <a
+                href={setting && setting.linkedin}
+                target="_blank"
+              >
+                <Tabler.TbBrandLinkedin />
+              </a>
           </div>
         </div>
         <div className="footer_wrapper">
@@ -76,16 +88,20 @@ const Footer = () => {
           <div className="footer_column">
             <h4 className="footer_heading">Address</h4>
             <ul className="footer_list">
-              {/* Loop through address data and render */}
-              {Object.entries(address).map(([key, value]) => (
-                <li key={key}>
-                  {key === "street" && <Phosphor.PiHouse />}
-                  {key === "email" && <Phosphor.PiEnvelope />}
-                  {key === "phone" && <Phosphor.PiPhone />}
-                  <span>{value}</span>
-                </li>
-              ))}
+              <li>
+                <Phosphor.PiHouse />
+                <span>{user.location}</span>
+              </li>
+              <li>
+                <Phosphor.PiEnvelope />
+                <span>{user.email}</span>
+              </li>
+              <li>
+                <Phosphor.PiPhone />
+                <span>{user.phoneNumber}</span>
+              </li>
             </ul>
+
           </div>
           <div className="footer_column">
             <h4 className="footer_heading">Our Work</h4>
@@ -93,9 +109,9 @@ const Footer = () => {
               {/* Loop through projects and render each one */}
               {projects.map((project) => (
                 <li key={project.id}>
-                  <Link to={project.link}>
+                  <Link to={`projects/${project.id}`}>
                     <figure className="footer_figure">
-                      <img src={project.imageUrl} alt={project.title} />
+                      <img src={project.featureImage} alt={project.title} />
                       <figcaption>{project.title}</figcaption>
                     </figure>
                   </Link>
