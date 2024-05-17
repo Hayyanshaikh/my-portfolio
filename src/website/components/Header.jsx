@@ -122,7 +122,7 @@ const MenuItem = ({ to, icon, text, location }) => (
         <span>{text}</span>
       </Link>
     ) : (
-      <ScrollLink to={to} duration={500} spy={true} hashSpy={true} offset={1}>
+      <ScrollLink to={to} duration={500} spy={true} hashSpy={true} smooth={true} offset={1}>
         {icon}
         <span>{text}</span>
       </ScrollLink>

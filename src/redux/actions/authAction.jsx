@@ -1,7 +1,6 @@
 import { auth } from '../../firebase/firebaseUtils.js';
 import { fetchUserSuccess } from '../slices/userSlice.jsx';
 import { setUser, setError, clearUser, setLoading } from '../slices/authSlice.jsx';
-import { useNavigate } from 'react-router-dom';
 
 // Async action to sign in
 export const signInAsync = (email, password) => async (dispatch) => {
@@ -15,11 +14,11 @@ export const signInAsync = (email, password) => async (dispatch) => {
       email: user.email,
     };
 
+
     dispatch(fetchUserSuccess(serializedUser));
-    dispatch(setUser());
+    dispatch(setUser(serializedUser));
   } catch (error) {
     dispatch(setError(error.message));
-    console.log(error);
   }
 };
 
@@ -34,7 +33,7 @@ export const signOutAsync = () => async (dispatch) => {
   }
 };
 
-// Async action to check signin status
+// Async action to check sign-in status
 export const checkSignInStatusAsync = () => async (dispatch) => {
   try {
     dispatch(setLoading());
@@ -46,7 +45,7 @@ export const checkSignInStatusAsync = () => async (dispatch) => {
           email: user.email,
         };
         dispatch(fetchUserSuccess(serializedUser));
-        dispatch(setUser());
+        dispatch(setUser(serializedUser));
       } else {
         dispatch(clearUser());
       }
@@ -58,7 +57,6 @@ export const checkSignInStatusAsync = () => async (dispatch) => {
 
 // Async action to handle forgot password
 export const forgotPasswordAsync = (email) => async (dispatch) => {
-  const navigate = useNavigate();
   try {
     dispatch(setLoading());
     await auth.sendPasswordResetEmail(email);

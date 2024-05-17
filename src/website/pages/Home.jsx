@@ -49,6 +49,7 @@ const Home = () => {
     dispatch(getUserAsync());
     dispatch(fetchResumes());
   }, []);
+  
 
   return (
     <>
@@ -60,8 +61,8 @@ const Home = () => {
               <div className="hero_content">
                 <h1 className="hero_heading">
                   <span>Hello, i'm</span>
-                  <strong>{user.firstName} {user.lastName}</strong>
-                  <p>{user.jobTitle}</p>
+                  <strong>{user && user.firstName} {user && user.lastName}</strong>
+                  <p>{user && user.jobTitle}</p>
                 </h1>
                 <p>
                   We denounce with righteous indignation dislike demoralized by
@@ -115,7 +116,7 @@ const Home = () => {
                   </h2>
                 </div>
                 <p className="about_me_text">
-                  {user.about}
+                  {user && user.about}
                 </p>
                 <div className="about_me_top_skills">
                   <div className="about_skill">
@@ -140,20 +141,20 @@ const Home = () => {
                     <Tabler.TbMail />
                     <div className="about_contact_content">
                       <span className="contact_slogan">Email</span>
-                      <p className="contact_text">{user.email}</p>
+                      <p className="contact_text">{user && user.email}</p>
                     </div>
                   </div>
                   <div className="about_contact">
                     <Tabler.TbPhone />
                     <div className="about_contact_content">
                       <span className="contact_slogan">Phone</span>
-                      <p className="contact_text">{user.phoneNumber}</p>
+                      <p className="contact_text">{user && user.phoneNumber}</p>
                     </div>
                   </div>
                 </div>
               </div>
               <figure className="about_me_img">
-                <img src={user.imageUrl} alt="" />
+                <img src={user && user.imageUrl} alt="" />
               </figure>
             </div>
           </div>

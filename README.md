@@ -1,18 +1,17 @@
 ## Firebase Configuration Setup
 
-Clone karne ke baad, apko `config.js` file ko setup karna hoga jisme Firebase ki configuration details hongi.
+After cloning, you config.jswill need to setup the file which will contain the configuration details of Firebase
 
 1. **Firebase Configuration Fetch Kare:**
 
-    - Apne Firebase project ki settings me jaye.
+    - Go to the settings of your Firebase project.
     - Firebase SDK snippet option select karein.
-    - Firebase Config ko copy karein.
+    - Copy the Firebase Config.
 
 2. **`config.js` File Create Karein:**
 
-    - `src/firebase/config.js` file ko create karein.
-    - Neeche di gayi template ka istemal kar ke Firebase configuration details ko paste karein:
-
+    - `src/firebase/config.js` create the file.
+    - Paste the Firebase configuration details using the template below:
     ```javascript
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
@@ -26,14 +25,4 @@ Clone karne ke baad, apko `config.js` file ko setup karna hoga jisme Firebase ki
     export default firebaseConfig;
     ```
 
-    Note: Apne Firebase project ki actual configuration values se template me di gayi placeholders ko replace karein.
-
-3. **Save karein aur file ko commit karein.**
-
-4. **Project ko run karein:**
-
-    ```bash
-    npm start
-    ```
-
-Ab aapka project Firebase ki configuration ke saath local environment me run hone ke liye tayar hai.
+**Note:** Replace the placeholders given in the template with the actual configuration values of your Firebase project.

@@ -31,7 +31,6 @@ const Footer = () => {
     dispatch(fetchProjects());
   }, []);
 
-
   // Sample quick links data
   const quickLinks = [
     { id: 1, title: "About", link: "/#about" },
@@ -75,7 +74,7 @@ const Footer = () => {
             <h4 className="footer_heading">Quick Links</h4>
             <ul className="footer_list">
               {/* Loop through quick links and render each one */}
-              {quickLinks.map((link) => (
+              {quickLinks && quickLinks.map((link) => (
                 <li key={link.id}>
                   <Link to={link.link}>
                     <Phosphor.PiCaretDoubleRight/>
@@ -90,15 +89,15 @@ const Footer = () => {
             <ul className="footer_list">
               <li>
                 <Phosphor.PiHouse />
-                <span>{user.location}</span>
+                <span>{user && user.location}</span>
               </li>
               <li>
                 <Phosphor.PiEnvelope />
-                <span>{user.email}</span>
+                <span>{user && user.email}</span>
               </li>
               <li>
                 <Phosphor.PiPhone />
-                <span>{user.phoneNumber}</span>
+                <span>{user && user.phoneNumber}</span>
               </li>
             </ul>
 
