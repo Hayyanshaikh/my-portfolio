@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './assets/css/index.css';
 import './assets/css/admin.css';
 import store from './redux/store'
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('hs__portfolio')).render(
   <Provider store={store}>
