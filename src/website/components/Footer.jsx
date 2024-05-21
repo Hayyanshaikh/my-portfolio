@@ -106,7 +106,7 @@ const Footer = () => {
             <h4 className="footer_heading">Our Work</h4>
             <ul className="footer_list">
               {/* Loop through projects and render each one */}
-              {projects.map((project) => (
+              {projects.slice(0, 2).map((project) => (
                 <li key={project.id}>
                   <Link to={`projects/${project.id}`}>
                     <figure className="footer_figure">

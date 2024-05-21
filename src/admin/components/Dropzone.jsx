@@ -3,7 +3,7 @@ import * as Tabler from "react-icons/tb";
 import { useDropzone } from 'react-dropzone';
 import Button from '../../website/components/Button.jsx';
 
-const Dropzone = ({ multiple = false, sendFilesToParent, maxFiles = 5 }) => {
+const Dropzone = ({ multiple = false, sendFilesToParent, maxFiles = 10 }) => {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: multiple,
     maxFiles: maxFiles,

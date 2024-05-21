@@ -124,7 +124,7 @@ const SingleProject = () => {
             <div className="small_overview">
               <figure className="image_of_project">
                 <img
-                  src="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg"
+                  src={project.featureImage}
                   alt=""
                 />
               </figure>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Input = ({ icon , label, id, name, placeholder, className, type, value, onChange, valid }) => {
+const Input = ({ icon , label, id, name, placeholder, className, type, value, required, onChange, valid }) => {
   const InputField = id === 'message' ? 'textarea' : 'input';
 
   return (
@@ -14,6 +14,7 @@ const Input = ({ icon , label, id, name, placeholder, className, type, value, on
           placeholder={placeholder} 
           autoComplete="off"
           value={value} 
+          required={required}
           onChange={onChange} 
         />
         {icon && icon}

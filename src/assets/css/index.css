@@ -321,6 +321,58 @@ figure img {
   margin-top: 25px;
 }
 
+/* alert */
+.alert {
+    padding: 12px 15px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-size: clamp(12px,2vw,14px);
+    font-weight: 500;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert .alert-icon {
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert .alert-icon svg{
+  height: 100%;
+  width: 100%;
+}
+
+.alert .close-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+
 /* header */
 
 .header_main {
@@ -1680,7 +1732,7 @@ footer>.container>.footer_column {
   text-align: center;
   font-size: clamp(14px, 2vw, 15px);
   color: var(--black);
-  margin-top: 20px;
+  margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid var(--border);
 }

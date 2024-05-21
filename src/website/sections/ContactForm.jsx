@@ -1,31 +1,38 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
-import Button from "../components/Button.jsx";
 import Input from "../components/Input.jsx";
-import emailjs from '@emailjs/browser';
+import Alert from "../components/Alert.jsx";
+import Button from "../components/Button.jsx";
 
 const ContactForm = () => {
   const form = useRef();
+  const [alert, setAlert] = useState({ show: false, message: '', type: '' });
+  const [loading, setLoading] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setLoading(true);
     emailjs
       .sendForm('service_lid72jm', 'template_f8z5717', form.current, 'bJGcM6yrhSHZoyx7r')
       .then(
         () => {
-          console.log('SUCCESS!');
+          setAlert({ show: true, message: 'Email sent successfully!', type: 'success' });
           form.current.reset();
+          setLoading(false);
+          setTimeout(() => setAlert({ show: false, message: '', type: '' }), 5000);
         },
-        (error) => {
-          console.log('FAILED...', error.text);
+        () => {
+          setAlert({ show: true, message: 'Failed to send email', type: 'danger' });
+          setLoading(false);
+          setTimeout(() => setAlert({ show: false, message: '', type: '' }), 5000);
         },
       );
   };
 
   return (
     <>
-      {/* Contact */}
       <Element name="contact">
         <section className="Contact">
           <div className="container">
@@ -56,10 +63,12 @@ const ContactForm = () => {
                 </ul>
               </div>
               <form ref={form} className="contact_form" onSubmit={sendEmail}>
+                <Alert message={alert.message} type={alert.type} show={alert.show} />
                 <Input
                   icon={<Tabler.TbUser />}
                   label="Name"
                   id="name"
+                  required={true}
                   name="name"
                   placeholder="Enter your name"
                 />
@@ -68,6 +77,7 @@ const ContactForm = () => {
                   icon={<Tabler.TbMail />}
                   label="Email"
                   id="email"
+                  required={true}
                   name="email"
                   placeholder="Enter your email"
                 />
@@ -95,8 +105,8 @@ const ContactForm = () => {
                   placeholder="Enter your message"
                   className="w-100"
                 />
-                <Button type="submit" className="btn">
-                  <span>Submit</span>
+                <Button type="submit" className="btn" disabled={loading}>
+                  <span>{loading ? 'loading...' : 'Submit'}</span>
                   <Tabler.TbChevronRight />
                 </Button>
               </form>
