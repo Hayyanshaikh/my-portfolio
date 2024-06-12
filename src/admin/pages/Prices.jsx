@@ -231,7 +231,7 @@ const Prices = () => {
                 </li>
               ))}
             </ul>
-            <Button type="submit">
+            <Button type="submit" disabled={loading ? true : false}>
               <span>{loading ? "Loading..." : price ? "Update" : "Save"}</span>
             </Button>
           </form>

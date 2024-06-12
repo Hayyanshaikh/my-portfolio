@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Favicon from '../../assets/images/favicon.svg'
+import Favicon from '../../assets/images/hero_icon.svg'
 import { Element } from 'react-scroll';
 import * as Tabler from "react-icons/tb";
 import WebLayout from '../WebLayout.jsx';
@@ -18,6 +18,8 @@ import {selectSkills} from '../../redux/slices/skillSlice.jsx';
 import {fetchSkills} from '../../redux/actions/skillAction.jsx';
 import {selectPrices} from '../../redux/slices/priceSlice.jsx';
 import {fetchPrices} from '../../redux/actions/priceAction.jsx';
+import {selectPackages} from '../../redux/slices/packageSlice.jsx';
+import {fetchPackages} from '../../redux/actions/packageAction.jsx';
 import {selectUser} from '../../redux/slices/userSlice.jsx';
 import {getUserAsync} from '../../redux/actions/userAction.jsx';
 import {selectResumes} from '../../redux/slices/resumeSlice.jsx';
@@ -30,6 +32,7 @@ const Home = () => {
   const services = useSelector(selectServices);
   const skills = useSelector(selectSkills);
   const prices = useSelector(selectPrices);
+  const packages = useSelector(selectPackages);
   const userData = useSelector(selectUser);
   const resumes = useSelector(selectResumes);
   const [user, setUser] = useState("");
@@ -46,11 +49,11 @@ const Home = () => {
     dispatch(fetchServices());
     dispatch(fetchSkills());
     dispatch(fetchPrices());
+    dispatch(fetchPackages());
     dispatch(getUserAsync());
     dispatch(fetchResumes());
   }, []);
   
-
   return (
     <>
       {/* hero section*/}
@@ -80,22 +83,20 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="hero_logo">
-                <img src={Favicon} alt=""/>
-              </div>
+              <div className="hero_img">
+                <div className="hero_logo">
+                  <img src={Favicon} alt=""/>
+                </div>
 
-              <div className="work_counter">
-                <div className="work_count">
-                  <span className="count">2Y+</span>
-                  <p className="work_text">Years Of Experience</p>
-                </div>
-                <div className="work_count">
-                  <span className="count">48+</span>
-                  <p className="work_text">Project Complete</p>
-                </div>
-                <div className="work_count">
-                  <span className="count">76%</span>
-                  <p className="work_text">Client Satisfactions</p>
+                <div className="work_counter">
+                  <div className="work_count">
+                    <span className="count">2Y+</span>
+                    <p className="work_text">Years Of Experience</p>
+                  </div>
+                  <div className="work_count">
+                    <span className="count">48+</span>
+                    <p className="work_text">Project Complete</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -119,22 +120,15 @@ const Home = () => {
                   {user && user.about}
                 </p>
                 <div className="about_me_top_skills">
-                  <div className="about_skill">
-                    <Tabler.TbCheck />
-                    <span>Branding &amp; Design</span>
-                  </div>
-                  <div className="about_skill">
-                    <Tabler.TbCheck />
-                    <span>Web Development</span>
-                  </div>
-                  <div className="about_skill">
-                    <Tabler.TbCheck />
-                    <span>Digital Marketing</span>
-                  </div>
-                  <div className="about_skill">
-                    <Tabler.TbCheck />
-                    <span>Product Design</span>
-                  </div>
+
+                  {
+                    services && services.slice(0, 4).map((service, key) => (
+                      <div className="about_skill">
+                        <Tabler.TbCheck />
+                        <span>{service.title}</span>
+                      </div>
+                    ))
+                  }
                 </div>
                 <div className="about_me_contact">
                   <div className="about_contact">
@@ -262,17 +256,26 @@ const Home = () => {
             </div>
             <div className="packages_wrapper">
               {
-                prices.map((price, key) => (
-                  <PackageCard
-                    key={key}
-                    tier={price.tier}
-                    price={price.price}
-                    discountRate="20%"
-                    desc="Ideal for beginners"
-                    features={price.features}
-                  />
-                ))
+                packages.filter(filterpkg => filterpkg.featured).map((pkg, pkgKey) => {  
+                  return prices.map((price, key) => {
+                    if (pkg.id === price.pkgId) {
+                      return (
+                        <PackageCard
+                          key={key}
+                          title={pkg.title}
+                          tier={price.tier}
+                          price={price.price}
+                          salePrice={price.salePrice}
+                          desc={pkg.description}
+                          features={price.features}
+                        />
+                      )
+                    }
+                    return null; // Condition false hone par null return karein
+                  })
+                })
               }
+
             </div>
           </div>
         </section>

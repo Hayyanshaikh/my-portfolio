@@ -90,9 +90,6 @@ const Header = () => {
                 ></button>
                 <span>{themeMode ? "light" : "dark"}</span>
               </div>
-              <button className="menu_btn">
-                <Tabler.TbAlignRight />
-              </button>
             </div>
             <nav className={!isScrollingDown ? "active" : ""}>
               <ul className="menu">
