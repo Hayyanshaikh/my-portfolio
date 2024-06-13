@@ -1,33 +1,54 @@
-import React, { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
-import { Element } from 'react-scroll';
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+import { Element } from "react-scroll";
 import * as Tabler from "react-icons/tb";
 import Input from "../components/Input.jsx";
 import Alert from "../components/Alert.jsx";
 import Button from "../components/Button.jsx";
+import { motion } from "framer-motion";
+import { fadeUpVariant } from "../../animation/FramerAnimation.jsx";
 
 const ContactForm = () => {
   const form = useRef();
-  const [alert, setAlert] = useState({ show: false, message: '', type: '' });
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
   const [loading, setLoading] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
     setLoading(true);
     emailjs
-      .sendForm('service_lid72jm', 'template_f8z5717', form.current, 'bJGcM6yrhSHZoyx7r')
+      .sendForm(
+        "service_lid72jm",
+        "template_f8z5717",
+        form.current,
+        "bJGcM6yrhSHZoyx7r"
+      )
       .then(
         () => {
-          setAlert({ show: true, message: 'Email sent successfully!', type: 'success' });
+          setAlert({
+            show: true,
+            message: "Email sent successfully!",
+            type: "success",
+          });
           form.current.reset();
           setLoading(false);
-          setTimeout(() => setAlert({ show: false, message: '', type: '' }), 5000);
+          setTimeout(
+            () => setAlert({ show: false, message: "", type: "" }),
+            5000
+          );
         },
         () => {
-          setAlert({ show: true, message: 'Failed to send email', type: 'danger' });
+          setAlert({
+            show: true,
+            message: "Failed to send email",
+            type: "danger",
+          });
           setLoading(false);
-          setTimeout(() => setAlert({ show: false, message: '', type: '' }), 5000);
-        },
+          setTimeout(
+            () => setAlert({ show: false, message: "", type: "" }),
+            5000
+          );
+        }
       );
   };
 
@@ -38,32 +59,94 @@ const ContactForm = () => {
           <div className="container">
             <div className="contact_wrapper">
               <div className="heading_wrapper">
-                <span className="heading_title">Get In Touch</span>
-                <h2 className="heading">
+                <motion.span
+                  className="heading_title"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={1}
+                >
+                  Get In Touch
+                </motion.span>
+                <motion.h2
+                  className="heading"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={2}
+                >
                   Let's Talk For your <span>Next Projects</span>
-                </h2>
-                <p>Sed ut perspiciatis unde omnin natus totam rem aperiam eaque inventore veritatis</p>
+                </motion.h2>
+                <motion.p
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={3}
+                >
+                  Sed ut perspiciatis unde omnin natus totam rem aperiam eaque
+                  inventore veritatis
+                </motion.p>
                 <ul className="contact_list">
-                  <li>
+                  <motion.li
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={4}
+                  >
                     <Tabler.TbCircleCheckFilled />
                     <p>5+ Years Of Experience</p>
-                  </li>
-                  <li>
+                  </motion.li>
+                  <motion.li
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={5}
+                  >
                     <Tabler.TbCircleCheckFilled />
                     <p>Professional Web Designer</p>
-                  </li>
-                  <li>
+                  </motion.li>
+                  <motion.li
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={6}
+                  >
                     <Tabler.TbCircleCheckFilled />
                     <p>Mobile Apps Design</p>
-                  </li>
-                  <li>
+                  </motion.li>
+                  <motion.li
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={7}
+                  >
                     <Tabler.TbCircleCheckFilled />
                     <p>Custom Design Support</p>
-                  </li>
+                  </motion.li>
                 </ul>
               </div>
-              <form ref={form} className="contact_form" onSubmit={sendEmail}>
-                <Alert message={alert.message} type={alert.type} show={alert.show} />
+              <motion.form
+                ref={form}
+                className="contact_form"
+                onSubmit={sendEmail}
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={3}
+              >
+                <Alert
+                  message={alert.message}
+                  type={alert.type}
+                  show={alert.show}
+                />
                 <Input
                   icon={<Tabler.TbUser />}
                   label="Name"
@@ -106,16 +189,16 @@ const ContactForm = () => {
                   className="w-100"
                 />
                 <Button type="submit" className="btn" disabled={loading}>
-                  <span>{loading ? 'loading...' : 'Submit'}</span>
+                  <span>{loading ? "loading..." : "Submit"}</span>
                   <Tabler.TbChevronRight />
                 </Button>
-              </form>
+              </motion.form>
             </div>
           </div>
         </section>
-      </Element> 
+      </Element>
     </>
   );
-}
+};
 
 export default ContactForm;

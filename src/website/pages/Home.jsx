@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from "react";
-import Favicon from '../../assets/images/hero_icon.svg'
-import { Element } from 'react-scroll';
+import { motion } from "framer-motion";
+import { Element } from "react-scroll";
 import * as Tabler from "react-icons/tb";
-import WebLayout from '../WebLayout.jsx';
+import WebLayout from "../WebLayout.jsx";
 import Button from "../components/Button.jsx";
-import useTitle from '../../hooks/useTitle.jsx';
+import useTitle from "../../hooks/useTitle.jsx";
 import WorkCard from "../components/WorkCard.jsx";
 import SkillCard from "../components/SkillCard.jsx";
-import ServiceCard from "../components/ServiceCard.jsx";
 import { useSelector, useDispatch } from "react-redux";
+import ServiceCard from "../components/ServiceCard.jsx";
+import Favicon from "../../assets/images/hero_icon.svg";
 import PackageCard from "../components/PackageCard.jsx";
-import {selectProjects} from '../../redux/slices/projectSlice.jsx';
-import {fetchProjects} from '../../redux/actions/projectAction.jsx';
-import {selectServices} from '../../redux/slices/serviceSlice.jsx';
-import {fetchServices} from '../../redux/actions/serviceAction.jsx';
-import {selectSkills} from '../../redux/slices/skillSlice.jsx';
-import {fetchSkills} from '../../redux/actions/skillAction.jsx';
-import {selectPrices} from '../../redux/slices/priceSlice.jsx';
-import {fetchPrices} from '../../redux/actions/priceAction.jsx';
-import {selectPackages} from '../../redux/slices/packageSlice.jsx';
-import {fetchPackages} from '../../redux/actions/packageAction.jsx';
-import {selectUser} from '../../redux/slices/userSlice.jsx';
-import {getUserAsync} from '../../redux/actions/userAction.jsx';
-import {selectResumes} from '../../redux/slices/resumeSlice.jsx';
-import {fetchResumes} from '../../redux/actions/resumeAction.jsx';
+import { selectProjects } from "../../redux/slices/projectSlice.jsx";
+import { fetchProjects } from "../../redux/actions/projectAction.jsx";
+import { selectServices } from "../../redux/slices/serviceSlice.jsx";
+import { fetchServices } from "../../redux/actions/serviceAction.jsx";
+import { selectSkills } from "../../redux/slices/skillSlice.jsx";
+import { fetchSkills } from "../../redux/actions/skillAction.jsx";
+import { selectPrices } from "../../redux/slices/priceSlice.jsx";
+import { fetchPrices } from "../../redux/actions/priceAction.jsx";
+import { selectPackages } from "../../redux/slices/packageSlice.jsx";
+import { fetchPackages } from "../../redux/actions/packageAction.jsx";
+import { selectUser } from "../../redux/slices/userSlice.jsx";
+import { getUserAsync } from "../../redux/actions/userAction.jsx";
+import { selectResumes } from "../../redux/slices/resumeSlice.jsx";
+import { fetchResumes } from "../../redux/actions/resumeAction.jsx";
+import {
+  fadeUpVariant,
+  zoomInVariant,
+  fadeDownVariant,
+  fadeLeftVariant,
+} from "../../animation/FramerAnimation.jsx";
 
 const Home = () => {
   useTitle("Home");
@@ -36,13 +43,13 @@ const Home = () => {
   const userData = useSelector(selectUser);
   const resumes = useSelector(selectResumes);
   const [user, setUser] = useState("");
-  const activeResume = resumes && resumes.find(resume => resume.active);
+  const activeResume = resumes && resumes.find((resume) => resume.active);
 
   useEffect(() => {
     if (userData) {
       setUser(userData[0]);
     }
-  }, [userData])
+  }, [userData]);
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -53,7 +60,6 @@ const Home = () => {
     dispatch(getUserAsync());
     dispatch(fetchResumes());
   }, []);
-  
   return (
     <>
       {/* hero section*/}
@@ -63,40 +69,105 @@ const Home = () => {
             <div className="hero_main">
               <div className="hero_content">
                 <h1 className="hero_heading">
-                  <span>Hello, i'm</span>
-                  <strong>{user && user.firstName} {user && user.lastName}</strong>
-                  <p>{user && user.jobTitle}</p>
+                  <motion.span
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={4}
+                  >
+                    Hello, i'm
+                  </motion.span>
+                  <motion.strong
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={5}
+                  >
+                    {user ? user.firstName : "Hayyan Ali"}{" "}
+                    {user && user.lastName}
+                  </motion.strong>
+                  <motion.p
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={6}
+                  >
+                    {user ? user.jobTitle : "Web Developer"}
+                  </motion.p>
                 </h1>
-                <p>
+                <motion.p
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={7}
+                >
                   We denounce with righteous indignation dislike demoralized by
                   the charms of pleasure
-                </p>
-                <div className="buttons_gourp">
+                </motion.p>
+                <motion.div
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={8}
+                  className="buttons_gourp"
+                >
                   <Button className="btn">
                     <span>hire me</span>
                     <Tabler.TbChevronRight />
                   </Button>
-                  <Button to={activeResume && activeResume.featureImage} target="_blank" download={true} className="text_btn">
+                  <Button
+                    to={activeResume && activeResume.featureImage}
+                    target="_blank"
+                    download={true}
+                    className="text_btn"
+                  >
                     <span>Download Resume</span>
                     <Tabler.TbChevronRight />
                   </Button>
-                </div>
+                </motion.div>
               </div>
 
               <div className="hero_img">
-                <div className="hero_logo">
-                  <img src={Favicon} alt=""/>
-                </div>
+                <motion.div
+                  variants={zoomInVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={1}
+                  className="hero_logo"
+                >
+                  <img src={Favicon} alt="" />
+                </motion.div>
 
                 <div className="work_counter">
-                  <div className="work_count">
+                  <motion.div
+                    className="work_count"
+                    variants={fadeDownVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={4}
+                  >
                     <span className="count">2Y+</span>
                     <p className="work_text">Years Of Experience</p>
-                  </div>
-                  <div className="work_count">
+                  </motion.div>
+
+                  <motion.div
+                    className="work_count"
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={6}
+                  >
                     <span className="count">48+</span>
                     <p className="work_text">Project Complete</p>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -108,29 +179,70 @@ const Home = () => {
         <section className="about_me bg">
           <div className="container">
             <div className="about_me_wrapper">
-              <div className="about_me_content">
-                <div className="heading_wrapper">
+              <motion.div
+                className="about_me_content"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={1}
+              >
+                <motion.div
+                  className="heading_wrapper"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={2}
+                >
                   <span className="heading_title">About me</span>
                   <h2 className="heading">
                     Professional <span>Problem Solutions</span> For Digital
                     Products
                   </h2>
-                </div>
-                <p className="about_me_text">
+                </motion.div>
+                <motion.p
+                  className="about_me_text"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={3}
+                >
                   {user && user.about}
-                </p>
-                <div className="about_me_top_skills">
-
-                  {
-                    services && services.slice(0, 4).map((service, key) => (
-                      <div className="about_skill">
+                </motion.p>
+                <motion.div
+                  className="about_me_top_skills"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={4}
+                >
+                  {services &&
+                    services.slice(0, 4).map((service, key) => (
+                      <motion.div
+                        className="about_skill"
+                        key={key}
+                        variants={fadeUpVariant}
+                        initial="initial"
+                        whileInView="animate"
+                        viewport={{ once: true }}
+                        custom={5}
+                      >
                         <Tabler.TbCheck />
                         <span>{service.title}</span>
-                      </div>
-                    ))
-                  }
-                </div>
-                <div className="about_me_contact">
+                      </motion.div>
+                    ))}
+                </motion.div>
+                <motion.div
+                  className="about_me_contact"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={6}
+                >
                   <div className="about_contact">
                     <Tabler.TbMail />
                     <div className="about_contact_content">
@@ -145,11 +257,18 @@ const Home = () => {
                       <p className="contact_text">{user && user.phoneNumber}</p>
                     </div>
                   </div>
-                </div>
-              </div>
-              <figure className="about_me_img">
+                </motion.div>
+              </motion.div>
+              <motion.figure
+                variants={fadeLeftVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={3}
+                className="about_me_img"
+              >
                 <img src={user && user.imageUrl} alt="" />
-              </figure>
+              </motion.figure>
             </div>
           </div>
         </section>
@@ -159,22 +278,46 @@ const Home = () => {
         <section className="services">
           <div className="container">
             <div className="heading_wrapper center">
-              <span className="heading_title">Popular Services</span>
-              <h2 className="heading">
+              <motion.span
+                className="heading_title"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={1}
+              >
+                Popular Services
+              </motion.span>
+              <motion.h2
+                className="heading"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={2}
+              >
                 My <span>Special Service</span> For your Business Development
-              </h2>
+              </motion.h2>
             </div>
             <div className="services_wrapper">
-              {
-                services && services.map((service, key) => (
-                  <ServiceCard
+              {services &&
+                services.map((service, key) => (
+                  <motion.div
                     key={key}
-                    icon={service.featureImage}
-                    title={service.title}
-                    description={service.description}
-                  />
-                ))
-              }
+                    className="service_card_wrapper"
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={key + 2} // different custom value to stagger animation
+                  >
+                    <ServiceCard
+                      icon={service.featureImage}
+                      title={service.title}
+                      description={service.description}
+                    />
+                  </motion.div>
+                ))}
             </div>
           </div>
         </section>
@@ -186,28 +329,61 @@ const Home = () => {
             <div className="skills_wrapper">
               <div className="skills_content">
                 <div className="heading_wrapper">
-                  <span className="heading_title">My Skills</span>
-                  <h2 className="heading">
+                  <motion.span
+                    className="heading_title"
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={1}
+                  >
+                    My Skills
+                  </motion.span>
+                  <motion.h2
+                    className="heading"
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={2}
+                  >
                     Let's Explore Popular <br />
                     <span>Skills & Experience</span>
-                  </h2>
-                  <p className="skills_text">
+                  </motion.h2>
+                  <motion.p
+                    className="skills_text"
+                    variants={fadeUpVariant}
+                    initial="initial"
+                    whileInView="animate"
+                    viewport={{ once: true }}
+                    custom={3}
+                  >
                     Sed ut perspiciatis unde omnis iste natus to voluptatem
                     accusantium doloremque laudantium, totam rem aperiamc eaque
                     ipsa quae ab illo inventore veritatis
-                  </p>
+                  </motion.p>
                 </div>
               </div>
               <div className="skills_list">
-                {
-                  skills && skills.filter(featuredSkill => featuredSkill.featured).map((skill, key)=>(
-                    <SkillCard
-                      key={key}
-                      image={skill.featureImage}
-                      text={skill.title}
-                    />
-                  ))
-                }
+                {skills &&
+                  skills
+                    .filter((featuredSkill) => featuredSkill.featured)
+                    .map((skill, key) => (
+                      <motion.div
+                        key={key}
+                        className="skill_card_wrapper"
+                        variants={fadeUpVariant}
+                        initial="initial"
+                        whileInView="animate"
+                        viewport={{ once: true }}
+                        custom={key + 4} // custom value to stagger animation
+                      >
+                        <SkillCard
+                          image={skill.featureImage}
+                          text={skill.title}
+                        />
+                      </motion.div>
+                    ))}
               </div>
             </div>
           </div>
@@ -218,28 +394,63 @@ const Home = () => {
         <section className="work">
           <div className="container">
             <div className="heading_wrapper center">
-              <span className="heading_title">Latest Works</span>
-              <h2 className="heading">
+              <motion.span
+                className="heading_title"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={1}
+              >
+                Latest Works
+              </motion.span>
+              <motion.h2
+                className="heading"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={2}
+              >
                 Explore My Popular <span>Projects</span>
-              </h2>
+              </motion.h2>
             </div>
             <div className="work_wrapper">
-              {
-                projects && projects.filter(featured => featured.featured).map((project, key) => (
-                  <WorkCard
-                    key={key}
-                    id={project.id}
-                    title={project.title}
-                    description={project.shortDescription}
-                    service={project.service}
-                    imageUrl={project.featureImage}
-                  />
-                ))
-              }
+              {projects &&
+                projects
+                  .filter((featured) => featured.featured)
+                  .map((project, key) => (
+                    <motion.div
+                      key={key}
+                      className="work_card_wrapper"
+                      variants={fadeUpVariant}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={{ once: true }}
+                      custom={key + 3} // custom value to stagger animation
+                    >
+                      <WorkCard
+                        id={project.id}
+                        title={project.title}
+                        description={project.shortDescription}
+                        service={project.service}
+                        imageUrl={project.featureImage}
+                      />
+                    </motion.div>
+                  ))}
+              <motion.div
+              className="button_wrapper"
+              variants={fadeUpVariant}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              custom={projects ? projects.length + 1 : 3} // custom value to stagger animation
+            >
               <Button to="projects">
                 <span>View More Projects</span>
                 <Tabler.TbChevronRight />
               </Button>
+            </motion.div>
             </div>
           </div>
         </section>
@@ -249,33 +460,57 @@ const Home = () => {
         <section className="packages bg">
           <div className="container">
             <div className="heading_wrapper center">
-              <span className="heading_title">Pricing Package</span>
-              <h2 className="heading">
+              <motion.span
+                className="heading_title"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={1}
+              >
+                Pricing Package
+              </motion.span>
+              <motion.h2
+                className="heading"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={2}
+              >
                 Amazing <span>Pricing</span> For your Projects
-              </h2>
+              </motion.h2>
             </div>
             <div className="packages_wrapper">
-              {
-                packages.filter(filterpkg => filterpkg.featured).map((pkg, pkgKey) => {  
+              {packages
+                .filter((filterpkg) => filterpkg.featured)
+                .map((pkg, pkgKey) => {
                   return prices.map((price, key) => {
                     if (pkg.id === price.pkgId) {
                       return (
-                        <PackageCard
+                        <motion.div
                           key={key}
-                          title={pkg.title}
-                          tier={price.tier}
-                          price={price.price}
-                          salePrice={price.salePrice}
-                          desc={pkg.description}
-                          features={price.features}
-                        />
-                      )
+                          className="package_card_wrapper"
+                          variants={fadeUpVariant}
+                          initial="initial"
+                          whileInView="animate"
+                          viewport={{ once: true }}
+                          custom={key + 1}
+                        >
+                          <PackageCard
+                            title={pkg.title}
+                            tier={price.tier}
+                            price={price.price}
+                            salePrice={price.salePrice}
+                            desc={pkg.description}
+                            features={price.features}
+                          />
+                        </motion.div>
+                      );
                     }
-                    return null; // Condition false hone par null return karein
-                  })
-                })
-              }
-
+                    return null;
+                  });
+                })}
             </div>
           </div>
         </section>

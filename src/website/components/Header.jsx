@@ -27,8 +27,6 @@ const Header = () => {
     dispatch(mode());
   };
 
-  document.body.classList.toggle("dark-mode", themeMode);
-
   useEffect(() => {
     const handleScroll = () => {
       const currentPosition = window.scrollY;
