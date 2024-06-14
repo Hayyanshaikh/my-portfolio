@@ -60,6 +60,15 @@ const Home = () => {
     dispatch(getUserAsync());
     dispatch(fetchResumes());
   }, []);
+
+  const generateWhatsAppLink = () => {
+    const message = encodeURIComponent(
+      `Hello, I am interested in hiring your services. Can we discuss further details?`
+    );
+    const phoneNumber = "923172271459";
+    return `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${message}&type=phone_number&app_absent=0`;
+  };
+
   return (
     <>
       {/* hero section*/}
@@ -105,8 +114,7 @@ const Home = () => {
                   viewport={{ once: true }}
                   custom={7}
                 >
-                  We denounce with righteous indignation dislike demoralized by
-                  the charms of pleasure
+                  Creating engaging and responsive websites with modern technologies and best practices.
                 </motion.p>
                 <motion.div
                   variants={fadeUpVariant}
@@ -116,7 +124,7 @@ const Home = () => {
                   custom={8}
                   className="buttons_gourp"
                 >
-                  <Button className="btn">
+                  <Button className="btn" to={generateWhatsAppLink()} target="_blank">
                     <span>hire me</span>
                     <Tabler.TbChevronRight />
                   </Button>
@@ -153,7 +161,7 @@ const Home = () => {
                     viewport={{ once: true }}
                     custom={4}
                   >
-                    <span className="count">2Y+</span>
+                    <span className="count">2+</span>
                     <p className="work_text">Years Of Experience</p>
                   </motion.div>
 
@@ -358,9 +366,7 @@ const Home = () => {
                     viewport={{ once: true }}
                     custom={3}
                   >
-                    Sed ut perspiciatis unde omnis iste natus to voluptatem
-                    accusantium doloremque laudantium, totam rem aperiamc eaque
-                    ipsa quae ab illo inventore veritatis
+                    Passionate about crafting user-friendly and efficient web applications using modern technologies and best practices to deliver exceptional user experiences.
                   </motion.p>
                 </div>
               </div>
@@ -444,7 +450,7 @@ const Home = () => {
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
-              custom={projects ? projects.length + 1 : 3} // custom value to stagger animation
+              custom={1} // custom value to stagger animation
             >
               <Button to="projects">
                 <span>View More Projects</span>

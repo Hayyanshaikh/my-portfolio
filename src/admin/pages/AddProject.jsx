@@ -43,6 +43,7 @@ const AddProject = () => {
     date: "",
     createdAt: "",
     version: "",
+    price: "",
   });
 
   useEffect(() => {
@@ -72,6 +73,7 @@ const AddProject = () => {
         date: project.date || "",
         createdAt: project.createdAt || "",
         version: project.version || "",
+        price: project.price || "",
       });
     }
   }, [project]);
@@ -173,6 +175,7 @@ const AddProject = () => {
         date: "",
         createdAt: "",
         version: "",
+        price: "",
       });
     }
   };
@@ -365,6 +368,16 @@ const AddProject = () => {
               placeholder="Enter project version"
               type="text"
               value={formData.version}
+              onChange={handleInputChange}
+            />
+            <Input
+              icon={<Tabler.TbCurrencyDollar />}
+              label="Price"
+              id="price"
+              name="price"
+              placeholder="Enter project price"
+              type="text"
+              value={formData.price}
               onChange={handleInputChange}
             />
           </div>

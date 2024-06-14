@@ -5,14 +5,17 @@ import Banner from "../components/Banner.jsx";
 import useTitle from "../../hooks/useTitle.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import { Routes, Route, useParams } from "react-router-dom";
-import {selectProjects} from '../../redux/slices/projectSlice.jsx';
-import {fetchProjects, deleteProject} from '../../redux/actions/projectAction.jsx';
+import { selectProjects } from "../../redux/slices/projectSlice.jsx";
+import {
+  fetchProjects,
+  deleteProject,
+} from "../../redux/actions/projectAction.jsx";
 
 const SingleProject = () => {
   let { projectId } = useParams();
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
-  const project = projects.find(project => project.id === projectId);
+  const project = projects.find((project) => project.id === projectId);
   const [activeTab, setActiveTab] = useState("overview");
   const pageTitle = project && project.title;
   useTitle(pageTitle);
@@ -22,14 +25,23 @@ const SingleProject = () => {
   }, []);
 
   if (!project) {
-    return <div>Loadding...</div>
+    return <div>Loadding...</div>;
   }
+
+  const generateWhatsAppLink = () => {
+    const message = encodeURIComponent(
+      `Hello, I am interested in purchasing ${project.title}. Can you provide more details?
+Rs. ${project.price}.
+
+https://hayyanshaikh55.netlify.app/projects/${projectId}`
+    );
+    const phoneNumber = "923172271459";
+    return `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${message}&type=phone_number&app_absent=0`;
+  };
 
   return (
     <>
-      <Banner>
-        {project.title}
-      </Banner>
+      <Banner>{project.title}</Banner>
 
       {/* Overview */}
       <section className="bg">
@@ -37,27 +49,26 @@ const SingleProject = () => {
           <div className="container">
             <div className="single_project_overview_wrapper">
               <figure className="image_of_project">
-                <img
-                  src={project.featureImage}
-                  alt=""
-                />
+                <img src={project.featureImage} alt="" />
               </figure>
               <div className="content_of_project">
                 <span className="highlight_text">highlights</span>
                 <ul>
-                  {
-                    project.highlights.map((highlight, key) => (
-                      <li key={key}>{highlight}</li>
-                    ))
-                  }
+                  {project.highlights.map((highlight, key) => (
+                    <li key={key}>{highlight}</li>
+                  ))}
                 </ul>
                 <hr />
                 <div className="cta">
-                  <span className="price">$20</span>
-                  <Button>
+                  <span className="price">Rs. {project.price ? parseInt(project.price).toFixed(2) : "00.0"}</span>
+                  <Button to={generateWhatsAppLink()} target="_blank">
                     <span>purchase Now</span>
                   </Button>
-                  <Button to={project.liveLink} className="btn outline">
+                  <Button
+                    to={project.liveLink}
+                    target="_blank"
+                    className="btn outline"
+                  >
                     <span>Live Preview</span>
                     <Tabler.TbExternalLink />
                   </Button>
@@ -97,46 +108,48 @@ const SingleProject = () => {
               </div>
               <hr />
               {activeTab === "overview" && (
-                <div className="content" dangerouslySetInnerHTML={{ __html: project.longDescription }}>
-	                
-	              </div>
+                <div
+                  className="content"
+                  dangerouslySetInnerHTML={{ __html: project.longDescription }}
+                ></div>
               )}
               {activeTab === "screenshots" && (
                 <div className="content">
-                  {
-                    project.galleryImages.map((image, key) => (
-                      <figure className="project_screenshots">
-                        <img src={image} alt="" />
-                      </figure>
-                    ))
-                  }
+                  {project.galleryImages.map((image, key) => (
+                    <figure className="project_screenshots">
+                      <img src={image} alt="" />
+                    </figure>
+                  ))}
                 </div>
               )}
               {activeTab === "changelog" && (
                 <div className="content">
-                	<div className="">
-                		<p>{project.version} - {project.date}</p>
-                		<p>Initial Release of the Template</p>
-                	</div>
+                  <div className="">
+                    <p>
+                      {project.version} - {project.date}
+                    </p>
+                    <p>Initial Release of the Template</p>
+                  </div>
                 </div>
               )}
             </div>
             <div className="small_overview">
               <figure className="image_of_project">
-                <img
-                  src={project.featureImage}
-                  alt=""
-                />
+                <img src={project.featureImage} alt="" />
               </figure>
               <div className="small_overview_content">
                 <div className="small_overview_content_head">
-                  <h4>modern title</h4>
-                  <p className="price">$20</p>
+                  <h4>{project.title}</h4>
+                  <p className="price">Rs. {project.price ? parseInt(project.price).toFixed(2) : "00.0"}</p>
                 </div>
-                <Button>
+                <Button to={generateWhatsAppLink()} target="_blank">
                   <span>purchase Now</span>
                 </Button>
-                <Button to={project.liveLink} className="btn outline">
+                <Button
+                  to={project.liveLink}
+                  target="_blank"
+                  className="btn outline"
+                >
                   <span>Live Preview</span>
                   <Tabler.TbExternalLink />
                 </Button>

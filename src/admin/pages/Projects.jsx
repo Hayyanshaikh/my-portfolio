@@ -10,7 +10,7 @@ import {selectProjects} from '../../redux/slices/projectSlice.jsx';
 import {fetchProjects, deleteProject} from '../../redux/actions/projectAction.jsx';
 
 const Projects = () => {
-  useTitle("all Projects");
+  useTitle("All Projects");
   const dispatch = useDispatch();
   const projects = useSelector(selectProjects);
   const [selected, setSelected] = useState(false);

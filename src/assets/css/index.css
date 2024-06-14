@@ -733,7 +733,7 @@ figure img {
 }
 
 .project_detail .content :where(li) {
-  color: var(--text);
+  color: var(--secondary-text);
 }
 
 .project_detail .content ul {
@@ -774,19 +774,24 @@ figure img {
 
 .small_overview_content {
   display: flex;
-  flex-direction: column;
   grid-gap: 10px;
+  flex-direction: column;
 }
 
 .small_overview_content_head .price {
-  color: var(--black);
-  font-weight: 500;
+    flex: 0 0 auto;
+    font-weight: 500;
+    color: var(--black);
+    padding-left: 7px;
+    border-left: 1px solid var(--secondary-text);
+    line-height: 1.2;
 }
 
 .small_overview_content_head h4 {
-  font-weight: 600;
-  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 500;
+  color: var(--black);
   text-transform: capitalize;
+  font-size: clamp(14px, 2vw, 16px);
 }
 
 .project_screenshots {

@@ -7,8 +7,8 @@ import * as Phosphor from "react-icons/pi";
 import Logo from "../../assets/images/logo.svg";
 import DarkLogo from "../../assets/images/logo-dark.svg";
 import { mode } from "../../redux/slices/ThemeSlice.jsx";
-import {selectSettings} from '../../redux/slices/settingSlice.jsx';
-import {getSettingsAsync} from '../../redux/actions/settingAction.jsx';
+import { selectSettings } from '../../redux/slices/settingSlice.jsx';
+import { getSettingsAsync } from '../../redux/actions/settingAction.jsx';
 
 const Header = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(false);
@@ -21,7 +21,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(getSettingsAsync());
-  }, []);
+  }, [dispatch]);
 
   const toggleTheme = () => {
     dispatch(mode());
@@ -51,6 +51,15 @@ const Header = () => {
     { to: "contact", icon: <Phosphor.PiPhoneCall />, text: "Contact" },
   ];
 
+  const socialLinks = [
+    { href: setting && setting.github, icon: <Tabler.TbBrandGithub /> },
+    { href: setting && setting.whatsapp, icon: <Tabler.TbBrandWhatsapp /> },
+    { href: setting && setting.linkedin, icon: <Tabler.TbBrandLinkedin /> },
+    { href: setting && setting.twitter, icon: <Tabler.TbBrandTwitter /> },
+    { href: setting && setting.instagram, icon: <Tabler.TbBrandInstagram /> },
+    { href: setting && setting.telegram, icon: <Tabler.TbBrandTelegram /> },
+  ];
+
   return (
     <>
       <header>
@@ -60,24 +69,13 @@ const Header = () => {
               <img src={themeMode ? Logo : DarkLogo} alt="logo" />
             </Link>
             <div className="header_socials">
-              <a
-                href={setting && setting.github}
-                target="_blank"
-              >
-                <Tabler.TbBrandGithub />
-              </a>
-              <a
-                href={setting && setting.whatsapp}
-                target="_blank"
-              >
-                <Tabler.TbBrandWhatsapp />
-              </a>
-              <a
-                href={setting && setting.linkedin}
-                target="_blank"
-              >
-                <Tabler.TbBrandLinkedin />
-              </a>
+              {socialLinks.map((link, index) =>
+                link.href ? (
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" key={index}>
+                    {link.icon}
+                  </a>
+                ) : null
+              )}
             </div>
             <div className="header_rightside">
               <div className="theme">

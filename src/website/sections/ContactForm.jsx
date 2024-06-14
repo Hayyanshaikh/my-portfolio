@@ -86,8 +86,7 @@ const ContactForm = () => {
                   viewport={{ once: true }}
                   custom={3}
                 >
-                  Sed ut perspiciatis unde omnin natus totam rem aperiam eaque
-                  inventore veritatis
+                  Let's get in touch! With over 2 years of experience, I specialize in web development, problem-solving, and custom solutions.
                 </motion.p>
                 <ul className="contact_list">
                   <motion.li
@@ -98,7 +97,7 @@ const ContactForm = () => {
                     custom={4}
                   >
                     <Tabler.TbCircleCheckFilled />
-                    <p>5+ Years Of Experience</p>
+                    <p>2+ Years Of Experience</p>
                   </motion.li>
                   <motion.li
                     variants={fadeUpVariant}
@@ -108,7 +107,7 @@ const ContactForm = () => {
                     custom={5}
                   >
                     <Tabler.TbCircleCheckFilled />
-                    <p>Professional Web Designer</p>
+                    <p>Professional Web Developer</p>
                   </motion.li>
                   <motion.li
                     variants={fadeUpVariant}
@@ -118,7 +117,7 @@ const ContactForm = () => {
                     custom={6}
                   >
                     <Tabler.TbCircleCheckFilled />
-                    <p>Mobile Apps Design</p>
+                    <p>Problem Solving</p>
                   </motion.li>
                   <motion.li
                     variants={fadeUpVariant}
@@ -128,7 +127,7 @@ const ContactForm = () => {
                     custom={7}
                   >
                     <Tabler.TbCircleCheckFilled />
-                    <p>Custom Design Support</p>
+                    <p>Custom Development</p>
                   </motion.li>
                 </ul>
               </div>

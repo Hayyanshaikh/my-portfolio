@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import * as Phosphor from "react-icons/pi";
 import * as Tabler from "react-icons/tb";
 import Logo from "../../assets/images/logo.svg";
-import {selectProjects} from '../../redux/slices/projectSlice.jsx';
-import {fetchProjects} from '../../redux/actions/projectAction.jsx';
 import { useSelector, useDispatch } from "react-redux";
-import {selectUser} from '../../redux/slices/userSlice.jsx';
-import {getUserAsync} from '../../redux/actions/userAction.jsx';
-import {selectSettings} from '../../redux/slices/settingSlice.jsx';
-import {getSettingsAsync} from '../../redux/actions/settingAction.jsx';
+import { selectProjects } from '../../redux/slices/projectSlice.jsx';
+import { fetchProjects } from '../../redux/actions/projectAction.jsx';
+import { selectUser } from '../../redux/slices/userSlice.jsx';
+import { getUserAsync } from '../../redux/actions/userAction.jsx';
+import { selectSettings } from '../../redux/slices/settingSlice.jsx';
+import { getSettingsAsync } from '../../redux/actions/settingAction.jsx';
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -29,9 +29,8 @@ const Footer = () => {
     dispatch(getUserAsync());
     dispatch(getSettingsAsync());
     dispatch(fetchProjects());
-  }, []);
+  }, [dispatch]);
 
-  // Sample quick links data
   const quickLinks = [
     { id: 1, title: "About", link: "/#about" },
     { id: 2, title: "Services", link: "/#services" },
@@ -39,6 +38,15 @@ const Footer = () => {
     { id: 4, title: "Projects", link: "/projects" },
     { id: 5, title: "Packages", link: "/#packages" },
     { id: 6, title: "Contact", link: "/#contact" }
+  ];
+
+  const socialLinks = [
+    { href: setting && setting.github, icon: <Tabler.TbBrandGithub /> },
+    { href: setting && setting.whatsapp, icon: <Tabler.TbBrandWhatsapp /> },
+    { href: setting && setting.linkedin, icon: <Tabler.TbBrandLinkedin /> },
+    { href: setting && setting.twitter, icon: <Tabler.TbBrandTwitter /> },
+    { href: setting && setting.instagram, icon: <Tabler.TbBrandInstagram /> },
+    { href: setting && setting.telegram, icon: <Tabler.TbBrandTelegram /> },
   ];
 
   return (
@@ -49,35 +57,23 @@ const Footer = () => {
             <img src={Logo} alt="logo" />
           </Link>
           <div className="header_socials">
-            <a
-                href={setting && setting.github}
-                target="_blank"
-              >
-                <Tabler.TbBrandGithub />
-              </a>
-              <a
-                href={setting && setting.whatsapp}
-                target="_blank"
-              >
-                <Tabler.TbBrandWhatsapp />
-              </a>
-              <a
-                href={setting && setting.linkedin}
-                target="_blank"
-              >
-                <Tabler.TbBrandLinkedin />
-              </a>
+            {socialLinks.map((link, index) =>
+              link.href ? (
+                <a href={link.href} target="_blank" rel="noopener noreferrer" key={index}>
+                  {link.icon}
+                </a>
+              ) : null
+            )}
           </div>
         </div>
         <div className="footer_wrapper">
           <div className="footer_column">
             <h4 className="footer_heading">Quick Links</h4>
             <ul className="footer_list">
-              {/* Loop through quick links and render each one */}
-              {quickLinks && quickLinks.map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.id}>
                   <Link to={link.link}>
-                    <Phosphor.PiCaretDoubleRight/>
+                    <Phosphor.PiCaretDoubleRight />
                     <span>{link.title}</span>
                   </Link>
                 </li>
@@ -93,19 +89,17 @@ const Footer = () => {
               </li>
               <li>
                 <Phosphor.PiEnvelope />
-                <span>{user && user.email}</span>
+                <Link to={`mailto:${user && user.email}`}><span>{user && user.email}</span></Link>
               </li>
               <li>
                 <Phosphor.PiPhone />
-                <span>{user && user.phoneNumber}</span>
+                <Link to={`tel:${user && user.phoneNumber}`}><span>{user && user.phoneNumber}</span></Link>
               </li>
             </ul>
-
           </div>
           <div className="footer_column">
             <h4 className="footer_heading">Our Work</h4>
             <ul className="footer_list">
-              {/* Loop through projects and render each one */}
               {projects.slice(0, 2).map((project) => (
                 <li key={project.id}>
                   <Link to={`projects/${project.id}`}>
