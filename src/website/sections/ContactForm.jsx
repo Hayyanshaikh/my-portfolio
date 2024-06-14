@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import { Element } from "react-scroll";
 import * as Tabler from "react-icons/tb";
 import Input from "../components/Input.jsx";
@@ -13,44 +12,35 @@ const ContactForm = () => {
   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
   const [loading, setLoading] = useState(false);
 
-  const sendEmail = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    emailjs
-      .sendForm(
-        "service_lid72jm",
-        "template_f8z5717",
-        form.current,
-        "bJGcM6yrhSHZoyx7r"
-      )
-      .then(
-        () => {
-          setAlert({
-            show: true,
-            message: "Email sent successfully!",
-            type: "success",
-          });
-          form.current.reset();
-          setLoading(false);
-          setTimeout(
-            () => setAlert({ show: false, message: "", type: "" }),
-            5000
-          );
-        },
-        () => {
-          setAlert({
-            show: true,
-            message: "Failed to send email",
-            type: "danger",
-          });
-          setLoading(false);
-          setTimeout(
-            () => setAlert({ show: false, message: "", type: "" }),
-            5000
-          );
-        }
-      );
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(form.current)).toString(),
+    })
+      .then(() => {
+        setAlert({
+          show: true,
+          message: "Form submitted successfully!",
+          type: "success",
+        });
+        form.current.reset();
+        setLoading(false);
+        setTimeout(() => setAlert({ show: false, message: "", type: "" }), 5000);
+      })
+      .catch(() => {
+        setAlert({
+          show: true,
+          message: "Failed to submit form",
+          type: "danger",
+        });
+        setLoading(false);
+        setTimeout(() => setAlert({ show: false, message: "", type: "" }), 5000);
+      });
   };
+
 
   return (
     <>
@@ -134,7 +124,9 @@ const ContactForm = () => {
               <motion.form
                 ref={form}
                 className="contact_form"
-                onSubmit={sendEmail}
+                onSubmit={handleSubmit}
+                name="contact"
+                data-netlify="true"
                 variants={fadeUpVariant}
                 initial="initial"
                 whileInView="animate"
@@ -146,6 +138,7 @@ const ContactForm = () => {
                   type={alert.type}
                   show={alert.show}
                 />
+                <input type="hidden" name="form-name" value="contact" />
                 <Input
                   icon={<Tabler.TbUser />}
                   label="Name"
