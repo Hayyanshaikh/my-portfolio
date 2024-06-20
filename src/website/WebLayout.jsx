@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Outlet, ScrollRestoration } from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import ContactForm from './sections/ContactForm.jsx';
-import { mode as toggleThemeMode } from '../redux/slices/ThemeSlice.jsx';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { selectSettings } from '../redux/slices/settingSlice.jsx';
 import { getSettingsAsync } from '../redux/actions/settingAction.jsx';
+import { mode as toggleThemeMode } from '../redux/slices/ThemeSlice.jsx';
 
 const WebLayout = () => {
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ const WebLayout = () => {
         <>
           <Header toggleTheme={toggleTheme} themeMode={themeMode} />
           <Outlet />
+          <Analytics />
           <ContactForm />
           <Footer />
           <ScrollRestoration />
