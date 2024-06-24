@@ -15,6 +15,7 @@ const Projects = () => {
   const projects = useSelector(selectProjects);
   const [selected, setSelected] = useState(false);
   const [selectedAll, setSelectedAll] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
   	dispatch(fetchProjects());
@@ -40,17 +41,28 @@ const Projects = () => {
   	dispatch(fetchProjects());
 	}
 
+	const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProjects = projects.filter(project =>
+    project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    project.shortDescription.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 	return (
 		<>
 			<div className="admin_head">
 				<h4>all Projects</h4>
 				<div className="admin_head_actions">
 					<Input
-	          icon={<Tabler.TbSearch />}
-	          id="searchProject"
-	          name="searchProject"
-	          placeholder="Search project"
-	        />
+            icon={<Tabler.TbSearch />}
+            id="searchProjects"
+            name="searchProjects"
+            placeholder="Search Projects"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
 					<Button to="add">
 						<Tabler.TbPlus/>
 						<span>Add project</span>
@@ -117,7 +129,7 @@ const Projects = () => {
 			  </thead>
 			  <tbody>
 			    {
-			    	projects.map((project, index) => (
+			    	filteredProjects.map((project, index) => (
 						  <tr key={project.id}>
 						    <td>
 						      <div>

@@ -40,8 +40,10 @@ const Login = () => {
           <Input
             icon={<Tabler.TbUser />}
             label="Email"
-            id="email"
-            name="email"
+            id="loginEmail"
+            name="loginEmail"
+            required={true}
+            type="email"
             placeholder="Enter your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

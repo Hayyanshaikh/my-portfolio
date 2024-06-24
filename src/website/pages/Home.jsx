@@ -382,7 +382,7 @@ const Home = () => {
                         initial="initial"
                         whileInView="animate"
                         viewport={{ once: true }}
-                        custom={key + 4} // custom value to stagger animation
+                        custom={key + 1}
                       >
                         <SkillCard
                           image={skill.featureImage}
@@ -433,7 +433,7 @@ const Home = () => {
                       initial="initial"
                       whileInView="animate"
                       viewport={{ once: true }}
-                      custom={key + 3} // custom value to stagger animation
+                      custom={1}
                     >
                       <WorkCard
                         id={project.id}
@@ -441,17 +441,18 @@ const Home = () => {
                         description={project.shortDescription}
                         service={project.service}
                         imageUrl={project.featureImage}
+                        liveLink={project.liveLink}
                       />
                     </motion.div>
                   ))}
               <motion.div
-              className="button_wrapper"
-              variants={fadeUpVariant}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              custom={1} // custom value to stagger animation
-            >
+                className="button_wrapper"
+                variants={fadeUpVariant}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                custom={1}
+              >
               <Button to="projects">
                 <span>View More Projects</span>
                 <Tabler.TbChevronRight />

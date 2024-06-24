@@ -13,8 +13,9 @@ const Packages = () => {
   useTitle("all Packages");
   const dispatch = useDispatch();
   const packages = useSelector(selectPackages);
-  const [selected, setSelected] = useState(false);
-  const [selectedAll, setSelectedAll] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [selectedAll, setSelectedAll] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
   	dispatch(fetchPackages());
@@ -39,17 +40,28 @@ const Packages = () => {
   	dispatch(fetchPackages());
 	}
 
+	const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredPackages = packages.filter(pkg =>
+    pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    pkg.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 	return (
 		<>
 			<div className="admin_head">
 				<h4>all Packages</h4>
 				<div className="admin_head_actions">
 					<Input
-	          icon={<Tabler.TbSearch />}
-	          id="searchPackage"
-	          name="searchPackage"
-	          placeholder="Search package"
-	        />
+            icon={<Tabler.TbSearch />}
+            id="searchPackage"
+            name="searchPackage"
+            placeholder="Search package"
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
 					<Button to="add">
 						<Tabler.TbPlus/>
 						<span>Add package</span>
@@ -108,7 +120,7 @@ const Packages = () => {
 			  </thead>
 			  <tbody>
 			    {
-			    	packages.map((pkg, index) => (
+			    	filteredPackages.map((pkg, index) => (
 						  <tr key={pkg.id}>
 						    <td>
 						      <div>

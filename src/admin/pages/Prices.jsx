@@ -29,6 +29,7 @@ const Prices = () => {
   const [selected, setSelected] = useState(Array(prices.length).fill(false));
   const [selectedAll, setSelectedAll] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     pkgId: "",
     pkgTitle: "",
@@ -164,6 +165,14 @@ const Prices = () => {
     await dispatch(deletePrice(id));
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredPrices = prices.filter(price =>
+    price.pkgTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    // price.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <>
       <div className="admin_head">
@@ -171,9 +180,11 @@ const Prices = () => {
         <div className="admin_head_actions">
           <Input
             icon={<Tabler.TbSearch />}
-            id="searchPrices"
-            name="searchPrices"
-            placeholder="Search Price"
+            id="searchPrice"
+            name="searchPrice"
+            placeholder="Search price"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
@@ -280,7 +291,7 @@ const Prices = () => {
               </tr>
             </thead>
             <tbody>
-              {prices.map((price, index) => (
+              {filteredPrices.map((price, index) => (
                 <tr key={price.id}>
                   <td>
                     <div>

@@ -17,7 +17,7 @@ const Dropzone = ({ multiple = false, sendFilesToParent, maxFiles = 10 }) => {
       <div {...getRootProps({ className: "dropzone" })}>
         <Tabler.TbCloudUpload />
         <p>Drag and Drop</p>
-        <Button>
+        <Button type="button">
           <span>Browse</span>
         </Button>
       </div>

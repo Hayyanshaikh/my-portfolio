@@ -2,7 +2,7 @@ import React from 'react';
 import * as Tabler from "react-icons/tb";
 import { Link } from "react-router-dom";
 
-const WorkCard = ({ id, imageUrl, service, title, description, ...restProps }) => {
+const WorkCard = ({ id, liveLink, imageUrl, service, title, description, ...restProps }) => {
   return (
     <div className="work_card" {...restProps}>
       <figure className="work_img">
@@ -13,7 +13,7 @@ const WorkCard = ({ id, imageUrl, service, title, description, ...restProps }) =
           <span className="work_category">{service}</span>
           <Link to={`projects/${id}`} className="work_title">{title}</Link>
           <p className="work_description">{description}</p>
-          <Link to={`projects/${id}`}>
+          <Link to={liveLink} target="_blank">
            <Tabler.TbArrowUpRight/>
           </Link>
         </hgroup>

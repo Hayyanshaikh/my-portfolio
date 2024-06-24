@@ -12,7 +12,7 @@ import Input from '../../website/components/Input.jsx';
 const experiences = [
   {
     id: 1,
-    jobTitle: "Frontend Developer",
+    title: "Frontend Developer",
     startDate: "2022-01-01",
     endDate: "2024-05-01",
     company: "ABC Corp",
@@ -20,7 +20,7 @@ const experiences = [
   },
   {
     id: 2,
-    jobTitle: "UI/UX Designer",
+    title: "UI/UX Designer",
     startDate: "2020-06-01",
     endDate: "2021-12-31",
     company: "XYZ Inc",
@@ -32,6 +32,11 @@ const experiences = [
 const Experience = () => {
   useTitle("All Experience");
   const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [selectedAll, setSelectedAll] = useState(false);
+  const [isPresent, setIsPresent] = useState(false);
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const openModal = () => {
     setIsOpen(true);
@@ -41,9 +46,8 @@ const Experience = () => {
     setIsOpen(false);
   };
 
-  const [selected, setSelected] = useState(Array(experiences.length).fill(false));
-
   const handleSelectAll = (e) => {
+    setSelectedAll(e.target.checked);
     const updatedSelected = Array(experiences.length).fill(e.target.checked);
     setSelected(updatedSelected);
   };
@@ -55,6 +59,13 @@ const Experience = () => {
       return updatedSelected;
     });
   };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredExperiences = experiences.filter(experience =>
+    experience.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -65,76 +76,89 @@ const Experience = () => {
             icon={<Tabler.TbSearch />}
             id="searchExperience"
             name="searchExperience"
-            placeholder="Search Experience"
+            placeholder="Search experience"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
       <div className="wrapper">
-      	<div className="wrapper_sidebar">
-      		<div className="sidebar_item">
-      		<h4 className="sidebar_heading center">Upload Company logo</h4>
-						<div className="image_thumbnail">
-							<Tabler.TbPhotoScan/>
-							{/*<figure>
-								<img src="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg" alt=""/>
-							</figure>*/}
-						</div>
-		        <Button onClick={openModal}>
-		        	<span>Upload Image</span>
-		        </Button>
-						<Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
-			        <Media/>
-			      </Modal>
-		        <Input
-		        	icon={<Tabler.TbBriefcase/>}
-		          label="Job Title"
-		          id="jobTitle"
-		          name="jobTitle"
-		          placeholder="Enter job title"
-		          className="w-full"
-		          type="text"
-		        />
-		        <Input
-		          label="Start Date"
-		          id="startDate"
-		          name="startDate"
-		          type="date"
-		        	icon={<Tabler.TbCalendarEvent/>}
-		        />
-		        <Input
-		          label="End Date"
-		          id="endDate"
-		          name="endDate"
-		          type="date"
-		        	icon={<Tabler.TbCalendarEvent/>}
-		        />
-		        <Checkbox label="Presenet"/>
-		        <Input
-		          label="Company"
-		          id="company"
-		          name="company"
-		          placeholder="Enter company name"
-		        	icon={<Tabler.TbBuilding/>}
-		          type="text"
-		        />
-		        <Checkbox label="Featured Experience"/>
-		        <div className="form_action_buttons">
-		          <Button className="btn outline">
-		            <span>Cancel</span>
-		          </Button>
-		          <Button>
-		            <span>Save</span>
-		          </Button>
-		        </div>
-		      </div>
-      	</div>
+        <div className="wrapper_sidebar">
+          <div className="sidebar_item">
+          <h4 className="sidebar_heading center">Upload Company logo</h4>
+            <div className="image_thumbnail">
+              <Tabler.TbPhotoScan/>
+              {/*<figure>
+                <img src="https://cdn.dribbble.com/users/2378593/screenshots/19045201/media/5e02c16d692630603babae6869bb1036.jpg" alt=""/>
+              </figure>*/}
+            </div>
+            <Button onClick={openModal}>
+              <span>Upload Image</span>
+            </Button>
+            <Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
+              <Media/>
+            </Modal>
+            <Input
+              icon={<Tabler.TbBriefcase/>}
+              label="Job Title"
+              id="title"
+              name="title"
+              placeholder="Enter job title"
+              className="w-full"
+              type="text"
+            />
+            <Input
+              label="Start Date"
+              id="startDate"
+              name="startDate"
+              type="date"
+              icon={<Tabler.TbCalendarEvent/>}
+            />
+            <Input
+              label="End Date"
+              id="endDate"
+              name="endDate"
+              type="date"
+              icon={<Tabler.TbCalendarEvent/>}
+            />
+            <Checkbox
+              label="Present"
+              checked={isPresent}
+              onChange={() => setIsPresent(!isPresent)}
+            />
+            <Input
+              label="Company"
+              id="company"
+              name="company"
+              placeholder="Enter company name"
+              icon={<Tabler.TbBuilding/>}
+              type="text"
+            />
+            <Checkbox
+              label="Featured Experience"
+              checked={isFeatured}
+              onChange={() => setIsFeatured(!isFeatured)}
+            />
+            <div className="form_action_buttons">
+              <Button className="btn outline">
+                <span>Cancel</span>
+              </Button>
+              <Button>
+                <span>Save</span>
+              </Button>
+            </div>
+          </div>
+        </div>
         <div className="wrapper_content">
           <table>
             <thead>
               <tr>
                 <th>
                   <div>
-                    <Checkbox onChange={handleSelectAll} />
+                    <Checkbox
+                      checked={selectedAll}
+                      onChange={handleSelectAll}
+                    />
                   </div>
                 </th>
                 <th>
@@ -185,14 +209,17 @@ const Experience = () => {
               </tr>
             </thead>
             <tbody>
-              {experiences.map((experience, index) => (
+              {filteredExperiences.map((experience, index) => (
                 <tr key={experience.id}>
                   <td>
                     <div>
-                      <Checkbox checked={selected[index]} onChange={() => handleSelect(index)} />
+                      <Checkbox
+                        checked={selected[index]}
+                        onChange={() => handleSelect(index)}
+                      />
                     </div>
                   </td>
-                  <td>{experience.jobTitle}</td>
+                  <td>{experience.title}</td>
                   <td>{experience.startDate}</td>
                   <td>{experience.endDate}</td>
                   <td>{experience.company}</td>

@@ -205,6 +205,7 @@ const AddProject = () => {
           <Input
             icon={<Tabler.TbFileDescription />}
             label="Title"
+            required={true}
             id="title"
             name="title"
             placeholder="Enter your title"

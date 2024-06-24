@@ -1,7 +1,8 @@
 /* Admin layout styles */
-.admin-layout *{
+.admin-layout * {
   transition: 0.2s ease-in-out;
 }
+
 .admin-layout {
   display: flex;
   min-height: 100dvh;
@@ -35,6 +36,10 @@
   align-items: center;
 }
 
+.nav-links :where(a, button):has(img) {
+  grid-gap: 10px;
+}
+
 .nav-links :where(a, button).active {
   color: var(--primary);
 }
@@ -43,6 +48,12 @@
   width: 22px;
   height: 22px;
   stroke-width: 1.6;
+}
+
+.nav-links :where(a, button) img {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
 }
 
 .admin-header ul {
@@ -106,7 +117,7 @@
   border-top: 1px solid var(--border);
 }
 
-.login_form{
+.login_form {
   width: 100%;
   margin: auto;
   height: 100%;
@@ -130,7 +141,7 @@
   background-color: var(--light-background);
 }
 
-.login_form .logo{
+.login_form .logo {
   width: 170px;
   align-self: center;
 }
@@ -523,12 +534,14 @@ table :where(td, th):has(.action_button) {
   position: relative;
   border-radius: 8px;
 }
-.screen_shots_imgs figure svg{
+
+.screen_shots_imgs figure svg {
   stroke-width: 1.8;
   stroke: var(--del);
   height: 20px;
   width: 20px;
 }
+
 .screen_shots_imgs figure button {
   opacity: 0;
   width: 100%;
@@ -604,14 +617,14 @@ table :where(td, th):has(.action_button) {
 
 .media_list {
   flex: 1;
-    max-height: 100%;
-    overflow: auto;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .media_list ul {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
 }
 
 .media_list ul li {

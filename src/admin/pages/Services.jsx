@@ -27,6 +27,7 @@ const Services = () => {
   const [selected, setSelected] = useState(Array(services.length).fill(false));
   const [selectedAll, setSelectedAll] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -106,6 +107,15 @@ const Services = () => {
     await dispatch(deleteService(id));
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredServices = services.filter(service =>
+    service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    service.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
@@ -116,9 +126,11 @@ const Services = () => {
         <div className="admin_head_actions">
           <Input
             icon={<Tabler.TbSearch />}
-            id="searchServices"
-            name="searchServices"
-            placeholder="Search Service"
+            id="searchService"
+            name="searchService"
+            placeholder="Search service"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
@@ -218,7 +230,7 @@ const Services = () => {
               </tr>
             </thead>
             <tbody>
-              {services.map((service, index) => (
+              {filteredServices.map((service, index) => (
                 <tr key={service.id}>
                   <td>
                     <div>

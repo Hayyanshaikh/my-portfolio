@@ -27,6 +27,7 @@ const Skills = () => {
   const [selected, setSelected] = useState(Array(skills.length).fill(false));
   const [selectedAll, setSelectedAll] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -34,6 +35,7 @@ const Skills = () => {
     featureImage: "",
     createdAt: "",
   });
+
   useEffect(() => {
   	dispatch(fetchSkills());
   }, []);
@@ -106,6 +108,15 @@ const Skills = () => {
     await dispatch(deleteSkill(id));
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredSkills = skills.filter(skill =>
+    skill.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    skill.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
@@ -116,9 +127,11 @@ const Skills = () => {
         <div className="admin_head_actions">
           <Input
             icon={<Tabler.TbSearch />}
-            id="searchSkills"
-            name="searchSkills"
-            placeholder="Search Skill"
+            id="searchPackage"
+            name="searchPackage"
+            placeholder="Search package"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
@@ -218,7 +231,7 @@ const Skills = () => {
               </tr>
             </thead>
             <tbody>
-              {skills.map((skill, index) => (
+              {filteredSkills.map((skill, index) => (
                 <tr key={skill.id}>
                   <td>
                     <div>

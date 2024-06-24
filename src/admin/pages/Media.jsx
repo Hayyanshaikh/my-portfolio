@@ -50,7 +50,7 @@ const Media = ({ getFile, limit }) => { // Pass getFile function as a prop
                   <img src={file.imageUrl} alt={file.fileName} />
                 </figure>
                 <h4 onClick={() => handleTransferFile(file)}>{file.fileName}</h4>
-                <button onClick={() => handleDeleteImg(file)}>
+                <button type="button" onClick={() => handleDeleteImg(file)}>
                   <Tabler.TbTrash />
                 </button>
               </li>

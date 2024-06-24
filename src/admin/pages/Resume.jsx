@@ -27,6 +27,7 @@ const Resume = () => {
   const [selected, setSelected] = useState(Array(resumes.length).fill(false));
   const [selectedAll, setSelectedAll] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     active: false,
@@ -103,6 +104,14 @@ const Resume = () => {
     await dispatch(deleteResume(id));
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredResumes = resumes.filter(resume =>
+    resume.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Modal className="media_modal" isOpen={isOpen} onClose={closeModal}>
@@ -113,9 +122,11 @@ const Resume = () => {
         <div className="admin_head_actions">
           <Input
             icon={<Tabler.TbSearch />}
-            id="searchResumes"
-            name="searchResumes"
-            placeholder="Search Resume"
+            id="searchResume"
+            name="searchResume"
+            placeholder="Search resume"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
@@ -199,7 +210,7 @@ const Resume = () => {
               </tr>
             </thead>
             <tbody>
-              {resumes.map((resume, index) => (
+              {filteredResumes.map((resume, index) => (
                 <tr key={resume.id}>
                   <td>
                     <div>

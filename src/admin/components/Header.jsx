@@ -6,13 +6,21 @@ import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import DarkLogo from "../../assets/images/logo-dark.svg";
 import { mode } from "../../redux/slices/ThemeSlice.jsx";
-import { selectIsAuthenticated } from "../../redux/slices/authSlice.jsx";
 import { signOutAsync } from "../../redux/actions/authAction.jsx";
+import { selectIsAuthenticated } from "../../redux/slices/authSlice.jsx";
+import { selectUser, selectLoading } from "../../redux/slices/userSlice.jsx";
+import { getUserAsync, updateUserAsync } from "../../redux/actions/userAction.jsx";
 
 const Header = () => {
   const dispatch = useDispatch();  
   const IsAuthenticated = useSelector(selectIsAuthenticated);
   const themeMode = useSelector((state) => state.theme.mode);
+  const user = useSelector(selectUser);
+  const loading = useSelector(selectLoading);
+
+  useEffect(() => {
+    dispatch(getUserAsync());
+  }, [])
 
   const toggleTheme = () => {
     dispatch(mode());
@@ -37,7 +45,7 @@ const Header = () => {
               <>
                 <li>
                   <NavLink to="/hs-admin/profile">
-                    <Tabler.TbUserCircle />
+                    <img src={user[0] && user[0].imageUrl} alt="profile image"/>
                     <span>My Profile</span>
                   </NavLink>
                 </li>
