@@ -11,12 +11,15 @@ import { useSelector, useDispatch } from "react-redux";
 import ServiceCard from "../components/ServiceCard.jsx";
 import Favicon from "../../assets/images/hero_icon.svg";
 import PackageCard from "../components/PackageCard.jsx";
+import TestimonialCard from "../components/TestimonialCard.jsx";
 import { selectProjects } from "../../redux/slices/projectSlice.jsx";
 import { fetchProjects } from "../../redux/actions/projectAction.jsx";
 import { selectServices } from "../../redux/slices/serviceSlice.jsx";
 import { fetchServices } from "../../redux/actions/serviceAction.jsx";
 import { selectSkills } from "../../redux/slices/skillSlice.jsx";
 import { fetchSkills } from "../../redux/actions/skillAction.jsx";
+import { selectTestimonials } from "../../redux/slices/testimonialSlice.jsx";
+import { fetchTestimonials } from "../../redux/actions/testimonialAction.jsx";
 import { selectPrices } from "../../redux/slices/priceSlice.jsx";
 import { fetchPrices } from "../../redux/actions/priceAction.jsx";
 import { selectPackages } from "../../redux/slices/packageSlice.jsx";
@@ -31,6 +34,10 @@ import {
   fadeDownVariant,
   fadeLeftVariant,
 } from "../../animation/FramerAnimation.jsx";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const Home = () => {
   useTitle("Home");
@@ -38,6 +45,7 @@ const Home = () => {
   const projects = useSelector(selectProjects);
   const services = useSelector(selectServices);
   const skills = useSelector(selectSkills);
+  const testimonials = useSelector(selectTestimonials);
   const prices = useSelector(selectPrices);
   const packages = useSelector(selectPackages);
   const userData = useSelector(selectUser);
@@ -55,6 +63,7 @@ const Home = () => {
     dispatch(fetchProjects());
     dispatch(fetchServices());
     dispatch(fetchSkills());
+    dispatch(fetchTestimonials());
     dispatch(fetchPrices());
     dispatch(fetchPackages());
     dispatch(getUserAsync());
@@ -462,9 +471,81 @@ const Home = () => {
           </div>
         </section>
       </Element>
+      {/* testimonial */}
+      <Element name="testimonial">
+        <section className="testimonial bg">
+          <div className="container">
+            <div className="testimonial_wrapper">
+              <div className="heading_wrapper">
+                <motion.span
+                  className="heading_title"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={1}
+                >
+                  Testimonials
+                </motion.span>
+                <motion.h2
+                  className="heading"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={2}
+                >
+                  Client Success <span>Stories & Testimonials</span>
+                </motion.h2>
+                <motion.p
+                  className="skills_text"
+                  variants={fadeUpVariant}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                  custom={3}
+                >
+                  Our clients' feedback fuels our passion for excellence. Their success stories reflect our commitment to delivering outstanding results.
+                </motion.p>
+                <div className="swiper-testimonial-buttons">
+                  <button className="swiper-testimonial-button swiper-button-prev">
+                    <Tabler.TbArrowUpLeft/>
+                  </button>
+                  <button className="swiper-testimonial-button swiper-button-next">
+                    <Tabler.TbArrowUpRight/>
+                  </button>
+                </div>
+              </div>
+              <div className="testimonials_slider">
+                <Swiper
+                  modules={[Navigation]}
+                  spaceBetween={30}
+                  slidesPerView={2}
+                  grabCursor={true}
+                  navigation={{
+                    prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-button-next',
+                  }}
+                >
+                  {testimonials.map((testimonial) => (
+                    <SwiperSlide key={testimonial.id}>
+                      <TestimonialCard
+                        featureImage={testimonial.featureImage}
+                        quote={testimonial.quote}
+                        customerName={testimonial.customerName}
+                        title={testimonial.title}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Element>
       {/* Packages */}
       <Element name="packages">
-        <section className="packages bg">
+        <section className="packages">
           <div className="container">
             <div className="heading_wrapper center">
               <motion.span

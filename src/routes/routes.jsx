@@ -3,6 +3,7 @@ import React from 'react';
 import AdminLayout from '../admin/AdminLayout';
 import AdminProfile from '../admin/pages/Profile.jsx';
 import AdminExperience from '../admin/pages/Experience.jsx';
+import AdminTestimonial from '../admin/pages/Testimonial.jsx';
 import AdminDashboard from '../admin/pages/Dashboard.jsx';
 import AdminProjects from '../admin/pages/Projects.jsx';
 import AdminAddProject from '../admin/pages/AddProject.jsx';
@@ -61,6 +62,14 @@ const adminRoutes = [
       {
         path: "experience",
         element: <AdminExperience/>,
+      },
+      {
+        path: "testimonial",
+        element: <AdminTestimonial/>,
+      },
+      {
+        path: "testimonial/:id",
+        element: <AdminTestimonial/>,
       },
       {
         path: "projects",

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/react';
 import { useSelector, useDispatch } from 'react-redux';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
@@ -60,7 +59,6 @@ const WebLayout = () => {
         <>
           <Header toggleTheme={toggleTheme} themeMode={themeMode} />
           <Outlet />
-          <Analytics />
           <ContactForm />
           <Footer />
           <ScrollRestoration />

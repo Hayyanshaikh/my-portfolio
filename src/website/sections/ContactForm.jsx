@@ -45,7 +45,7 @@ const ContactForm = () => {
   return (
     <>
       <Element name="contact">
-        <section className="Contact">
+        <section className="contact">
           <div className="container">
             <div className="contact_wrapper">
               <div className="heading_wrapper">

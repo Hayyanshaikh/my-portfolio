@@ -30,10 +30,7 @@ const SingleProject = () => {
 
   const generateWhatsAppLink = () => {
     const message = encodeURIComponent(
-      `Hello, I am interested in purchasing ${project.title}. Can you provide more details?
-Rs. ${project.price}.
-
-https://hayyanshaikh55.netlify.app/projects/${projectId}`
+      `Hello, I am interested in purchasing ${project.title}. Can you provide more details?`
     );
     const phoneNumber = "923172271459";
     return `https://api.whatsapp.com/send/?phone=${phoneNumber}&text=${message}&type=phone_number&app_absent=0`;
@@ -64,14 +61,18 @@ https://hayyanshaikh55.netlify.app/projects/${projectId}`
                   <Button to={generateWhatsAppLink()} target="_blank">
                     <span>purchase Now</span>
                   </Button>
-                  <Button
-                    to={project.liveLink}
-                    target="_blank"
-                    className="btn outline"
-                  >
-                    <span>Live Preview</span>
-                    <Tabler.TbExternalLink />
-                  </Button>
+                  {
+                  project.service === "Web Development" ? (
+                    <Button
+                      to={project.liveLink}
+                      target="_blank"
+                      className="btn outline"
+                    >
+                      <span>Live Preview</span>
+                      <Tabler.TbExternalLink />
+                    </Button>
+                  ) : ""
+                }
                 </div>
               </div>
             </div>
@@ -140,19 +141,22 @@ https://hayyanshaikh55.netlify.app/projects/${projectId}`
               <div className="small_overview_content">
                 <div className="small_overview_content_head">
                   <h4>{project.title}</h4>
-                  <p className="price">Rs. {project.price ? parseInt(project.price).toFixed(2) : "00.0"}</p>
                 </div>
                 <Button to={generateWhatsAppLink()} target="_blank">
                   <span>purchase Now</span>
                 </Button>
-                <Button
-                  to={project.liveLink}
-                  target="_blank"
-                  className="btn outline"
-                >
-                  <span>Live Preview</span>
-                  <Tabler.TbExternalLink />
-                </Button>
+                {
+                  project.service === "Web Development" ? (
+                    <Button
+                      to={project.liveLink}
+                      target="_blank"
+                      className="btn outline"
+                    >
+                      <span>Live Preview</span>
+                      <Tabler.TbExternalLink />
+                    </Button>
+                  ) : ""
+                }
               </div>
             </div>
           </div>

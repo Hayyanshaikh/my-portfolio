@@ -25,9 +25,9 @@ const AddProject = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState("");
   const servicesData = useSelector(selectServices);
-  const [hightlightField, setHightlightField] = useState("");
   const project = projects.find(project => project.id === id);
   useTitle(!project ? "Add New Project" : `Update ${project && project.title}`);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     service: "",
@@ -98,10 +98,6 @@ const AddProject = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const highlightChange = (e) => {
-    const { value } = e.target;
-    setHightlightField(value);
-  };
 
   const openModal = (type) => {
   	setModalType(type);
@@ -138,9 +134,19 @@ const AddProject = () => {
   const handleAddhighlights = () => {
     setFormData((prev) => ({
       ...prev,
-      highlights: [...formData.highlights, hightlightField],
+      highlights: [...formData.highlights, searchTerm],
     }));
-    setHightlightField("");
+  };
+
+  const highlightChange = (value) => {
+    setFormData({
+      ...formData,
+      highlights: [...formData.highlights ,value],
+    });
+  };
+
+  const handleSearchChange = (value) => {
+    setSearchTerm(value);
   };
 
   const deleteHighlight = (index) => {
@@ -179,6 +185,11 @@ const AddProject = () => {
       });
     }
   };
+
+  const highlights = Array.from(new Set(projects.flatMap(project => project.highlights))).map(highlight => ({
+    value: highlight,
+    label: highlight
+  }));
 
   return (
     <>
@@ -315,13 +326,14 @@ const AddProject = () => {
           <div className="sidebar_item">
             <h4 className="sidebar_heading">Add Highlights</h4>
             <div className="highlight_input">
-              <Input
-                type="text"
-                id="add-highlights"
-                name="add-highlights"
-                placeholder="Add Highlight"
-                value={hightlightField}
-                onChange={highlightChange}
+              <Select
+                id="serviceSelect"
+                name="serviceSelect"
+                selected={formData.highlight}
+                options={highlights}
+                className="custom-select"
+                onSelect={highlightChange}
+                onSearchChange={handleSearchChange}
               />
               <Button type="button" onClick={handleAddhighlights}>
                 <Tabler.TbPlus />

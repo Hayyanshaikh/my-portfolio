@@ -632,7 +632,7 @@ figure img {
   filter: drop-shadow(1px 1px 300px var(--primary));
 }
 
-.hero_logo img{
+.hero_logo img {
   width: 100%;
   height: 100%;
 }
@@ -664,11 +664,11 @@ figure img {
   z-index: 11;
 }
 
-.work_count:nth-child(1){
+.work_count:nth-child(1) {
   align-self: flex-start;
 }
 
-.work_count:nth-child(2){
+.work_count:nth-child(2) {
   align-self: flex-end;
 }
 
@@ -777,12 +777,12 @@ figure img {
 }
 
 .small_overview_content_head .price {
-    flex: 0 0 auto;
-    font-weight: 500;
-    color: var(--black);
-    padding-left: 7px;
-    border-left: 1px solid var(--secondary-text);
-    line-height: 1.2;
+  flex: 0 0 auto;
+  font-weight: 500;
+  color: var(--black);
+  padding-left: 7px;
+  border-left: 1px solid var(--secondary-text);
+  line-height: 1.2;
 }
 
 .small_overview_content_head h4 {
@@ -1079,7 +1079,7 @@ figure img {
   margin-top: 30px;
 }
 
-.work_card_wrapper{
+.work_card_wrapper {
   width: 100%;
 }
 
@@ -1090,7 +1090,7 @@ figure img {
   align-items: center;
 }
 
-.work_card_wrapper:nth-child(even) .work_card{
+.work_card_wrapper:nth-child(even) .work_card {
   flex-direction: row-reverse;
 }
 
@@ -1156,15 +1156,19 @@ figure img {
   border: 1px solid var(--border);
 }
 
-.work_content svg:hover{
+.work_content svg:hover {
   background: var(--primary);
   stroke: var(--white);
 }
 
 .projects_grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   grid-gap: 30px;
+}
+
+.projects_grid:has(.work_card_v2:nth-child(3)){
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
 
 .work_card_v2 {
@@ -1174,8 +1178,12 @@ figure img {
 }
 
 .work_card_v2 .work_img {
-  height: 280px;
+  height: 380px;
   border-radius: 12px;
+}
+
+.projects_grid:has(.work_card_v2:nth-child(3)) .work_card_v2 .work_img{
+  height: 280px;
 }
 
 .work_card_v2 .work_content {
@@ -1273,6 +1281,161 @@ figure img {
 .cta .price {
   color: var(--black);
   font-weight: 500;
+}
+
+/* Testimonial */
+.testimonial_wrapper {
+  display: flex;
+  align-items: center;
+  grid-gap: 60px;
+  justify-content: space-between;
+}
+
+.testimonial_wrapper .heading_wrapper {
+  max-width: 400px;
+}
+
+.swiper-testimonial-buttons{
+  display: flex;
+  grid-gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.swiper-testimonial-button {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    color: var(--black);
+    inset: unset;
+    position: relative;
+    border-radius: 50px;
+    transition: 0.2s ease;
+    border: 1px solid var(--border);
+}
+
+.swiper-testimonial-button svg{
+  width: 20px;
+  height: 20px;
+}
+
+.swiper-testimonial-button:hover{
+  color: var(--white);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.swiper-testimonial-button:after{
+  content: none;
+}
+
+.testimonials_slider {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+}
+
+.swiper-slide:has(.testimonial_card){
+  height: unset;
+}
+
+.testimonial_card {
+  height: 100%;
+  display: flex;
+  padding: 50px 30px;
+  text-align: center;
+  color: var(--white);
+  border-radius: 12px;
+  align-items: center;
+  transition: 0.2s ease;
+  flex-direction: column;
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+.testimonial_card:hover,
+.swiper-slide.swiper-slide-active .testimonial_card {
+  background: var(--body);
+}
+
+.testimonial_image {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  justify-content: center;
+  background: var(--light-background);
+}
+
+.testimonial_image svg{
+  width: 50px;
+  height: 50px;
+  stroke-width: 1px;
+  stroke: var(--black);
+}
+
+.testimonial_image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.testimonial_quote_icon {
+  top: 10px;
+  left: -20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  margin: 0 auto;
+  font-size: 24px;
+  border-radius: 50%;
+  position: absolute;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-background);
+  transition: 0.2s ease-in-out;
+}
+
+.testimonial_quote_icon svg{
+  width: 25px;
+  height: 25px;
+  stroke-width: 1.8px;
+  stroke: var(--primary);
+  transition: 0.2s ease-in-out;
+}
+
+
+.testimonial_card:hover .testimonial_quote_icon,
+.swiper-slide.swiper-slide-active .testimonial_card .testimonial_quote_icon{
+  background-color: var(--primary);
+}
+
+.testimonial_card:hover .testimonial_quote_icon svg,
+.swiper-slide.swiper-slide-active .testimonial_card .testimonial_quote_icon svg{
+  stroke: var(--white);
+}
+
+.testimonial_quote_text {
+  margin-bottom: 20px;
+  font-size: clamp(12px, 2vw, 14px);
+}
+
+.testimonial_name {
+  margin: 0;
+  margin-top: auto;
+  font-weight: 500;
+  font-size: clamp(16px, 2vw, 18px);
+}
+
+.testimonial_title {
+  margin: 0;
+  color: var(--primary);
+  font-size: clamp(12px, 2vw, 14px);
 }
 
 /* packages */
@@ -1438,7 +1601,13 @@ figure img {
 }
 
 .input_group span {
-  line-height: 1;
+    text-align: left;
+    line-height: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
 }
 
 .input_group :where(input, textarea, select, button) {
@@ -1471,6 +1640,10 @@ figure img {
   justify-content: center;
 }
 
+.input_box > *{
+  width: 100%;
+}
+
 .input_group:not(.input_quill) svg {
   position: absolute;
   top: 50%;
@@ -1501,14 +1674,16 @@ figure img {
   position: absolute;
   width: 100%;
   z-index: 1;
-  overflow: hidden;
+  overflow: auto;
+  max-height: 300px;
 }
 
 .option {
   border: none;
-  min-height: unset;
   cursor: pointer;
   padding: 8px 15px;
+  min-height: unset;
+  text-align: left;
   border-radius: 0px;
   color: var(--text);
   background: transparent;

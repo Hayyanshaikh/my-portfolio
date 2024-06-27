@@ -10,6 +10,7 @@ import packageSlice from './slices/packageSlice.jsx';
 import priceSlice from './slices/priceSlice.jsx';
 import resumeSlice from './slices/resumeSlice.jsx';
 import settingSlice from './slices/settingSlice.jsx';
+import testimonialSlice from './slices/testimonialSlice.jsx';
 
 const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
     packages: packageSlice,
     prices: priceSlice,
     resumes: resumeSlice,
+    testimonial: testimonialSlice,
     settings: settingSlice,
   },
 });
